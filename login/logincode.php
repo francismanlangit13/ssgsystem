@@ -5,10 +5,10 @@
         
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $password = mysqli_real_escape_string($con, $_POST['password']);
-
-        $login_query = "SELECT user_id,fname,lname,user_status,pos_name,user_type,email,password FROM user WHERE email='$email' AND password= '$password' 
+        $hashed_password = md5($password);
+        $login_query = "SELECT user_id,fname,lname,user_status,pos_name,user_type,email,password FROM user WHERE email='$email' AND password= '$hashed_password' 
         UNION
-        SELECT user_id,fname,lname,user_status,pos_name,user_type,email,password FROM student WHERE email='$email' AND password= '$password' LIMIT 1";
+        SELECT user_id,fname,lname,user_status,pos_name,user_type,email,password FROM student WHERE email='$email' AND password= '$hashed_password' LIMIT 1";
         $login_query_run = mysqli_query($con, $login_query);
 
         if(mysqli_num_rows($login_query_run) > 0){
@@ -33,43 +33,43 @@
 
                 if($_SESSION['u_status'] != '3' && $_SESSION['u_status'] != '2'){
                     if( $_SESSION['auth_role'] == '1' &&  $_SESSION['pos_role'] == '1'   ){
-                        $_SESSION['status'] = "Welcome Administrator";
+                        $_SESSION['status'] = "Welcome $full_name";
                         $_SESSION['status_code'] = "success";
                         header("Location: " . base_url . "admin");
                         exit(0);
                     }
                     elseif( $_SESSION['auth_role'] == '5' &&  $_SESSION['pos_role'] == '4'){
-                        $_SESSION['status'] = "Welcome Parent!";
+                        $_SESSION['status'] = "Welcome $full_name";
                         $_SESSION['status_code'] = "success";
                         header("Location: " . base_url . "parent");
                         exit(0);
                     }
                     elseif( $_SESSION['auth_role'] == '1' &&  $_SESSION['pos_role'] == '2'){
-                        $_SESSION['status'] = "Welcome Secretary!";
+                        $_SESSION['status'] = "Welcome $full_name";
                         $_SESSION['status_code'] = "success";
                         header("Location: " . base_url . "secretary");
                         exit(0);
                     }
                     elseif( $_SESSION['auth_role'] == '1' &&  $_SESSION['pos_role'] == '3'){
-                        $_SESSION['status'] = "Welcome Treasurer!";
+                        $_SESSION['status'] = "Welcome $full_name";
                         $_SESSION['status_code'] = "success";
                         header("Location: " . base_url . "treasurer");
                         exit(0);
                     }
                     elseif( $_SESSION['auth_role'] == '4'  &&  $_SESSION['pos_role'] == '5'){
-                        $_SESSION['status'] = "Welcome Student!";
+                        $_SESSION['status'] = "Welcome $full_name";
                         $_SESSION['status_code'] = "success";
                         header("Location: " . base_url . "student");
                         exit(0);
                     }
                     elseif( $_SESSION['auth_role'] == '1'  &&  $_SESSION['pos_role'] == '6'){
-                        $_SESSION['status'] = "Welcome President!";
+                        $_SESSION['status'] = "Welcome $full_name";
                         $_SESSION['status_code'] = "success";
                         header("Location: " . base_url . "admin");
                         exit(0);
                     }
                     elseif( $_SESSION['auth_role'] == '1'  &&  $_SESSION['pos_role'] == '7'){
-                        $_SESSION['status'] = "Welcome Vice President!";
+                        $_SESSION['status'] = "Welcome $full_name";
                         $_SESSION['status_code'] = "success";
                         header("Location: " . base_url . "admin");
                         exit(0);

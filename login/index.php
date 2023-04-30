@@ -22,8 +22,6 @@
                 <div class="signin-content">
                     <div class="signin-image">
                         <figure><img src="<?php echo base_url ?>assets/files/images/system/ssg.png" alt="sing up image"></figure>
-                        <a href="studentregister.php" style="display:none" class="signup-image-link">Create Student Account</a>
-                        <a href="parentregister.php" style="display:none" class="signup-image-link">Create Parent Account</a>
                     </div>
 
                     <div class="signin-form">
