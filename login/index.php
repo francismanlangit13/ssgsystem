@@ -31,23 +31,18 @@
                                 <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Your Name" required/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="overflow:visible !important;">
                                 <label for="password"><i class="zmdi zmdi-lock" style="margin-bottom:2.5rem;"></i></label>
                                 <input type="password" name="password" minlength="8" id="password" placeholder="Password" required/>
                                 <a href="javascript:void(0)"  style="position: relative; top: -2.5rem; left: 87%; cursor: pointer; color: lightgray;">
                                     <img alt="show password icon" src="<?php echo base_url ?>assets/files/images/system/eye-close.png" width="25rem" height="1%" id="togglePassword">
                                 </a>
                             </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                            <div class="form-group form-button" style="margin-top:-2.5rem;">
+                                <input type="submit" name="login_btn"  class="form-submit" value="Log in" style="width:100%;"/>
                             </div>
                             <div class="form-group">
-                            <a href="<?php echo base_url ?>login/forgot" class="signup-image-link">Forgot Password</a>
-                            </div>
-
-                            <div class="form-group form-button">
-                                <input type="submit" name="login_btn"  class="form-submit" value="Log in"/>
+                                <a href="<?php echo base_url ?>login/forgot" class="signup-image-link">Forgot Password</a>
                             </div>
                         </form>
                     </div>
