@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SSG</title>
+    <title>Supreme Student Government of JBI | Login</title>
+    <!-- Favicons -->
+    <link href="<?php echo base_url ?>assets/files/images/system/ssg.png" rel="icon">
+    <link href="<?php echo base_url ?>assets/files/images/system/ssg.png" rel="apple-touch-icon">
     <!-- Font Icon -->
     <link rel="stylesheet" href="<?php echo base_url ?>assets/fonts/material-icon/css/material-design-iconic-font.min.css">
     <!-- Main css -->
@@ -58,40 +61,12 @@
     <!-- JS -->
     <script src="<?php echo base_url ?>assets/vendor/jquery/jquery.min.js"></script>
     <!-- SCRIPT FOR SWEET ALERT -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="<?php echo base_url ?>assets/js/sweetalert.js"></script>
     <!-- Show pass -->
     <script src="<?php echo base_url ?>assets/js/showpass.js"></script>
     <script>
         var base_url = "<?php echo base_url ?>"; // Global base_url in javascript
-    </script>
-  
-
-
-<?php
-        if(isset($_SESSION['status']) && $_SESSION['status_code'] !='' )
-        {
-            ?>
-                <script>
-                swal({
-                title: "<?php echo $_SESSION['status']; ?>",
-                icon: "<?php echo $_SESSION['status_code']; ?>",
-                timer: 5000,
-                button: "Close",
-                }).then(
-                function () {},
-                // handling the promise rejection
-                function (dismiss) {
-                    if (dismiss === 'timer') {
-                    //console.log('I was closed by the timer')
-                    }
-                }
-                )
-                </script>
-                <?php
-                unset($_SESSION['status']);
-                unset($_SESSION['status_code']);
-        }
-                ?>
-                
+    </script> 
+    <?php include ('message.php'); ?>
 </body>
 </html>
