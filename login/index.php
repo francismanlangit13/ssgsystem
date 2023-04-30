@@ -43,7 +43,7 @@
                                 <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
                             </div>
                             <div class="form-group">
-                            <a href="studentregister.php" class="signup-image-link">Forgot Password</a>
+                            <a href="<?php echo base_url ?>login/forgot" class="signup-image-link">Forgot Password</a>
                             </div>
 
                             <div class="form-group form-button">

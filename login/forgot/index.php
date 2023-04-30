@@ -1,3 +1,4 @@
+<?php include ('../../db_conn.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +8,12 @@
     <title>Supreme Student Government of JBI | Forgot</title>
 
     <!-- Font Icon -->
-    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="<?php echo base_url ?>assets/fonts/material-icon/css/material-design-iconic-font.min.css">
 
     <!-- Main css -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<?php echo base_url ?>assets/css/style-login.css">
 </head>
 <body>
- <?php session_start(); ?>
     <div class="main">
 
         <!-- Sing in  Form -->
@@ -21,9 +21,7 @@
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <figure><img src="images/ssg.jpg" alt="sing up image"></figure>
-                        <a href="studentregister.php" class="signup-image-link">Create Student Account</a>
-                        <a href="parentregister.php" class="signup-image-link">Create Parent Account</a>
+                        <figure><img src="<?php echo base_url ?>assets/files/images/system/ssg.png" alt="sing up image"></figure>
                     </div>
 
                     <div class="signin-form">
@@ -31,15 +29,13 @@
                         <form action="forgotpasswordcode.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="email"  placeholder="Enter Email Address"/>
+                                <input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Enter Email Address" required/>
                             </div>
-
-                            <div class="form-group">
-                            <a href="index.php" class="signup-image-link">Click here to login</a>
-                            </div>
-                          
                             <div class="form-group form-button">
-                                <input type="submit" name="forgot_btn"  class="form-submit" value="Submit"/>
+                                <input type="submit" name="forgot_btn"  class="form-submit" value="Submit" style="width:100%;"/>
+                            </div>
+                            <div class="form-group">
+                                <a href="<?php echo base_url ?>login" class="signup-image-link">Click here to login</a>
                             </div>
                         </form>
                     </div>
@@ -50,40 +46,9 @@
     </div>
 
     <!-- JS -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-
-     <!-- SCRIPT FOR SWEET ALERT -->
-     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-  
-
-
-<?php
-        if(isset($_SESSION['status']) && $_SESSION['status_code'] !='' )
-        {
-            ?>
-                <script>
-                swal({
-                title: "<?php echo $_SESSION['status']; ?>",
-                icon: "<?php echo $_SESSION['status_code']; ?>",
-                timer: 5000,
-                button: "Close",
-                }).then(
-                function () {},
-                // handling the promise rejection
-                function (dismiss) {
-                    if (dismiss === 'timer') {
-                    //console.log('I was closed by the timer')
-                    }
-                }
-                )
-                </script>
-                <?php
-                unset($_SESSION['status']);
-                unset($_SESSION['status_code']);
-        }
-                ?>
-                
+    <script src="<?php echo base_url ?>assets/vendor/jquery/jquery.min.js"></script>
+    <!-- SCRIPT FOR SWEET ALERT -->
+    <script src="<?php echo base_url ?>assets/js/sweetalert.js"></script>
+    <?php include ('message.php'); ?>
 </body>
 </html>

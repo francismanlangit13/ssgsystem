@@ -1,5 +1,5 @@
 <?php
-    include('config/dbcon.php');
+    include('../../db_conn.php');
 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
@@ -15,13 +15,16 @@
 
         if(mysqli_num_rows($check_mail_run) > 0){
             $row = mysqli_fetch_array($check_mail_run);
-            $get_email = $row['email'];
-            $new_password = substr(md5(microtime()),rand(0,26),8);
-            $hashed_password = md5($new_password);
-            if ($row['user_type'] == 4){
+            if($row['user_type'] != 4){
+                $get_email = $row['email'];
+                $new_password = substr(md5(microtime()),rand(0,26),8);
+                $hashed_password = md5($new_password);
                 $sql = "UPDATE student SET password='$hashed_password' WHERE email='$email'";
             }
             else{
+                $get_email = $row['email'];
+                $new_password = substr(md5(microtime()),rand(0,26),8);
+                $hashed_password = md5($new_password);
                 $sql = "UPDATE user SET password='$hashed_password' WHERE email='$email'";
             }
             if (mysqli_query($con, $sql)) {
