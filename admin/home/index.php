@@ -32,7 +32,7 @@
                                         </label>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>admin/home/student_account" >View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                                         </label>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>admin/home/officer_account">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                                         </label>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>admin/home/paymenthistory">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -104,27 +104,18 @@
                                         </label>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link text-decoration-none" href="#">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
+                            <div class="col-xl-12">
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
+                                        Users chart
                                     </div>
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -202,3 +193,55 @@
         <?php include ('../includes/bottom.php'); ?>
     </body>
 </html>
+<?php
+    $total_student = "SELECT * FROM `student`";
+    $total_student_query_run = mysqli_query($con, $total_student);
+    $student_count = mysqli_num_rows($total_student_query_run);
+
+    $total_parent = "SELECT * FROM `user` WHERE user_type = 5";
+    $total_parent_query_run = mysqli_query($con, $total_parent);
+    $parent_count = mysqli_num_rows($total_parent_query_run);
+
+    $total_officer = "SELECT * FROM `user` WHERE user_type = 1";
+    $total_officer_query_run = mysqli_query($con, $total_officer);
+    $officer_count = mysqli_num_rows($total_officer_query_run);
+?>
+<script>
+    // Set new default font family and font color to mimic Bootstrap's default styling
+    Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#292b2c';
+
+    // Bar Chart Example
+    var ctx = document.getElementById("myBarChart");
+    var myLineChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Students", "Parents", "Officers"],
+        datasets: [{
+        //label: "Revenue",
+        backgroundColor: "rgba(2,117,216,1)",
+        borderColor: "rgba(2,117,216,1)",
+        data: [<?php echo $student_count; ?>, <?php echo $parent_count; ?>, <?php echo $officer_count; ?>],
+        }],
+    },
+    options: {
+        scales: {
+        xAxes: [{
+            time: {
+            unit: 'month'
+            },
+            gridLines: {
+            display: false
+            },
+            ticks: {
+            maxTicksLimit: 6
+            }
+        }],
+        },
+        legend: {
+        display: false
+        }
+    }
+    });
+
+</script>

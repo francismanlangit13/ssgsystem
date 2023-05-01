@@ -9,4 +9,7 @@
     <link href="<?php echo base_url ?>assets/css/datatables.min.css" rel="stylesheet" />
     <link href="<?php echo base_url ?>assets/css/styles.css" rel="stylesheet" />
     <script src="<?php echo base_url ?>assets/js/fontawsome.all.js" crossorigin="anonymous"></script>
+    <!-- SCRIPT FOR SWEET ALERT -->
+    <script src="<?php echo base_url ?>assets/js/sweetalert.js"></script>
+    <script src="<?php echo base_url ?>assets/js/jquery.min.js"></script>
 </head>

@@ -1,12 +1,12 @@
 <?php
-include('authentication.php');
+include('../../db_conn.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require './PHPMailer/src/Exception.php';
-require './PHPMailer/src/PHPMailer.php';
-require './PHPMailer/src/SMTP.php';
+require '../../assets/PHPMailer/src/Exception.php';
+require '../../assets/PHPMailer/src/PHPMailer.php';
+require '../../assets/PHPMailer/src/SMTP.php';
 
 
 //add officer account
@@ -116,7 +116,7 @@ if(isset($_POST['logout_btn']))
 
     $_SESSION['status'] = "Logout Successfully";
     $_SESSION['status_code'] = "success";
-    header("Location: ../login/index.php");
+    header("Location: " . base_url . "login");
     exit(0);
 }
 
