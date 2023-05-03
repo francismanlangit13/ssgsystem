@@ -16,7 +16,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                         <?php
-                                            $total_student = "SELECT * FROM `student`";
+                                            $total_student = "SELECT * FROM `user` WHERE user_type = 6";
                                             $total_student_query_run = mysqli_query($con, $total_student);
                                         ?>
                                     <div class="card-body"><i class="fas fa-user-tie"></i> Total Student
@@ -40,7 +40,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
                                     <?php
-                                        $staff = "SELECT `user`.* FROM `user` WHERE `user`.pos_name != 4";
+                                        $staff = "SELECT * FROM `user` WHERE user_type IN (2, 3, 4, 5)";
                                         $staff_query_run = mysqli_query($con, $staff);
                                     ?>
                                     <div class="card-body"><i class="fas fa-users"></i> Total Officer
@@ -88,7 +88,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
                                     <?php
-                                        $arch_student = "SELECT *, student.* FROM student WHERE student.user_status = 2";
+                                        $arch_student = "SELECT * FROM user WHERE user_status = 3";
                                         $arch_student_query_run = mysqli_query($con, $arch_student);
                                     ?>
                                     <div class="card-body"><i class="fa fa-archive"></i> Total Archived Account
@@ -194,15 +194,15 @@
     </body>
 </html>
 <?php
-    $total_student = "SELECT * FROM `student`";
+    $total_student = "SELECT * FROM `user` WHERE user_type = 6";
     $total_student_query_run = mysqli_query($con, $total_student);
     $student_count = mysqli_num_rows($total_student_query_run);
 
-    $total_parent = "SELECT * FROM `user` WHERE user_type = 5";
+    $total_parent = "SELECT * FROM `user` WHERE user_type = 7";
     $total_parent_query_run = mysqli_query($con, $total_parent);
     $parent_count = mysqli_num_rows($total_parent_query_run);
 
-    $total_officer = "SELECT * FROM `user` WHERE user_type = 1";
+    $total_officer = "SELECT * FROM `user` WHERE user_type IN (2, 3, 4, 5)";
     $total_officer_query_run = mysqli_query($con, $total_officer);
     $officer_count = mysqli_num_rows($total_officer_query_run);
 ?>

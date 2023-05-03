@@ -47,27 +47,16 @@
                                         <?php
                                             $user_id = $_SESSION['auth_user']['user_id'];
                                             $query = "SELECT
-                                                `user`.user_id, 
-                                                `user`.fname, 
-                                                `user`.mname, 
-                                                `user`.lname, 
-                                                `user`.email, 
-                                                user_status.user_status, 
-                                                position.pos_name
+                                                *
                                                 FROM
                                                 `user`
                                                 INNER JOIN
                                                 user_status
                                                 ON 
                                                 `user`.user_status = user_status.user_status_id
-                                                INNER JOIN
-                                                position
-                                                ON 
-                                                `user`.pos_name = position.pos_id
                                                 WHERE
-                                                `user`.user_type = 1 AND
-                                                `user`.user_status = 1 AND
-                                                `user`.user_id != '1'
+                                                user_type IN (2, 3, 4, 5) AND
+                                                user_type IN (1, 2)
                                             ";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
@@ -77,7 +66,17 @@
                                             <td><?= $row['user_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> </td>
                                             <td><?= $row['email']; ?></td>
-                                            <td><?= $row['pos_name']; ?></td>
+                                            <td><?= $row['pos_name']; ?>
+                                                <?php if($row['user_type'] == 2){
+                                                    echo "President";
+                                                } elseif($row['user_type'] == 3){
+                                                    echo "Vice President";
+                                                } elseif($row['user_type'] == 4){
+                                                    echo "Secretary";
+                                                } elseif($row['user_type'] == 5){
+                                                    echo "Treasurer";
+                                                } else { } ?>
+                                            </td>
                                             <td><?= $row['user_status']; ?></td>
                                             <td> 
                                                 <div class="row d-flex justify-content-center">

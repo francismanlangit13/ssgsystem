@@ -20,14 +20,14 @@
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <?php
                         $userID = $_SESSION['auth_user'] ['user_id'];
-                        $query = "SELECT user.front FROM user where user_id = $userID";
+                        $query = "SELECT * FROM user where user_id = $userID";
                         $query_run = mysqli_query($con, $query);
                         $user = mysqli_num_rows($query_run) > 0;
 
                         if($user){
                             while($row = mysqli_fetch_assoc($query_run)){
                     ?>
-                    <img id="cimg" class="img-fluid card-img-top" src="data:image;base64,<?php echo base64_encode($row['front']) ?>"  alt="user-avatar">
+                    <img id="cimg" class="img-fluid card-img-top" src=""  alt="user-avatar">
                     <?php } } ?>
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?= $_SESSION['auth_user'] ['user_name'];  ?></span>
                 </a>
