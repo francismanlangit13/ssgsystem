@@ -45,26 +45,16 @@
                                         <?php
                                             $user_id = $_SESSION['auth_user']['user_id'];
                                             $query = "SELECT
-                                                `user`.user_id, 
-                                                `user`.fname, 
-                                                `user`.mname, 
-                                                `user`.lname, 
-                                                `user`.email, 
-                                                user_status.user_status, 
-                                                position.pos_name
+                                                *
                                                 FROM
                                                 `user`
                                                 INNER JOIN
                                                 user_status
                                                 ON 
                                                 `user`.user_status = user_status.user_status_id
-                                                INNER JOIN
-                                                position
-                                                ON 
-                                                `user`.pos_name = position.pos_id
                                                 WHERE
-                                                `user`.user_type = 5 AND
-                                                `user`.user_status = 1
+                                                user_type = 7 AND
+                                                user_status.user_status_id IN (1, 2)
                                             ";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
