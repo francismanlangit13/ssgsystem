@@ -8,107 +8,8 @@ require '../../assets/PHPMailer/src/Exception.php';
 require '../../assets/PHPMailer/src/PHPMailer.php';
 require '../../assets/PHPMailer/src/SMTP.php';
 
-
-//add officer account
-if(isset($_POST["add_officer"])){
-    $front = $_FILES['front'];
-  
-    $fileName = $front['name'];
-    $fileTmpname = $front['tmp_name'];
-    $fileSize = $front['size'];
-    $fileError = $front['error'];
-  
-    $fileExt = explode('.',$fileName);
-    $fileActExt = strtolower(end($fileExt));
-    $allowed = array('jpg','jpeg','png');
-  
-    $email = $_POST['email'];
-  
-    $checkemail = "SELECT email FROM user WHERE email='$email'";
-    $checkemail_run = mysqli_query($con,$checkemail);
-  
-    if(mysqli_num_rows($checkemail_run) > 0)
-    {
-      $_SESSION['status'] = "Email already exist!";
-      $_SESSION['status_code'] = "error";
-      header("Location: officer_account.php");
-        exit(0);
-    }
-    else{
-      if(in_array($fileActExt, $allowed)){
-          if($fileError === 0){
-              if($fileSize < 50000000){
-                $fname = $_POST['fname'];
-                $mname = $_POST['mname'];
-                $lname = $_POST['lname'];
-                $email = $_POST['email'];
-                $password = uniqid();
-                $position = $_POST['role_as'];
-                $code = 0;
-                $user_type = 1;
-                $status = 1;
-                $front = addslashes(file_get_contents($_FILES["front"]['tmp_name']));
-      
-                $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `email`, `password`, `front`, `user_type`, `pos_name`, `user_status`,`code`) VALUES ('$fname','$mname','$lname','$email','$password','$front','$user_type','$position','$status','$code')";
-      
-                  $query_run = mysqli_query($con, $query);
-      
-                  if($query_run){
-      
-                    $name = htmlentities($_POST['lname']);
-                    $email = htmlentities($_POST['email']);
-                    $subject = htmlentities('Username and Password Credentials');
-                    $message =  nl2br("Good day! \r\n This is your Online SSG Account! \r\n Email:$email \r\n Password: $password ");
-
-                    $mail = new PHPMailer(true);
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'ssg.jbi7204@gmail.com';
-                    $mail->Password = 'fkqlcsiecymvoypb';
-                    $mail->Port = 465;
-                    $mail->SMTPSecure = 'ssl';
-                    $mail->isHTML(true);
-                    $mail->setFrom($email, $name);
-                    $mail->addAddress($email);
-                    $mail->Subject = ("$email ($subject)");
-                    $mail->Body = $message;
-                    $mail->send();
-                    
-        
-      
-                    $_SESSION['status'] = "Officer Account has been added, password is sent to their email.";
-                    $_SESSION['status_code'] = "success";
-                    header('Location: officer_account.php');
-                    exit(0);
-                  }else{
-                    $_SESSION['status'] = "Product Not Added!";
-                    $_SESSION['status_code'] = "error";
-                    header('Location: officer_account.php');
-                    exit(0);
-                  }
-      
-              }else{
-                  $_SESSION['status']="File is too large file must be 10mb";
-                  $_SESSION['status_code'] = "error"; 
-                  header('Location: officer_account.php');
-              }
-          }else{
-              $_SESSION['status']="File Error";
-              $_SESSION['status_code'] = "error"; 
-              header('Location: officer_account.php');
-          }
-      }else{
-          $_SESSION['status']="File not allowed";
-          $_SESSION['status_code'] = "error"; 
-          header('Location: officer_account.php');
-      }
-    }
-  }
-
-
-if(isset($_POST['logout_btn']))
-{
+// Logout
+if(isset($_POST['logout_btn'])){
     // session_destroy();
     unset( $_SESSION['auth']);
     unset( $_SESSION['auth_role']);
@@ -120,7 +21,103 @@ if(isset($_POST['logout_btn']))
     exit(0);
 }
 
+// Add officer account
+if(isset($_POST["add_officer"])){
+    $fileImage = $_FILES['image'];
+    $customFileName = 'user_' . date('Ymd_His'); // replace with your desired file name
+    $ext = pathinfo($fileImage['name'], PATHINFO_EXTENSION); // get the file extension
+    $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
+    $fileTmpname = $fileImage['tmp_name'];
+    $fileSize = $fileImage['size'];
+    $fileError = $fileImage['error'];
+    $fileExt = explode('.',$fileName);
+    $fileActExt = strtolower(end($fileExt));
+    $allowed = array('jpg','jpeg','png');
+    
+    if(in_array($fileActExt, $allowed)){
+      if($fileError === 0){
+        if($fileSize < 10485760){
+          $fname = $_POST['fname'];
+          $mname = $_POST['mname'];
+          $lname = $_POST['lname'];
+          $suffix = $_POST['suffix'];
+          $gender = $_POST['gender'];
+          $email = $_POST['email'];
+          $phone = $_POST['phone'];
+          $role_as = $_POST['role'];
+          $new_password = substr(md5(microtime()),rand(0,26),8);
+          $password = md5($new_password);
+          $user_type = $role_as;
+          $user_status = '1';
+          $uploadDir = '../../assets/files/images/users/';
+          $targetFile = $uploadDir . $fileName;
 
+          if (move_uploaded_file($fileTmpname, $targetFile)) {
+            $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
+            $query_run = mysqli_query($con, $query);
+
+            if($query_run){
+              $name = htmlentities($_POST['lname']);
+              $email = htmlentities($_POST['email']);
+              $subject = htmlentities('Username and Password Credentials');
+              $message = nl2br("Welcome to Supreme Student Government System! \r\n \r\n Email: $email \r\n Password: $new_password \r\n \r\n Please change your password immediately.");
+              // PHP Mailer
+              require("../../assets/PHPMailer/PHPMailerAutoload.php");
+              require ("../../assets/PHPMailer/class.phpmailer.php");
+              require ("../../assets/PHPMailer/class.smtp.php");
+              $mail = new PHPMailer();
+              $mail->IsSMTP();
+              //$mail->SMTPDebug = 2; // Debug if the gmail doesn't send email when forgetting password.
+              $mail->SMTPAuth = true;
+              $mail->SMTPSecure = 'TLS/STARTTLS';
+              $mail->Host = 'smtp.gmail.com'; // Enter your host here
+              $mail->Port = '587';
+              $mail->IsHTML();
+              $mail->Username = 'ssg.jbi7204@gmail.com'; // Enter your email here
+              $mail->Password = 'fkqlcsiecymvoypb'; //Enter your passwrod here
+              $mail->setFrom($email, $name);
+              $mail->addAddress($_POST['email']);
+              $mail->Subject = ("$email ($subject)");
+              $mail->Body = $message;
+              $mail->send();
+        
+              $_SESSION['status'] = "Officer added successfully, Credentials was sent to their email!";
+              $_SESSION['status_code'] = "success";
+              header("Location: " . base_url . "admin/home/officer_account");
+              exit(0);
+            }
+            else{
+              $_SESSION['status'] = "Officer was not added";
+              $_SESSION['status_code'] = "error";
+              header("Location: " . base_url . "admin/home/officer_account");
+              exit(0);
+            }
+          }
+          else{
+            $_SESSION['status']="Error uploading image.";
+            $_SESSION['status_code'] = "error";
+            header("Location: " . base_url . "admin/home/officer_account");
+          }
+
+        }
+        else{
+          $_SESSION['status']="File is too large file must be 10mb";
+          $_SESSION['status_code'] = "error"; 
+          header("Location: " . base_url . "admin/home/officer_account");
+        }
+      }
+      else{
+        $_SESSION['status']="File Error";
+        $_SESSION['status_code'] = "error"; 
+        header("Location: " . base_url . "admin/home/officer_account");
+      }
+    }
+    else{
+      $_SESSION['status']="Invalid file type";
+      $_SESSION['status_code'] = "error"; 
+      header("Location: " . base_url . "admin/home/officer_account");
+    }
+}
 
 
 if(isset($_POST['add_expense']))

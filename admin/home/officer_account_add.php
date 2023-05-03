@@ -40,8 +40,8 @@
 
                                                 <div class="col-md-3 mb-3">
                                                     <div class="form-group">
-                                                        <label for="suff">Suffix</label>
-                                                        <select class="form-control" name="suff">
+                                                        <label for="suffix">Suffix</label>
+                                                        <select class="form-control" name="suffix">
                                                             <option value="" selected disabled>Select Suffix</option>
                                                             <option value="Jr">Jr</option>
                                                             <option value="Sr">Sr</option>
@@ -54,25 +54,36 @@
                                                         </select>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="form-group">
+                                                        <label for="gender" class="required">Gender</label>
+                                                        <select class="form-control" name="gender" required>
+                                                            <option value="" selected disabled>Select Gender</option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                     
                                                 <div class="col-md-6 mb-3">
                                                     <label for="" class="required">Email</label>
                                                     <input required type="email" Placeholder="Enter Email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control">
                                                 </div>
 
-                                                <div class="col-md-6 mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     <label for="" class="required">Role</label>
-                                                    <select name="role_as" required class="form-control">
+                                                    <select name="role" required class="form-control">
                                                         <option value="" selected disabled>Select Role</option>
-                                                        <option value="6">President</option>
-                                                        <option value="7">Vice President</option>
-                                                        <option value="2">Secretary</option>
-                                                        <option value="3">Treasurer</option>
+                                                        <option value="2">President</option>
+                                                        <option value="3">Vice President</option>
+                                                        <option value="4">Secretary</option>
+                                                        <option value="5">Treasurer</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="dp" class="required">Profile Picture</label>
-                                                    <input required type="file" name="image" class="input-large btn btn-secondary" id="image1" accept=".jpg, .jpeg, .png" onchange="previewImage('frame1', 'image1')">
+                                                    <input required type="file" name="image" class="input-large btn btn-dark" id="image1" accept=".jpg, .jpeg, .png" onchange="previewImage('frame1', 'image1')">
                                                 </div>
 
                                                 <div class="col-md-6">

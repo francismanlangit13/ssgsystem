@@ -28,7 +28,7 @@
                                             <th>No.</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>Position</th>
+                                            <th>Role</th>
                                             <th>Status</th>
                                             <th>ACTION</th>
                                         </tr>
@@ -38,7 +38,7 @@
                                             <th>Id</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>Position</th>
+                                            <th>Role</th>
                                             <th>Status</th>
                                             <th>ACTION</th>
                                         </tr>
@@ -66,7 +66,7 @@
                                             <td><?= $row['user_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> </td>
                                             <td><?= $row['email']; ?></td>
-                                            <td><?= $row['pos_name']; ?>
+                                            <td>
                                                 <?php if($row['user_type'] == 2){
                                                     echo "President";
                                                 } elseif($row['user_type'] == 3){
