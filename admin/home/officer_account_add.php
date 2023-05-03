@@ -66,9 +66,15 @@
                                                     </div>
                                                 </div>
                     
-                                                <div class="col-md-6 mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     <label for="" class="required">Email</label>
                                                     <input required type="email" Placeholder="Enter Email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control">
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="" class="required">Phone Number</label>
+                                                    <input required type="text" name="phone" pattern="09[0-9]{9}" maxlength="11" class="form-control" id="phone-input">
+                                                    <div id="phone-error"></div>
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">

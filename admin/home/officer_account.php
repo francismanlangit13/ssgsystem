@@ -56,7 +56,7 @@
                                                 `user`.user_status = user_status.user_status_id
                                                 WHERE
                                                 user_type IN (2, 3, 4, 5) AND
-                                                user_type IN (1, 2)
+                                                user_status.user_status_id IN (1, 2)
                                             ";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){

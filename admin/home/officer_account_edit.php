@@ -31,44 +31,78 @@
                                     <form action="code.php" method="POST" enctype="multipart/form-data">
                                         <div class="card-body">
                                             <div class="row">
+                                                <input type="hidden" name="user_id" value="<?=$user['user_id'];?>">
                                                 <div class="col-md-3 mb-3">
-                                                    <label for="">First Name</label>
-                                                    <input type="text" value="<?=$user['fname'];?>" class="form-control" required>
+                                                    <label for="" class="required">First Name</label>
+                                                    <input type="text" name="fname" value="<?=$user['fname'];?>" class="form-control" required>
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
                                                     <label for="">Middle Name</label>
-                                                    <input type="text" value="<?=$user['mname'];?>" class="form-control">
+                                                    <input type="text" name="mname" value="<?=$user['mname'];?>" class="form-control">
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
-                                                    <label for="">Last Name</label>
-                                                    <input type="text" value="<?=$user['lname'];?>" class="form-control" required>
+                                                    <label for="" class="required">Last Name</label>
+                                                    <input type="text" name="lname" value="<?=$user['lname'];?>" class="form-control" required>
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
-                                                    <label for="">Suffix</label>
-                                                    <input type="text" value="<?=$user['suff'];?>" class="form-control">
+                                                    <div class="form-group">
+                                                        <label for="suffix">Suffix</label>
+                                                        <select class="form-control" name="suffix">
+                                                            <option value="" selected disabled>Select Suffix</option>
+                                                            <option value="Jr" <?= $user['suffix'] == 'Jr' ? 'selected' :'' ?>>Jr</option>
+                                                            <option value="Sr" <?= $user['suffix'] == 'Sr' ? 'selected' :'' ?>>Sr</option>
+                                                            <option value="I" <?= $user['suffix'] == 'I' ? 'selected' :'' ?>>I</option>
+                                                            <option value="II" <?= $user['suffix'] == 'II' ? 'selected' :'' ?>>II</option>
+                                                            <option value="III" <?= $user['suffix'] == 'III' ? 'selected' :'' ?>>III</option>
+                                                            <option value="IV" <?= $user['suffix'] == 'IV' ? 'selected' :'' ?>>IV</option>
+                                                            <option value="V" <?= $user['suffix'] == 'V' ? 'selected' :'' ?>>V</option>
+                                                            <option value="VI" <?= $user['suffix'] == 'VI' ? 'selected' :'' ?>>VI</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="form-group">
+                                                        <label for="suffix" class="required">Gender</label>
+                                                        <select class="form-control" name="gender">
+                                                            <option value="" selected disabled>Select Gender</option>
+                                                            <option value="Male" <?= $user['gender'] == 'Male' ? 'selected' :'' ?>>Male</option>
+                                                            <option value="Female" <?= $user['gender'] == 'Female' ? 'selected' :'' ?>>Female</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                     
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="">Email</label>
-                                                    <input type="email" value="<?=$user['email'];?>" class="form-control" required>
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="" class="required">Email</label>
+                                                    <input type="email" name="email" value="<?=$user['email'];?>" class="form-control" required>
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
-                                                    <label for="">Role</label>
-                                                    <input type="text" value="<?=$user['user_type'];?>" class="form-control" required>
+                                                    <label for="" class="required">Phone Number</label>
+                                                    <input required type="text" name="phone" value="<?=$user['phone'];?>" pattern="09[0-9]{9}" maxlength="11" class="form-control" id="phone-input">
+                                                    <div id="phone-error"></div>
                                                 </div>
                                                 
                                                 <div class="col-md-3 mb-3">
                                                     <label for="" class="required">Role</label>
-                                                    <select name="role_as" required class="form-control">
-                                                        <option value="">--Select Role--</option>
-                                                        <option value="1" <?= $user['pos_name'] == '1' ? 'selected' :'' ?>>Admin</option>
-                                                        <option value="7" <?= $user['user_type'] == '7' ? 'selected' :'' ?>>Vice President</option>
-                                                        <option value="2" <?= $user['user_type'] == '2' ? 'selected' :'' ?>>Secretary</option>
-                                                        <option value="3" <?= $user['user_type'] == '3' ? 'selected' :'' ?>>Treasurer</option>
+                                                    <select name="role" required class="form-control">
+                                                        <option value="" selected disabled>Select Role</option>
+                                                        <option value="2" <?= $user['user_type'] == '2' ? 'selected' :'' ?>>President</option>
+                                                        <option value="3" <?= $user['user_type'] == '3' ? 'selected' :'' ?>>Vice President</option>
+                                                        <option value="4" <?= $user['user_type'] == '4' ? 'selected' :'' ?>>Secretary</option>
+                                                        <option value="5" <?= $user['user_type'] == '5' ? 'selected' :'' ?>>Treasurer</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="" class="required">Status</label>
+                                                    <select name="status" required class="form-control">
+                                                        <option value="" selected disabled>Select Status</option>
+                                                        <option value="1" <?= $user['user_status'] == '1' ? 'selected' :'' ?>>Active</option>
+                                                        <option value="2" <?= $user['user_status'] == '2' ? 'selected' :'' ?>>In active</option>
                                                     </select>
                                                 </div>
 

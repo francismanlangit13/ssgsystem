@@ -9,7 +9,7 @@
                 <?php
                     if(isset($_GET['id'])){
                         $id = $_GET['id'];
-                        $users = "SELECT * FROM user INNER JOIN user_type ON user.user_type = user_type.user_type_id WHERE user_id='$id' ";
+                        $users = "SELECT * FROM user INNER JOIN user_type ON user.user_type = user_type.user_type_id INNER JOIN user_status ON user.user_status = user_status.user_status_id WHERE user_id='$id' ";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
                             foreach($users_run as $user){
@@ -47,17 +47,32 @@
 
                                             <div class="col-md-3 mb-3">
                                                 <label for="">Suffix</label>
-                                                <input type="text" value="<?=$user['suff'];?>" class="form-control" disabled>
+                                                <input type="text" value="<?=$user['suffix'];?>" class="form-control" disabled>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label for="">Gender</label>
+                                                <input type="text" value="<?=$user['gender'];?>" class="form-control" disabled>
                                             </div>
                 
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="">Email</label>
                                                 <input type="email" value="<?=$user['email'];?>" class="form-control" disabled>
                                             </div>
 
                                             <div class="col-md-3 mb-3">
-                                                <label for="">Position</label>
+                                                <label for="">Phone</label>
+                                                <input type="text" value="<?=$user['phone'];?>" class="form-control" disabled>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label for="">Role</label>
                                                 <input type="text" value="<?=$user['user_type'];?>" class="form-control" disabled>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label for="">Status</label>
+                                                <input type="text" value="<?=$user['user_status'];?>" class="form-control" disabled>
                                             </div>
                                         </div>
                                         <div class="float-end">

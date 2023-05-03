@@ -119,6 +119,67 @@ if(isset($_POST["add_officer"])){
     }
 }
 
+// Update officer account
+if(isset($_POST["update_officer"])){
+    $user_id = $_POST['user_id'];
+    $fname = $_POST['fname'];
+    $mname = $_POST['mname'];
+    $lname = $_POST['lname'];
+    $suffix = $_POST['suffix'];
+    $gender = $_POST['gender'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $user_type = $_POST['role'];
+    $user_status = $_POST['status'];
+
+    $query = "UPDATE `user` SET 
+    `fname`='$fname',
+    `mname`='$mname',
+    `lname`='$lname',
+    `suffix`='$suffix',
+    `gender`='$gender',
+    `email`='$email',
+    `phone`='$phone',
+    `user_type`='$user_type',
+    `user_status`='$user_status'
+    WHERE `user_id`='$user_id'";
+    $query_run = mysqli_query($con, $query);
+
+    if($query_run){
+      $_SESSION['status'] = "Officer updated successfully";
+      $_SESSION['status_code'] = "success";
+      header("Location: " . base_url . "admin/home/officer_account");
+      exit(0);
+    }
+    else{
+      $_SESSION['status'] = "Officer was not updated";
+      $_SESSION['status_code'] = "error";
+      header("Location: " . base_url . "admin/home/officer_account");
+      exit(0);
+    }
+}
+
+if(isset($_POST['officer_delete'])){
+    $user_id= $_POST['officer_delete'];
+    $u_status = 3;
+
+    $query = "UPDATE `user` SET `user_status`='$u_status' WHERE user_id='$user_id'";
+    $query_run = mysqli_query($con, $query);
+    
+    if($query_run){
+        $_SESSION['status'] = "Officer deleted successfully";
+        $_SESSION['status_code'] = "success";
+        header('Location: officer_account');
+        exit(0);
+    }
+    else{
+        $_SESSION['status'] = "Something went wrong!";
+        $_SESSION['status_code'] = "error";
+        header('Location: officer_account');
+        exit(0);
+    }
+}
+
 
 if(isset($_POST['add_expense']))
 {
@@ -496,46 +557,6 @@ if(isset($_POST['update_student']))
 }
 
 
-
-
-if(isset($_POST['update_officer']))
-{
-    $user_id= $_POST['user_id'];
-    $fname= $_POST['fname'];
-    $mname= $_POST['mname'];
-    $lname= $_POST['lname'];
-    $suff= $_POST['suff'];
-    $email= $_POST['email'];
-    $password= $_POST['password'];
-    $position = $_POST['position'];
-    $status = $_POST['status'];
-    $front = $_FILES['front'];
-    $back = $_FILES['back'];
-    $front = addslashes(file_get_contents($_FILES["front"]['tmp_name']));
-    $back = addslashes(file_get_contents($_FILES["back"]['tmp_name']));
-
-    $query = "UPDATE `user` SET `fname`='$fname',`mname`='$mname',`lname`='$lname',`email`='$email',`password`='$password',`front`='$front',`back`='$back' WHERE `user_id`='$user_id'";
-    $query_run = mysqli_query($con, $query);
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Officer Update Succesfully";
-        $_SESSION['status_code'] = "success";
-        header('Location: officer_account.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something is wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: officer_account.php');
-        exit(0);
-    }
-}
-
-
-
-
 if(isset($_POST['update_parent']))
 {
     $user_id= $_POST['user_id'];
@@ -670,33 +691,6 @@ if(isset($_POST['officer_active']))
         $_SESSION['status'] = "Something went wrong!";
         $_SESSION['status_code'] = "error";
         header('Location: index.php');
-        exit(0);
-    }
-}
-
-
-
-
-if(isset($_POST['officer_delete']))
-{
-    $user_id= $_POST['officer_delete'];
-    $u_status = 2;
-
-    $query = "UPDATE `user` SET `user_status`='$u_status' WHERE user_id='$user_id'";
-    $query_run = mysqli_query($con, $query);
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Officer Archived";
-        $_SESSION['status_code'] = "success";
-        header('Location: officer_account.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: officer_account.php.php');
         exit(0);
     }
 }
