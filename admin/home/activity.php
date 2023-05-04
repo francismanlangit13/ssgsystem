@@ -45,7 +45,7 @@
                                             FROM
                                             `activity`
                                             WHERE
-                                            `status`= 'Active'";
+                                            `status` IN ('Active','In active')";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){
@@ -57,13 +57,13 @@
                                             <td> 
                                                 <div class="row d-inline-flex justify-content-center">
                                                     <div class="col-md-3">
-                                                        <a href="user_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
+                                                        <a href="activity_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text ml-2 mr-2">View</span>
                                                         </a>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <a href="user_edit?id=<?=$row['user_id'];?>" class="btn btn-success btn-icon-split"> 
+                                                        <a href="activity_edit?id=<?=$row['user_id'];?>" class="btn btn-success btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text">Update</span>
                                                         </a>
@@ -116,7 +116,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <form action="code.php" method="POST">
-            <input type="hidden" id="delete_id" name="user_delete" value="">
+            <input type="hidden" id="delete_id" name="activity_delete" value="">
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       </div>

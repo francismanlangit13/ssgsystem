@@ -658,6 +658,7 @@ if(isset($_POST['user_delete'])){
   }
 }
 
+// Add activity
 if(isset($_POST['add_activity'])){
   $title = $_POST['title'];
   $status = "Active";
@@ -675,6 +676,50 @@ if(isset($_POST['add_activity'])){
     $_SESSION['status_code'] = "error";
     header("Location: " . base_url . "admin/home/activity");
     exit(0);
+  }
+}
+
+// Update activity
+if(isset($_POST['update_activity'])){
+  $user_id = $_POST['user_id'];
+  $title = $_POST['title'];
+  $status = $_POST['status'];
+  $person =  $_SESSION['auth_user']['user_id'];
+  $query = "UPDATE `activity` SET `user_id`='$person',`activity_title`='$title',`status`='$status' WHERE activity_id = '$user_id'";
+  $query_run = mysqli_query($con, $query);
+
+  if($query_run){
+    $_SESSION['status'] = "Actvity updated successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "admin/home/activity");
+    exit(0);
+  }else{
+    $_SESSION['status'] = "Something went wrong!";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/activity");
+    exit(0);
+  }
+}
+
+// Delete activity
+if(isset($_POST['activity_delete'])){
+  $user_id= $_POST['activity_delete'];
+  $u_status = 'Archive';
+
+  $query = "UPDATE `activity` SET `status`='$u_status' WHERE user_id='$user_id'";
+  $query_run = mysqli_query($con, $query);
+  
+  if($query_run){
+      $_SESSION['status'] = "Actvity deleted successfully";
+      $_SESSION['status_code'] = "success";
+      header("Location: " . base_url . "admin/home/activity");
+      exit(0);
+  }
+  else{
+      $_SESSION['status'] = "Something went wrong!";
+      $_SESSION['status_code'] = "error";
+      header("Location: " . base_url . "admin/home/activity");
+      exit(0);
   }
 }
 

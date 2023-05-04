@@ -19,7 +19,7 @@
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Activity</li>
-                            <li class="breadcrumb-item active">Add Activity</li>
+                            <li class="breadcrumb-item active">Update Activity</li>
                         </ol>
                         <div class="row">
                             <div class="col-md-12">
@@ -30,6 +30,7 @@
                                     <div class="card-body">
                                         <form action="code.php" method="post" autocomplete="off" enctype="multipart/form-data">
                                             <div class="row">
+                                                <input type="hidden" name="user_id" value="<?=$user['activity_id'];?>">
                                                 <div class="col-md-12 mb-3">
                                                     <label for="" class="required">Title</label>
                                                     <input required type="text" Placeholder="Enter Activity Name" name="title" value="<?= $user['activity_title']; ?>" class="form-control">
@@ -46,7 +47,7 @@
                                             </div>   
                                             <div class="float-end">
                                                 <a href="activity" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                                <button type="submit" name="update_activity" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
+                                                <button type="submit" name="update_activity" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
                                             </div>
                                         </form>
                                     </div>
@@ -71,7 +72,7 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4>Personal Information</h4>
+                                            <h4>Activity Information</h4>
                                         </div>
                                         <div class="card-body">
                                             <h4>No Record Found!</h4>
