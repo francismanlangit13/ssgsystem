@@ -57,19 +57,19 @@
                                             <td> 
                                                 <div class="row d-inline-flex justify-content-center">
                                                     <div class="col-md-3">
-                                                        <a href="activity_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
+                                                        <a href="activity_view?id=<?=$row['activity_id'];?>" class="btn btn-info btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text ml-2 mr-2">View</span>
                                                         </a>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <a href="activity_edit?id=<?=$row['user_id'];?>" class="btn btn-success btn-icon-split"> 
+                                                        <a href="activity_edit?id=<?=$row['activity_id'];?>" class="btn btn-success btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text">Update</span>
                                                         </a>
                                                     </div>
                                                     <div class="col-md-4" style="margin-left:-0.3rem;">
-                                                        <button type="button" data-toggle="modal" value="<?=$row['user_id']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-danger btn-icon-split">
+                                                        <button type="button" data-toggle="modal" value="<?=$row['activity_id']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-danger btn-icon-split">
                                                             <span class="icon text-white-50">
                                                             </span>
                                                             <span class="text">Delete</span>

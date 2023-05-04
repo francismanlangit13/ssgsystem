@@ -723,6 +723,58 @@ if(isset($_POST['activity_delete'])){
   }
 }
 
+// Add Announcement
+if(isset($_POST['add_announcement'])){
+  $announcement_title = $_POST['title'];
+  $activity_id = $_POST['activity_id'];
+  $status = "Active";
+  $person =  $_SESSION['auth_user']['user_id'];
+  $announcement_body = $_POST['body'];
+  $date_start = $_POST['date_start'];
+  $date_end = $_POST['date_end'];
+  
+  $query = "INSERT INTO `announcement`(`activity_id`, `user_id`, `announcement_title`, `announcement_body`, `date_start`, `date_end`, `status`) VALUES ('$activity_id','$person','$announcement_title','$announcement_body','$date_start','$date_end','$status')";
+  $query_run = mysqli_query($con, $query);
+  if($query_run){
+    $_SESSION['status'] = "Announcement added successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "admin/home/announcement");
+    exit(0);
+  }else{
+    $_SESSION['status'] = "Something went wrong!";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/announcement");
+    exit(0);
+  }
+}
+
+// Update Announcement
+if(isset($_POST['update_announcement'])){
+  $user_id= $_POST['user_id'];
+  $announcement_title = $_POST['title'];
+  $activity_id = $_POST['activity_id'];
+  $status = $_POST['status'];
+  $person =  $_SESSION['auth_user']['user_id'];
+  $announcement_body = $_POST['body'];
+  $date_start = $_POST['date_start'];
+  $date_end = $_POST['date_end'];
+
+  $query = "UPDATE `announcement` SET `activity_id`='$activity_id',`user_id`='$person',`announcement_title`='$announcement_title',`announcement_body`='$announcement_body',`date_start`='$date_start',`date_end`='$date_end',`status`='$status' WHERE announcement_id='$user_id'";
+  $query_run = mysqli_query($con, $query);
+  if($query_run){
+    $_SESSION['status'] = "Announcement updated successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "admin/home/announcement");
+    exit(0);
+  }else{
+    $_SESSION['status'] = "Something went wrong!";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/announcement");
+    exit(0);
+  }
+
+}
+
 if(isset($_POST['add_expense']))
 {
 
@@ -752,58 +804,6 @@ if(isset($_POST['add_expense']))
 
 }
 
-if(isset($_POST['add_ann']))
-{
-    $announcement_title = $_POST['title'];
-    $status = "Active";
-    $announcement_body = $_POST['body'];
-    $date_start = $_POST['date_start'];
-    $date_end = $_POST['date_end'];
-
-    $query = "INSERT INTO `announcement`(`announcement_title`,`status`, `announcement_body`, `date_start`, `date_end`) VALUES ('$announcement_title','$status','$announcement_body','$date_start','$date_end')";
-    $query_run = mysqli_query($con, $query);
-
-    if($query_run){
-        $_SESSION['status'] = "Announcement Added!";
-        $_SESSION['status_code'] = "success";
-        header('Location: announcement.php');
-        exit(0);
-      }else{
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: announcement.php');
-        exit(0);
-      }
-
-}
-
-if(isset($_POST['update_ann']))    
-{
-
-    $id = $_POST['announcement_id'];
-    $announcement_title = $_POST['title'];
-    $status = "Active";
-    $announcement_body = $_POST['body'];
-    $date_start = $_POST['date_start'];
-    $date_end = $_POST['date_end'];
-
-    $query = "UPDATE `announcement` SET `announcement_title`='$announcement_title',`status`='$status', `announcement_body` = '$announcement_body', `date_start` = '$date_start', `date_end` = '$date_end' WHERE announcement_id = '$id' ";
-    $query_run = mysqli_query($con, $query);
-
-    if($query_run){
-        $_SESSION['status'] = "Announcement Updated!";
-        $_SESSION['status_code'] = "success";
-        header('Location: announcement.php');
-        exit(0);
-      }else{
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: announcement.php');
-        exit(0);
-      }
-
-}
-
 
 if(isset($_POST['announcement_delete']))
 {
@@ -827,54 +827,6 @@ if(isset($_POST['announcement_delete']))
       exit(0);
     }
 }
-
-if(isset($_POST['update_activity']))    
-{
-
-    $id = $_POST['activity_id'];
-    $title = $_POST['title'];
-    $status = "Active";
-
-    $query = "UPDATE `activity` SET `activity_title`='$title',`status`='$status' WHERE activity_id = '$id' ";
-    $query_run = mysqli_query($con, $query);
-
-    if($query_run){
-        $_SESSION['status'] = "Activity Updated!";
-        $_SESSION['status_code'] = "success";
-        header('Location: activity.php');
-        exit(0);
-      }else{
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: activity.php');
-        exit(0);
-      }
-
-}
-
-if(isset($_POST['activity_delete']))
-{
-    $user_id= $_POST['activity_delete'];
-    $newstatus = "Archived";
-
-    $query = "UPDATE `activity` SET `status`='$newstatus' WHERE `activity_id`= '$user_id'";
-    $query_run = mysqli_query($con, $query);
-    if($query_run)
-    {
-      $_SESSION['status'] = "The activity has been successfully archived.";
-      $_SESSION['status_code'] = "success";
-      header('Location: activity.php');
-      exit(0);
-    }
-    else
-    {
-      $_SESSION['status'] = "SOMETHING WENT WRONG!";
-      $_SESSION['status_code'] = "error";
-      header('Location: activity.php');
-      exit(0);
-    }
-}
-
 
 if(isset($_POST['add_expense']))
 {

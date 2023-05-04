@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2023 at 09:12 AM
+-- Generation Time: May 04, 2023 at 10:19 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -35,6 +35,13 @@ CREATE TABLE `activity` (
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `activity`
+--
+
+INSERT INTO `activity` (`activity_id`, `user_id`, `activity_title`, `status`) VALUES
+(1, 1, 'new', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -43,6 +50,7 @@ CREATE TABLE `activity` (
 
 CREATE TABLE `announcement` (
   `announcement_id` int(11) NOT NULL,
+  `activity_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `announcement_title` varchar(255) NOT NULL,
   `announcement_body` text NOT NULL,
@@ -50,6 +58,13 @@ CREATE TABLE `announcement` (
   `date_end` datetime NOT NULL,
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `announcement`
+--
+
+INSERT INTO `announcement` (`announcement_id`, `activity_id`, `user_id`, `announcement_title`, `announcement_body`, `date_start`, `date_end`, `status`) VALUES
+(1, 1, 1, 'Attention to all Bethelians', ' Naa tay activity for Intrams.', '2023-05-18 03:15:00', '2023-05-19 03:16:00', 'Active');
 
 -- --------------------------------------------------------
 
@@ -165,7 +180,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `penalty`, `balance`, `photo`, `user_type`, `user_status`) VALUES
-(1, 'User', '', 'Admin', '', '', 'admin@gmail.com', '', '0192023a7bbd73250516f069df18b500', '', '', '', '', '', 1, 1),
+(1, 'User', '', 'Admin', '', '', 'admin@gmail.com', '', '0192023a7bbd73250516f069df18b500', '', '', '', '', 'user_20230504_101038.png', 1, 1),
 (2, 'Francis', '', 'Carlo', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', '98130883534f6d6c1dea599bc54882f0', '', '', '', '', 'user_20230504_101038.png', 2, 1),
 (3, 'new parent1', '', 'new', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'dc0ced319b493a585fa14fd0379cae52', '', '', '', '', 'user_20230504_104014.png', 7, 1),
 (4, 'Student', '', 'Franz', 'Sr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'dae8cfe4fb300e29dff17c18b2fa8b7f', '2019300208', 'Grade 10', '', '', 'user_20230504_140135.png', 6, 1),
@@ -231,7 +246,8 @@ ALTER TABLE `activity`
 --
 ALTER TABLE `announcement`
   ADD PRIMARY KEY (`announcement_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `activity_id` (`activity_id`);
 
 --
 -- Indexes for table `fines_transaction`
@@ -294,13 +310,13 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT for table `activity`
 --
 ALTER TABLE `activity`
-  MODIFY `activity_id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `activity_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `announcement`
 --
 ALTER TABLE `announcement`
-  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `fines_transaction`
@@ -364,7 +380,8 @@ ALTER TABLE `activity`
 -- Constraints for table `announcement`
 --
 ALTER TABLE `announcement`
-  ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+  ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `announcement_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`activity_id`);
 
 --
 -- Constraints for table `fines_transaction`
