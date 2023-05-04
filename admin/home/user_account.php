@@ -11,14 +11,14 @@
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Account</li>
-                            <li class="breadcrumb-item active">Student Account</li>
+                            <li class="breadcrumb-item active">User Account</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                List of Student Account
+                                List of User Account
                                 <div class="float-end">
-                                    <a type="button" class="btn btn-primary" href="student_add" style="zoom:75%"><i class="fa fa-plus"></i> Add Student Account</a>
+                                    <a type="button" class="btn btn-primary" href="user_add" style="zoom:75%"><i class="fa fa-plus"></i> Add User Account</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -26,7 +26,6 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Student ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Status</th>
@@ -36,7 +35,6 @@
                                     <tfoot>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Student ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Status</th>
@@ -49,14 +47,13 @@
                                             $query = "SELECT
                                                 *
                                                 FROM
-                                                user
+                                                `user`
                                                 INNER JOIN
                                                 user_status
                                                 ON 
                                                 `user`.user_status = user_status.user_status_id
                                                 WHERE
-                                                user_type = 6
-                                                AND
+                                                user_type = 1 AND
                                                 user_status.user_status_id IN (1, 2)
                                             ";
                                             $query_run = mysqli_query($con, $query);
@@ -65,20 +62,19 @@
                                         ?>
                                         <tr>
                                             <td><?= $row['user_id']; ?></td>
-                                            <td><?= $row['student_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> </td>
                                             <td><?= $row['email']; ?></td>
                                             <td><?= $row['user_status']; ?></td>
                                             <td> 
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-md-4">
-                                                        <a href="student_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
+                                                        <a href="user_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text ml-2 mr-2">View</span>
                                                         </a>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <a href="student_edit?id=<?=$row['user_id'];?>" class="btn btn-success btn-icon-split"> 
+                                                        <a href="user_edit?id=<?=$row['user_id'];?>" class="btn btn-success btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text">Update</span>
                                                         </a>
@@ -108,7 +104,6 @@
                                             else{
                                         ?>
                                             <tr>
-                                                <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
@@ -144,7 +139,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <form action="code.php" method="POST">
-            <input type="hidden" id="delete_id" name="student_delete" value="">
+            <input type="hidden" id="delete_id" name="user_delete" value="">
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       </div>

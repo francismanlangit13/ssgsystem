@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2023 at 05:07 PM
+-- Generation Time: May 04, 2023 at 09:12 AM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -147,6 +147,7 @@ CREATE TABLE `user` (
   `mname` varchar(255) NOT NULL,
   `lname` varchar(255) NOT NULL,
   `suffix` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -163,8 +164,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `fname`, `mname`, `lname`, `suffix`, `email`, `phone`, `password`, `student_id`, `level`, `penalty`, `balance`, `photo`, `user_type`, `user_status`) VALUES
-(1, 'User', '', 'Admin', '', 'admin@gmail.com', '', '0192023a7bbd73250516f069df18b500', '', '', '', '', '', 1, 1);
+INSERT INTO `user` (`user_id`, `fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `penalty`, `balance`, `photo`, `user_type`, `user_status`) VALUES
+(1, 'User', '', 'Admin', '', '', 'admin@gmail.com', '', '0192023a7bbd73250516f069df18b500', '', '', '', '', '', 1, 1),
+(2, 'Francis', '', 'Carlo', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', '98130883534f6d6c1dea599bc54882f0', '', '', '', '', 'user_20230504_101038.png', 2, 1),
+(3, 'new parent1', '', 'new', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'dc0ced319b493a585fa14fd0379cae52', '', '', '', '', 'user_20230504_104014.png', 7, 1),
+(4, 'Student', '', 'Franz', 'Sr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'dae8cfe4fb300e29dff17c18b2fa8b7f', '2019300208', 'Grade 10', '', '', 'user_20230504_140135.png', 6, 1),
+(5, 'new', '', 'admin', '', 'Male', 'admin1@gmail.com', '09457664949', 'f7b8bb95e0c1c5138688c03f2fce0b2a', '', '', '', '', 'user_20230504_150919.png', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -331,7 +336,7 @@ ALTER TABLE `ssg_expenses`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_status`

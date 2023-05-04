@@ -18,7 +18,7 @@
                                 <i class="fas fa-table me-1"></i>
                                 List of Officer Account
                                 <div class="float-end">
-                                    <a type="button" class="btn btn-primary" href="officer_account_add" style="zoom:75%"><i class="fa fa-plus"></i> Add Officer Account</a>
+                                    <a type="button" class="btn btn-primary" href="officer_add" style="zoom:75%"><i class="fa fa-plus"></i> Add Officer Account</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -81,13 +81,13 @@
                                             <td> 
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-md-4">
-                                                        <a href="officer_account_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
+                                                        <a href="officer_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text ml-2 mr-2">View</span>
                                                         </a>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <a href="officer_account_edit?id=<?=$row['user_id'];?>" class="btn btn-success btn-icon-split"> 
+                                                        <a href="officer_edit?id=<?=$row['user_id'];?>" class="btn btn-success btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text">Update</span>
                                                         </a>

@@ -9,7 +9,7 @@
                 <?php
                     if(isset($_GET['id'])){
                         $id = $_GET['id'];
-                        $users = "SELECT * FROM user WHERE user_id='$id' ";
+                        $users = "SELECT * FROM user WHERE user_id='$id' AND user_type = 1 AND user_status IN (1,2)";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
                             foreach($users_run as $user){
@@ -19,7 +19,7 @@
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Account</li>
-                            <li class="breadcrumb-item active">Officer</li>
+                            <li class="breadcrumb-item active">User</li>
                             <li class="breadcrumb-item active">Update Account</li>
                         </ol>
                         <div class="row">
@@ -85,17 +85,6 @@
                                                     <input required type="text" name="phone" value="<?=$user['phone'];?>" pattern="09[0-9]{9}" maxlength="11" class="form-control" id="phone-input">
                                                     <div id="phone-error"></div>
                                                 </div>
-                                                
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="" class="required">Role</label>
-                                                    <select name="role" required class="form-control">
-                                                        <option value="" selected disabled>Select Role</option>
-                                                        <option value="2" <?= $user['user_type'] == '2' ? 'selected' :'' ?>>President</option>
-                                                        <option value="3" <?= $user['user_type'] == '3' ? 'selected' :'' ?>>Vice President</option>
-                                                        <option value="4" <?= $user['user_type'] == '4' ? 'selected' :'' ?>>Secretary</option>
-                                                        <option value="5" <?= $user['user_type'] == '5' ? 'selected' :'' ?>>Treasurer</option>
-                                                    </select>
-                                                </div>
 
                                                 <div class="col-md-3 mb-3">
                                                     <label for="" class="required">Status</label>
@@ -108,8 +97,8 @@
 
                                             </div>
                                             <div class="float-end">
-                                                <a href="officer_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                                <button type="submit" name="update_officer" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
+                                                <a href="user_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <button type="submit" name="update_user" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
                                             </div>
                                             <br><br>
                                         </div>
@@ -124,7 +113,31 @@
                     }
                     else{
                 ?>
-                    <h4>No Record Found!</h4>
+                    <main>
+                        <div class="container-fluid px-4">
+                            <ol class="breadcrumb mb-4 mt-3">
+                                <li class="breadcrumb-item">Dashboard</li>
+                                <li class="breadcrumb-item ">Account</li>
+                                <li class="breadcrumb-item active">User</li>
+                                <li class="breadcrumb-item active">Update Account</li>
+                            </ol>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4>Personal Information</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4>No Record Found!</h4>
+                                            <div class="float-end">
+                                                <a href="user_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
                 <?php } } ?>
                 <?php include ('../includes/footer.php'); ?>
             </div>

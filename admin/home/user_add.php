@@ -11,7 +11,7 @@
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Account</li>
-                            <li class="breadcrumb-item active">Student</li>
+                            <li class="breadcrumb-item active">User</li>
                             <li class="breadcrumb-item active">Add Account</li>
                         </ol>
                         <div class="row">
@@ -55,7 +55,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3 mb-3">
+                                                <div class="col-md-4 mb-3">
                                                     <div class="form-group">
                                                         <label for="gender" class="required">Gender</label>
                                                         <select class="form-control" name="gender" required>
@@ -66,38 +66,23 @@
                                                     </div>
                                                 </div>
                     
-                                                <div class="col-md-3 mb-3">
+                                                <div class="col-md-4 mb-3">
                                                     <label for="" class="required">Email</label>
                                                     <input required type="email" Placeholder="Enter Email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control">
                                                 </div>
 
-                                                <div class="col-md-3 mb-3">
+                                                <div class="col-md-4 mb-3">
                                                     <label for="" class="required">Phone Number</label>
                                                     <input required type="text" name="phone" pattern="09[0-9]{9}" maxlength="11" class="form-control" id="phone-input">
                                                     <div id="phone-error"></div>
                                                 </div>
 
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="" class="required">Student ID</label>
-                                                    <input required type="text" name="student_id" class="form-control">
-                                                </div>
-
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="" class="required">Year Level</label>
-                                                    <select name="level" required class="form-control">
-                                                        <option value="" selected disabled>Select Year Level</option>
-                                                        <option value="Grade 7">Grade 7</option>
-                                                        <option value="Grade 8">Grade 8</option>
-                                                        <option value="Grade 9">Grade 9</option>
-                                                        <option value="Grade 10">Grade 10</option>
-                                                        <option value="Grade 11">Grade 11</option>
-                                                        <option value="Grade 12">Grade 12</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-md-3">
+                                                <div class="col-md-6">
                                                     <label for="dp" class="required">Profile Picture</label>
                                                     <input required type="file" name="image" class="input-large btn btn-dark" id="image1" accept=".jpg, .jpeg, .png" onchange="previewImage('frame1', 'image1')">
+                                                </div>
+
+                                                <div class="col-md-6">
                                                 </div>
 
                                                 <div class="col-md-5 text-center">
@@ -107,8 +92,8 @@
                                                 </div>
                                             </div>   
                                             <div class="float-end">
-                                                <a href="student_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                                <button type="submit" name="add_student" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
+                                                <a href="user_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <button type="submit" name="add_user" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
                                             </div>
                                         </form>
                                     </div>

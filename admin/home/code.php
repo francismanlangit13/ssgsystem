@@ -159,6 +159,7 @@ if(isset($_POST["update_officer"])){
     }
 }
 
+// Delete officer account
 if(isset($_POST['officer_delete'])){
     $user_id= $_POST['officer_delete'];
     $u_status = 3;
@@ -180,6 +181,482 @@ if(isset($_POST['officer_delete'])){
     }
 }
 
+// Add parent account
+if(isset($_POST["add_parent"])){
+  $fileImage = $_FILES['image'];
+  $customFileName = 'user_' . date('Ymd_His'); // replace with your desired file name
+  $ext = pathinfo($fileImage['name'], PATHINFO_EXTENSION); // get the file extension
+  $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
+  $fileTmpname = $fileImage['tmp_name'];
+  $fileSize = $fileImage['size'];
+  $fileError = $fileImage['error'];
+  $fileExt = explode('.',$fileName);
+  $fileActExt = strtolower(end($fileExt));
+  $allowed = array('jpg','jpeg','png');
+  
+  if(in_array($fileActExt, $allowed)){
+    if($fileError === 0){
+      if($fileSize < 10485760){
+        $fname = $_POST['fname'];
+        $mname = $_POST['mname'];
+        $lname = $_POST['lname'];
+        $suffix = $_POST['suffix'];
+        $gender = $_POST['gender'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $new_password = substr(md5(microtime()),rand(0,26),8);
+        $password = md5($new_password);
+        $user_type = '7';
+        $user_status = '1';
+        $uploadDir = '../../assets/files/images/users/';
+        $targetFile = $uploadDir . $fileName;
+
+        if (move_uploaded_file($fileTmpname, $targetFile)) {
+          $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
+          $query_run = mysqli_query($con, $query);
+
+          if($query_run){
+            $name = htmlentities($_POST['lname']);
+            $email = htmlentities($_POST['email']);
+            $subject = htmlentities('Username and Password Credentials');
+            $message = nl2br("Welcome to Supreme Student Government System! \r\n \r\n Email: $email \r\n Password: $new_password \r\n \r\n Please change your password immediately.");
+            // PHP Mailer
+            require("../../assets/PHPMailer/PHPMailerAutoload.php");
+            require ("../../assets/PHPMailer/class.phpmailer.php");
+            require ("../../assets/PHPMailer/class.smtp.php");
+            $mail = new PHPMailer();
+            $mail->IsSMTP();
+            //$mail->SMTPDebug = 2; // Debug if the gmail doesn't send email when forgetting password.
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'TLS/STARTTLS';
+            $mail->Host = 'smtp.gmail.com'; // Enter your host here
+            $mail->Port = '587';
+            $mail->IsHTML();
+            $mail->Username = 'ssg.jbi7204@gmail.com'; // Enter your email here
+            $mail->Password = 'fkqlcsiecymvoypb'; //Enter your passwrod here
+            $mail->setFrom($email, $name);
+            $mail->addAddress($_POST['email']);
+            $mail->Subject = ("$email ($subject)");
+            $mail->Body = $message;
+            $mail->send();
+      
+            $_SESSION['status'] = "Parent added successfully, Credentials was sent to their email!";
+            $_SESSION['status_code'] = "success";
+            header("Location: " . base_url . "admin/home/parent_account");
+            exit(0);
+          }
+          else{
+            $_SESSION['status'] = "Parent was not added";
+            $_SESSION['status_code'] = "error";
+            header("Location: " . base_url . "admin/home/parent_account");
+            exit(0);
+          }
+        }
+        else{
+          $_SESSION['status']="Error uploading image.";
+          $_SESSION['status_code'] = "error";
+          header("Location: " . base_url . "admin/home/parent_account");
+        }
+
+      }
+      else{
+        $_SESSION['status']="File is too large file must be 10mb";
+        $_SESSION['status_code'] = "error"; 
+        header("Location: " . base_url . "admin/home/parent_account");
+      }
+    }
+    else{
+      $_SESSION['status']="File Error";
+      $_SESSION['status_code'] = "error"; 
+      header("Location: " . base_url . "admin/home/parent_account");
+    }
+  }
+  else{
+    $_SESSION['status']="Invalid file type";
+    $_SESSION['status_code'] = "error"; 
+    header("Location: " . base_url . "admin/home/parent_account");
+  }
+}
+
+// Update parent account
+if(isset($_POST["update_parent"])){
+  $user_id = $_POST['user_id'];
+  $fname = $_POST['fname'];
+  $mname = $_POST['mname'];
+  $lname = $_POST['lname'];
+  $suffix = $_POST['suffix'];
+  $gender = $_POST['gender'];
+  $email = $_POST['email'];
+  $phone = $_POST['phone'];
+  $user_status = $_POST['status'];
+
+  $query = "UPDATE `user` SET 
+  `fname`='$fname',
+  `mname`='$mname',
+  `lname`='$lname',
+  `suffix`='$suffix',
+  `gender`='$gender',
+  `email`='$email',
+  `phone`='$phone',
+  `user_status`='$user_status'
+  WHERE `user_id`='$user_id'";
+  $query_run = mysqli_query($con, $query);
+
+  if($query_run){
+    $_SESSION['status'] = "Parent updated successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "admin/home/parent_account");
+    exit(0);
+  }
+  else{
+    $_SESSION['status'] = "Parent was not updated";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/parent_account");
+    exit(0);
+  }
+}
+
+// Delete parent account
+if(isset($_POST['parent_delete'])){
+  $user_id= $_POST['parent_delete'];
+  $u_status = 3;
+
+  $query = "UPDATE `user` SET `user_status`='$u_status' WHERE user_id='$user_id'";
+  $query_run = mysqli_query($con, $query);
+  
+  if($query_run){
+      $_SESSION['status'] = "Parent deleted successfully";
+      $_SESSION['status_code'] = "success";
+      header('Location: parent_account');
+      exit(0);
+  }
+  else{
+      $_SESSION['status'] = "Something went wrong!";
+      $_SESSION['status_code'] = "error";
+      header('Location: parent_account');
+      exit(0);
+  }
+}
+
+// Add student account
+if(isset($_POST["add_student"])){
+  $fileImage = $_FILES['image'];
+  $customFileName = 'user_' . date('Ymd_His'); // replace with your desired file name
+  $ext = pathinfo($fileImage['name'], PATHINFO_EXTENSION); // get the file extension
+  $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
+  $fileTmpname = $fileImage['tmp_name'];
+  $fileSize = $fileImage['size'];
+  $fileError = $fileImage['error'];
+  $fileExt = explode('.',$fileName);
+  $fileActExt = strtolower(end($fileExt));
+  $allowed = array('jpg','jpeg','png');
+  
+  if(in_array($fileActExt, $allowed)){
+    if($fileError === 0){
+      if($fileSize < 10485760){
+        $fname = $_POST['fname'];
+        $mname = $_POST['mname'];
+        $lname = $_POST['lname'];
+        $suffix = $_POST['suffix'];
+        $gender = $_POST['gender'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $student_id = $_POST['student_id'];
+        $level = $_POST['level'];
+        $new_password = substr(md5(microtime()),rand(0,26),8);
+        $password = md5($new_password);
+        $user_type = '6';
+        $user_status = '1';
+        $uploadDir = '../../assets/files/images/users/';
+        $targetFile = $uploadDir . $fileName;
+
+        if (move_uploaded_file($fileTmpname, $targetFile)) {
+          $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$student_id','$level','$fileName','$user_type','$user_status')";
+          $query_run = mysqli_query($con, $query);
+
+          if($query_run){
+            $name = htmlentities($_POST['lname']);
+            $email = htmlentities($_POST['email']);
+            $subject = htmlentities('Username and Password Credentials');
+            $message = nl2br("Welcome to Supreme Student Government System! \r\n \r\n Email: $email \r\n Password: $new_password \r\n \r\n Please change your password immediately.");
+            // PHP Mailer
+            require("../../assets/PHPMailer/PHPMailerAutoload.php");
+            require ("../../assets/PHPMailer/class.phpmailer.php");
+            require ("../../assets/PHPMailer/class.smtp.php");
+            $mail = new PHPMailer();
+            $mail->IsSMTP();
+            //$mail->SMTPDebug = 2; // Debug if the gmail doesn't send email when forgetting password.
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'TLS/STARTTLS';
+            $mail->Host = 'smtp.gmail.com'; // Enter your host here
+            $mail->Port = '587';
+            $mail->IsHTML();
+            $mail->Username = 'ssg.jbi7204@gmail.com'; // Enter your email here
+            $mail->Password = 'fkqlcsiecymvoypb'; //Enter your passwrod here
+            $mail->setFrom($email, $name);
+            $mail->addAddress($_POST['email']);
+            $mail->Subject = ("$email ($subject)");
+            $mail->Body = $message;
+            $mail->send();
+      
+            $_SESSION['status'] = "Student added successfully, Credentials was sent to their email!";
+            $_SESSION['status_code'] = "success";
+            header("Location: " . base_url . "admin/home/student_account");
+            exit(0);
+          }
+          else{
+            $_SESSION['status'] = "Student was not added";
+            $_SESSION['status_code'] = "error";
+            header("Location: " . base_url . "admin/home/student_account");
+            exit(0);
+          }
+        }
+        else{
+          $_SESSION['status']="Error uploading image.";
+          $_SESSION['status_code'] = "error";
+          header("Location: " . base_url . "admin/home/student_account");
+        }
+
+      }
+      else{
+        $_SESSION['status']="File is too large file must be 10mb";
+        $_SESSION['status_code'] = "error"; 
+        header("Location: " . base_url . "admin/home/student_account");
+      }
+    }
+    else{
+      $_SESSION['status']="File Error";
+      $_SESSION['status_code'] = "error"; 
+      header("Location: " . base_url . "admin/home/student_account");
+    }
+  }
+  else{
+    $_SESSION['status']="Invalid file type";
+    $_SESSION['status_code'] = "error"; 
+    header("Location: " . base_url . "admin/home/student_account");
+  }
+}
+
+// Update student account
+if(isset($_POST["update_student"])){
+  $user_id = $_POST['user_id'];
+  $fname = $_POST['fname'];
+  $mname = $_POST['mname'];
+  $lname = $_POST['lname'];
+  $suffix = $_POST['suffix'];
+  $gender = $_POST['gender'];
+  $email = $_POST['email'];
+  $phone = $_POST['phone'];
+  $student_id = $_POST['student_id'];
+  $level = $_POST['level'];
+  $user_status = $_POST['status'];
+
+  $query = "UPDATE `user` SET 
+  `fname`='$fname',
+  `mname`='$mname',
+  `lname`='$lname',
+  `suffix`='$suffix',
+  `gender`='$gender',
+  `email`='$email',
+  `phone`='$phone',
+  `student_id`='$student_id',
+  `level`='$level',
+  `user_status`='$user_status'
+  WHERE `user_id`='$user_id'";
+  $query_run = mysqli_query($con, $query);
+
+  if($query_run){
+    $_SESSION['status'] = "Student updated successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "admin/home/student_account");
+    exit(0);
+  }
+  else{
+    $_SESSION['status'] = "Student was not updated";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/student_account");
+    exit(0);
+  }
+}
+
+// Delete student account
+if(isset($_POST['student_delete'])){
+  $user_id= $_POST['student_delete'];
+  $u_status = 3;
+
+  $query = "UPDATE `user` SET `user_status`='$u_status' WHERE user_id='$user_id'";
+  $query_run = mysqli_query($con, $query);
+  
+  if($query_run){
+      $_SESSION['status'] = "Student deleted successfully";
+      $_SESSION['status_code'] = "success";
+      header('Location: student_account');
+      exit(0);
+  }
+  else{
+      $_SESSION['status'] = "Something went wrong!";
+      $_SESSION['status_code'] = "error";
+      header('Location: student_account');
+      exit(0);
+  }
+}
+
+// Add user account
+if(isset($_POST["add_user"])){
+  $fileImage = $_FILES['image'];
+  $customFileName = 'user_' . date('Ymd_His'); // replace with your desired file name
+  $ext = pathinfo($fileImage['name'], PATHINFO_EXTENSION); // get the file extension
+  $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
+  $fileTmpname = $fileImage['tmp_name'];
+  $fileSize = $fileImage['size'];
+  $fileError = $fileImage['error'];
+  $fileExt = explode('.',$fileName);
+  $fileActExt = strtolower(end($fileExt));
+  $allowed = array('jpg','jpeg','png');
+  
+  if(in_array($fileActExt, $allowed)){
+    if($fileError === 0){
+      if($fileSize < 10485760){
+        $fname = $_POST['fname'];
+        $mname = $_POST['mname'];
+        $lname = $_POST['lname'];
+        $suffix = $_POST['suffix'];
+        $gender = $_POST['gender'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $new_password = substr(md5(microtime()),rand(0,26),8);
+        $password = md5($new_password);
+        $user_type = '1';
+        $user_status = '1';
+        $uploadDir = '../../assets/files/images/users/';
+        $targetFile = $uploadDir . $fileName;
+
+        if (move_uploaded_file($fileTmpname, $targetFile)) {
+          $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
+          $query_run = mysqli_query($con, $query);
+
+          if($query_run){
+            $name = htmlentities($_POST['lname']);
+            $email = htmlentities($_POST['email']);
+            $subject = htmlentities('Username and Password Credentials');
+            $message = nl2br("Welcome to Supreme Student Government System! \r\n \r\n Email: $email \r\n Password: $new_password \r\n \r\n Please change your password immediately.");
+            // PHP Mailer
+            require("../../assets/PHPMailer/PHPMailerAutoload.php");
+            require ("../../assets/PHPMailer/class.phpmailer.php");
+            require ("../../assets/PHPMailer/class.smtp.php");
+            $mail = new PHPMailer();
+            $mail->IsSMTP();
+            //$mail->SMTPDebug = 2; // Debug if the gmail doesn't send email when forgetting password.
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'TLS/STARTTLS';
+            $mail->Host = 'smtp.gmail.com'; // Enter your host here
+            $mail->Port = '587';
+            $mail->IsHTML();
+            $mail->Username = 'ssg.jbi7204@gmail.com'; // Enter your email here
+            $mail->Password = 'fkqlcsiecymvoypb'; //Enter your passwrod here
+            $mail->setFrom($email, $name);
+            $mail->addAddress($_POST['email']);
+            $mail->Subject = ("$email ($subject)");
+            $mail->Body = $message;
+            $mail->send();
+      
+            $_SESSION['status'] = "User added successfully, Credentials was sent to their email!";
+            $_SESSION['status_code'] = "success";
+            header("Location: " . base_url . "admin/home/user_account");
+            exit(0);
+          }
+          else{
+            $_SESSION['status'] = "User was not added";
+            $_SESSION['status_code'] = "error";
+            header("Location: " . base_url . "admin/home/user_account");
+            exit(0);
+          }
+        }
+        else{
+          $_SESSION['status']="Error uploading image.";
+          $_SESSION['status_code'] = "error";
+          header("Location: " . base_url . "admin/home/user_account");
+        }
+
+      }
+      else{
+        $_SESSION['status']="File is too large file must be 10mb";
+        $_SESSION['status_code'] = "error"; 
+        header("Location: " . base_url . "admin/home/user_account");
+      }
+    }
+    else{
+      $_SESSION['status']="File Error";
+      $_SESSION['status_code'] = "error"; 
+      header("Location: " . base_url . "admin/home/user_account");
+    }
+  }
+  else{
+    $_SESSION['status']="Invalid file type";
+    $_SESSION['status_code'] = "error"; 
+    header("Location: " . base_url . "admin/home/user_account");
+  }
+}
+
+// Update officer account
+if(isset($_POST["update_user"])){
+  $user_id = $_POST['user_id'];
+  $fname = $_POST['fname'];
+  $mname = $_POST['mname'];
+  $lname = $_POST['lname'];
+  $suffix = $_POST['suffix'];
+  $gender = $_POST['gender'];
+  $email = $_POST['email'];
+  $phone = $_POST['phone'];
+  $user_status = $_POST['status'];
+
+  $query = "UPDATE `user` SET 
+  `fname`='$fname',
+  `mname`='$mname',
+  `lname`='$lname',
+  `suffix`='$suffix',
+  `gender`='$gender',
+  `email`='$email',
+  `phone`='$phone',
+  `user_status`='$user_status'
+  WHERE `user_id`='$user_id'";
+  $query_run = mysqli_query($con, $query);
+
+  if($query_run){
+    $_SESSION['status'] = "User updated successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "admin/home/user_account");
+    exit(0);
+  }
+  else{
+    $_SESSION['status'] = "User was not updated";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/user_account");
+    exit(0);
+  }
+}
+
+// Delete officer account
+if(isset($_POST['user_delete'])){
+  $user_id= $_POST['user_delete'];
+  $u_status = 3;
+
+  $query = "UPDATE `user` SET `user_status`='$u_status' WHERE user_id='$user_id'";
+  $query_run = mysqli_query($con, $query);
+  
+  if($query_run){
+      $_SESSION['status'] = "User deleted successfully";
+      $_SESSION['status_code'] = "success";
+      header('Location: user_account');
+      exit(0);
+  }
+  else{
+      $_SESSION['status'] = "Something went wrong!";
+      $_SESSION['status_code'] = "error";
+      header('Location: user_account');
+      exit(0);
+  }
+}
 
 if(isset($_POST['add_expense']))
 {
@@ -263,9 +740,6 @@ if(isset($_POST['update_ann']))
 }
 
 
-
-
-
 if(isset($_POST['announcement_delete']))
 {
     $user_id= $_POST['announcement_delete'];
@@ -312,10 +786,6 @@ if(isset($_POST['update_activity']))
       }
 
 }
-
-
-
-
 
 if(isset($_POST['activity_delete']))
 {
@@ -428,329 +898,6 @@ if(isset($_POST['addfinesbtn']))
         exit(0);
     }
 }
-
-if(isset($_POST["add_student"])){
-    $front = $_FILES['front'];
-  
-    $fileName = $front['name'];
-    $fileTmpname = $front['tmp_name'];
-    $fileSize = $front['size'];
-    $fileError = $front['error'];
-  
-    $fileExt = explode('.',$fileName);
-    $fileActExt = strtolower(end($fileExt));
-    $allowed = array('jpg','jpeg','png');
-  
-    $email = $_POST['email'];
-  
-    $checkemail = "SELECT email FROM student WHERE email='$email'";
-    $checkemail_run = mysqli_query($con,$checkemail);
-  
-    if(mysqli_num_rows($checkemail_run) > 0)
-    {
-      $_SESSION['status'] = "Email already exist!";
-      $_SESSION['status_code'] = "error";
-      header("Location: student_account.php");
-        exit(0);
-    }
-    else{
-      if(in_array($fileActExt, $allowed)){
-          if($fileError === 0){
-              if($fileSize < 50000000){
-                $fname = $_POST['fname'];
-                $mname = $_POST['mname'];
-                $lname = $_POST['lname'];
-                $suff = $_POST['suff'];
-                $level = $_POST['level'];
-                $email = $_POST['email'];
-                $password = uniqid();
-                $mobilenumber = $_POST['mobilenumber'];
-                $id = $_POST['id'];
-                $user_type = 4;
-                $status = 1;
-                $pos_name = 5;
-                $front = addslashes(file_get_contents($_FILES["front"]['tmp_name']));
-      
-                $query = "INSERT INTO `student`(`fname`, `mname`, `lname`, `suff`, `level`, `email`, `password`, `mobilenumber`, `id`, `user_type`, `user_status`, `pos_name`, `front`) VALUES ('$fname','$mname','$lname', '$suff', '$level', '$email', '$password', '$mobilenumber', '$id', '$user_type','$status', '$pos_name', '$front')";
-      
-                  $query_run = mysqli_query($con, $query);
-      
-                  if($query_run){
-      
-                    $name = htmlentities($_POST['lname']);
-                    $email = htmlentities($_POST['email']);
-                    $subject = htmlentities('Username and Password Credentials');
-                    $message =  nl2br("Good day! \r\n This is your Online SSG Account! \r\n Email:$email \r\n Password: $password ");
-
-                    $mail = new PHPMailer(true);
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'ssg.jbi7204@gmail.com';
-                    $mail->Password = 'fkqlcsiecymvoypb';
-                    $mail->Port = 465;
-                    $mail->SMTPSecure = 'ssl';
-                    $mail->isHTML(true);
-                    $mail->setFrom($email, $name);
-                    $mail->addAddress($email);
-                    $mail->Subject = ("$email ($subject)");
-                    $mail->Body = $message;
-                    $mail->send();
-                    
-        
-      
-                    $_SESSION['status'] = "Student Account has been added, password is sent to their email.";
-                    $_SESSION['status_code'] = "success";
-                    header('Location: student_account.php');
-                    exit(0);
-                  }else{
-                    $_SESSION['status'] = "Student Not Added!";
-                    $_SESSION['status_code'] = "error";
-                    header('Location: student_account.php');
-                    exit(0);
-                  }
-      
-              }else{
-                  $_SESSION['status']="File is too large file must be 10mb";
-                  $_SESSION['status_code'] = "error"; 
-                  header('Location: student_account.php');
-              }
-          }else{
-              $_SESSION['status']="File Error";
-              $_SESSION['status_code'] = "error"; 
-              header('Location: student_account.php');
-          }
-      }else{
-          $_SESSION['status']="File not allowed";
-          $_SESSION['status_code'] = "error"; 
-          header('Location: student_account.php');
-      }
-    }
-}
-
-if(isset($_POST['update_student']))
-{
-    $fname = $_POST['fname'];
-    $mname = $_POST['mname'];
-    $lname = $_POST['lname'];
-    $suff = $_POST['suff'];
-    $level = $_POST['level'];
-    $email = $_POST['email'];
-
-    $query = "UPDATE `student` SET `fname`='$fname',`mname`='$mname',`lname`='$lname',`suff`='$suff',`level`='$level',`email`='$email' WHERE `user_id`='$user_id'";
-    $query_run = mysqli_query($con, $query);
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Student Update Succesfully";
-        $_SESSION['status_code'] = "success";
-        header('Location: student_account.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something is wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: student_account.php');
-        exit(0);
-    }
-}
-
-
-if(isset($_POST['update_parent']))
-{
-    $user_id= $_POST['user_id'];
-    $fname= $_POST['fname'];
-    $mname= $_POST['mname'];
-    $lname= $_POST['lname'];
-    $email= $_POST['email'];
-    $password= $_POST['password'];
-    $position = $_POST['position'];
-    $status = $_POST['status'];
-    $front = $_FILES['front'];
-    $back = $_FILES['back'];
-    $front = addslashes(file_get_contents($_FILES["front"]['tmp_name']));
-    $back = addslashes(file_get_contents($_FILES["back"]['tmp_name']));
-
-    $query = "UPDATE `user` SET `fname`='$fname',`mname`='$mname',`lname`='$lname',`email`='$email',`password`='$password',`front`='$front',`back`='$back' WHERE `user_id`='$user_id'";
-    $query_run = mysqli_query($con, $query);
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Officer Update Succesfully";
-        $_SESSION['status_code'] = "success";
-        header('Location: parent_account.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something is wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: parent_account.php');
-        exit(0);
-    }
-}
-
-
-
-
-
-if(isset($_POST['student_active']))
-{
-    $user_id= $_POST['student_active'];
-    $u_status = 1;
-
-    $query = "UPDATE `student` SET `user_status`='$u_status' WHERE user_id='$user_id'";
-    $query_run = mysqli_query($con, $query);
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Status change to Active";
-        $_SESSION['status_code'] = "success";
-        header('Location: index.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: index.php');
-        exit(0);
-    }
-}
-
-
-
-if(isset($_POST['parent_active']))
-{
-    $user_id= $_POST['parent_active'];
-    $status = 1;
-
-    $query = "UPDATE `user` SET `user_status`='$status' WHERE user_id='$user_id'";
-    $query_run = mysqli_query($con, $query);
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Parent Status change to active";
-        $_SESSION['status_code'] = "success";
-        header('Location: index.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: index.php');
-        exit(0);
-    }
-}
-
-
-if(isset($_POST['parent_active']))
-{
-    $user_id= $_POST['parent_active'];
-    $status = 1;
-
-    $query = "UPDATE `user` SET `user_status`='$status' WHERE user_id='$user_id'";
-    $query_run = mysqli_query($con, $query);
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Parent Account Status change to active";
-        $_SESSION['status_code'] = "success";
-        header('Location: index.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: index.php');
-        exit(0);
-    }
-}
-
-
-if(isset($_POST['officer_active']))
-{
-    $user_id= $_POST['officer_active'];
-    $status01 = 1;
-
-    $query = "UPDATE `user` SET `user_status`='$status01' WHERE user_id='$user_id'";
-    $query_run = mysqli_query($con, $query);
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Officer Account Status change to active";
-        $_SESSION['status_code'] = "success";
-        header('Location: index.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: index.php');
-        exit(0);
-    }
-}
-
-
-
-if(isset($_POST['parent_delete']))
-{
-    $user_id= $_POST['parent_delete'];
-    $u_status = 2;
-
-    $query = "UPDATE `user` SET `user_status`='$u_status' WHERE user_id='$user_id'";
-    $query_run = mysqli_query($con, $query);
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Parent Archived";
-        $_SESSION['status_code'] = "success";
-        header('Location: parent_account.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: parent_account.php.php');
-        exit(0);
-    }
-}
-
-
-
-
-
-
-if(isset($_POST['student_delete']))
-{
-    $user_id= $_POST['student_delete'];
-    $u_status = 2;
-
-    $query = "UPDATE `student` SET `user_status`='$u_status' WHERE `user_id`='$user_id'";
-    $query_run = mysqli_query($con, $query);
-    
-    if($query_run)
-    {
-        $_SESSION['status'] = "Student Archived";
-        $_SESSION['status_code'] = "success";
-        header('Location: student_account.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: student_account.php.php');
-        exit(0);
-    }
-}
-
-
 
 
 

@@ -11,7 +11,7 @@
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Account</li>
-                            <li class="breadcrumb-item active">Officer Account</li>
+                            <li class="breadcrumb-item active">Officer</li>
                             <li class="breadcrumb-item active">Add Account</li>
                         </ol>
                         <div class="row">
