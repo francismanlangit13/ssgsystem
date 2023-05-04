@@ -27,7 +27,7 @@
                         if($user){
                             while($row = mysqli_fetch_assoc($query_run)){
                     ?>
-                    <img id="cimg" class="img-fluid card-img-top" src=""  alt="user-avatar">
+                    <img id="cimg" class="img-fluid card-img-top" src="<?php echo base_url ?>assets/files/images/users/<?= $row['photo']; ?>"  alt="user-avatar">
                     <?php } } ?>
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?= $_SESSION['auth_user'] ['user_name'];  ?></span>
                 </a>
