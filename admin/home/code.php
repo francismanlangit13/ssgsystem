@@ -170,13 +170,13 @@ if(isset($_POST['officer_delete'])){
     if($query_run){
         $_SESSION['status'] = "Officer deleted successfully";
         $_SESSION['status_code'] = "success";
-        header('Location: officer_account');
+        header("Location: " . base_url . "admin/home/officer_account");
         exit(0);
     }
     else{
         $_SESSION['status'] = "Something went wrong!";
         $_SESSION['status_code'] = "error";
-        header('Location: officer_account');
+        header("Location: " . base_url . "admin/home/officer_account");
         exit(0);
     }
 }
@@ -327,13 +327,13 @@ if(isset($_POST['parent_delete'])){
   if($query_run){
       $_SESSION['status'] = "Parent deleted successfully";
       $_SESSION['status_code'] = "success";
-      header('Location: parent_account');
+      header("Location: " . base_url . "admin/home/parent_account");
       exit(0);
   }
   else{
       $_SESSION['status'] = "Something went wrong!";
       $_SESSION['status_code'] = "error";
-      header('Location: parent_account');
+      header("Location: " . base_url . "admin/home/parent_account");
       exit(0);
   }
 }
@@ -490,13 +490,13 @@ if(isset($_POST['student_delete'])){
   if($query_run){
       $_SESSION['status'] = "Student deleted successfully";
       $_SESSION['status_code'] = "success";
-      header('Location: student_account');
+      header("Location: " . base_url . "admin/home/student_account");
       exit(0);
   }
   else{
       $_SESSION['status'] = "Something went wrong!";
       $_SESSION['status_code'] = "error";
-      header('Location: student_account');
+      header("Location: " . base_url . "admin/home/student_account");
       exit(0);
   }
 }
@@ -598,7 +598,7 @@ if(isset($_POST["add_user"])){
   }
 }
 
-// Update officer account
+// Update user account
 if(isset($_POST["update_user"])){
   $user_id = $_POST['user_id'];
   $fname = $_POST['fname'];
@@ -636,7 +636,7 @@ if(isset($_POST["update_user"])){
   }
 }
 
-// Delete officer account
+// Delete user account
 if(isset($_POST['user_delete'])){
   $user_id= $_POST['user_delete'];
   $u_status = 3;
@@ -647,14 +647,34 @@ if(isset($_POST['user_delete'])){
   if($query_run){
       $_SESSION['status'] = "User deleted successfully";
       $_SESSION['status_code'] = "success";
-      header('Location: user_account');
+      header("Location: " . base_url . "admin/home/user_account");
       exit(0);
   }
   else{
       $_SESSION['status'] = "Something went wrong!";
       $_SESSION['status_code'] = "error";
-      header('Location: user_account');
+      header("Location: " . base_url . "admin/home/user_account");
       exit(0);
+  }
+}
+
+if(isset($_POST['add_activity'])){
+  $title = $_POST['title'];
+  $status = "Active";
+  $person =  $_SESSION['auth_user']['user_id'];
+  $query = "INSERT INTO `activity`(`user_id`, `activity_title`,`status`) VALUES ('$person','$title','$status')";
+  $query_run = mysqli_query($con, $query);
+
+  if($query_run){
+    $_SESSION['status'] = "Actvity added successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "admin/home/activity");
+    exit(0);
+  }else{
+    $_SESSION['status'] = "Something went wrong!";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/activity");
+    exit(0);
   }
 }
 
@@ -809,31 +829,6 @@ if(isset($_POST['activity_delete']))
       exit(0);
     }
 }
-
-
-if(isset($_POST['add_act']))
-{
-    $title = $_POST['title'];
-    $status = "Active";
-
-    $query = "INSERT INTO `activity`(`activity_title`,`status`) VALUES ('$title','$status')";
-    $query_run = mysqli_query($con, $query);
-
-    if($query_run){
-        $_SESSION['status'] = "Actvity Added!";
-        $_SESSION['status_code'] = "success";
-        header('Location: activity.php');
-        exit(0);
-      }else{
-        $_SESSION['status'] = "Something went wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: activity.php');
-        exit(0);
-      }
-
-}
-
-
 
 
 if(isset($_POST['add_expense']))
