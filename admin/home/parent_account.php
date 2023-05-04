@@ -66,8 +66,8 @@
                                             <td><?= $row['email']; ?></td>
                                             <td><?= $row['user_status']; ?></td>
                                             <td> 
-                                                <div class="row d-flex justify-content-center">
-                                                    <div class="col-md-4">
+                                                <div class="row d-inline-flex justify-content-center">
+                                                    <div class="col-md-3">
                                                         <a href="parent_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text ml-2 mr-2">View</span>
@@ -79,18 +79,7 @@
                                                             <span class="text">Update</span>
                                                         </a>
                                                     </div>
-                                                    <!-- <div class="col-md-12 mb-1">
-                                                        <form action="code.php" method="POST" style="zoom:105%;">
-                                                            <input type="text" name="oldimage" value="<?= $row['picture']; ?>" hidden>
-                                                            <button type="submit" name="user_delete" value="<?=$row['user_id']; ?>" class="btn btn-danger btn-icon-split" href="#">
-                                                                <span class="icon text-white-50">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </span>
-                                                                <span class="text">Delete</span>
-                                                            </button> 
-                                                        </form>
-                                                    </div> -->
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4" style="margin-left:-0.3rem;">
                                                         <button type="button" data-toggle="modal" value="<?=$row['user_id']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-danger btn-icon-split">
                                                             <span class="icon text-white-50">
                                                             </span>
