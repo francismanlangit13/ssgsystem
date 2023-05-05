@@ -9,7 +9,7 @@
                 <?php
                     if(isset($_GET['id'])){
                         $id = $_GET['id'];
-                        $users = "SELECT * FROM user INNER JOIN user_type ON user.user_type = user_type.user_type_id INNER JOIN user_status ON user.user_status = user_status.user_status_id WHERE user_id='$id' AND user_type.user_type_id IN (2,3,4,5) AND user_status.user_status_id IN (1,2)";
+                        $users = "SELECT * FROM user INNER JOIN user_type ON user.user_type = user_type.user_type_id INNER JOIN user_status ON user.user_status = user_status.user_status_id WHERE user_id='$id' AND user_type.user_type_id IN (1,2,3,4,5) AND user_status.user_status_id IN (1,2)";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
                             foreach($users_run as $user){
@@ -19,7 +19,7 @@
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Account</li>
-                            <li class="breadcrumb-item active">Officer</li>
+                            <li class="breadcrumb-item active">Offical</li>
                             <li class="breadcrumb-item active">View Account</li>
                         </ol>
                         <div class="row">
@@ -94,7 +94,7 @@
                             <ol class="breadcrumb mb-4 mt-3">
                                 <li class="breadcrumb-item">Dashboard</li>
                                 <li class="breadcrumb-item ">Account</li>
-                                <li class="breadcrumb-item active">Officer</li>
+                                <li class="breadcrumb-item active">Offical</li>
                                 <li class="breadcrumb-item active">View Account</li>
                             </ol>
                             <div class="row">

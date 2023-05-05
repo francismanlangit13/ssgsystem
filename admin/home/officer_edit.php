@@ -9,7 +9,7 @@
                 <?php
                     if(isset($_GET['id'])){
                         $id = $_GET['id'];
-                        $users = "SELECT * FROM user WHERE user_id='$id' AND user_type IN (2,3,4,5) AND user_status IN (1,2)";
+                        $users = "SELECT * FROM user WHERE user_id='$id' AND user_type IN (1,2,3,4,5) AND user_status IN (1,2)";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
                             foreach($users_run as $user){
@@ -19,7 +19,7 @@
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Account</li>
-                            <li class="breadcrumb-item active">Officer</li>
+                            <li class="breadcrumb-item active">Offical</li>
                             <li class="breadcrumb-item active">Update Account</li>
                         </ol>
                         <div class="row">
@@ -90,6 +90,7 @@
                                                     <label for="" class="required">Role</label>
                                                     <select name="role" required class="form-control">
                                                         <option value="" selected disabled>Select Role</option>
+                                                        <option value="1" <?= $user['user_type'] == '1' ? 'selected' :'' ?>>Admin</option>
                                                         <option value="2" <?= $user['user_type'] == '2' ? 'selected' :'' ?>>President</option>
                                                         <option value="3" <?= $user['user_type'] == '3' ? 'selected' :'' ?>>Vice President</option>
                                                         <option value="4" <?= $user['user_type'] == '4' ? 'selected' :'' ?>>Secretary</option>
@@ -129,7 +130,7 @@
                             <ol class="breadcrumb mb-4 mt-3">
                                 <li class="breadcrumb-item">Dashboard</li>
                                 <li class="breadcrumb-item ">Account</li>
-                                <li class="breadcrumb-item active">Officer</li>
+                                <li class="breadcrumb-item active">Offical</li>
                                 <li class="breadcrumb-item active">Update Account</li>
                             </ol>
                             <div class="row">

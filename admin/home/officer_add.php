@@ -11,7 +11,7 @@
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Account</li>
-                            <li class="breadcrumb-item active">Officer</li>
+                            <li class="breadcrumb-item active">Offical</li>
                             <li class="breadcrumb-item active">Add Account</li>
                         </ol>
                         <div class="row">
@@ -81,6 +81,7 @@
                                                     <label for="" class="required">Role</label>
                                                     <select name="role" required class="form-control">
                                                         <option value="" selected disabled>Select Role</option>
+                                                        <option value="1">Admin</option>
                                                         <option value="2">President</option>
                                                         <option value="3">Vice President</option>
                                                         <option value="4">Secretary</option>
@@ -88,8 +89,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="dp" class="required">Profile Picture</label>
-                                                    <input required type="file" name="image" class="input-large btn btn-dark" id="image1" accept=".jpg, .jpeg, .png" onchange="previewImage('frame1', 'image1')">
+                                                    <label for="dp">Profile Picture</label>
+                                                    <input type="file" name="image" class="input-large btn btn-dark" id="image1" accept=".jpg, .jpeg, .png" onchange="previewImage('frame1', 'image1')">
                                                 </div>
 
                                                 <div class="col-md-6">

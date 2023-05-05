@@ -11,14 +11,14 @@
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Account</li>
-                            <li class="breadcrumb-item active">Officer Account</li>
+                            <li class="breadcrumb-item active">Offical Account</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 List of Officer Account
                                 <div class="float-end">
-                                    <a type="button" class="btn btn-primary" href="officer_add" style="zoom:75%"><i class="fa fa-plus"></i> Add Officer Account</a>
+                                    <a type="button" class="btn btn-primary" href="officer_add" style="zoom:75%"><i class="fa fa-plus"></i> Add Offical Account</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -55,7 +55,7 @@
                                                 ON 
                                                 `user`.user_status = user_status.user_status_id
                                                 WHERE
-                                                user_type IN (2, 3, 4, 5) AND
+                                                user_type IN (1, 2, 3, 4, 5) AND
                                                 user_status.user_status_id IN (1, 2)
                                             ";
                                             $query_run = mysqli_query($con, $query);
@@ -67,7 +67,9 @@
                                             <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> </td>
                                             <td><?= $row['email']; ?></td>
                                             <td>
-                                                <?php if($row['user_type'] == 2){
+                                                <?php if($row['user_type'] == 1){
+                                                    echo "Admin";
+                                                } elseif($row['user_type'] == 2){
                                                     echo "President";
                                                 } elseif($row['user_type'] == 3){
                                                     echo "Vice President";

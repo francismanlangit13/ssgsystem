@@ -23,100 +23,96 @@ if(isset($_POST['logout_btn'])){
 
 // Add officer account
 if(isset($_POST["add_officer"])){
-    $fileImage = $_FILES['image'];
+  if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $photo = $_FILES['image'];
     $customFileName = 'user_' . date('Ymd_His'); // replace with your desired file name
-    $ext = pathinfo($fileImage['name'], PATHINFO_EXTENSION); // get the file extension
+    $ext = pathinfo($photo['name'], PATHINFO_EXTENSION); // get the file extension
     $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
-    $fileTmpname = $fileImage['tmp_name'];
-    $fileSize = $fileImage['size'];
-    $fileError = $fileImage['error'];
+    $fileTmpname = $photo['tmp_name'];
+    $fileSize = $photo['size'];
+    $fileError = $photo['error'];
     $fileExt = explode('.',$fileName);
     $fileActExt = strtolower(end($fileExt));
     $allowed = array('jpg','jpeg','png');
-    
     if(in_array($fileActExt, $allowed)){
       if($fileError === 0){
         if($fileSize < 10485760){
-          $fname = $_POST['fname'];
-          $mname = $_POST['mname'];
-          $lname = $_POST['lname'];
-          $suffix = $_POST['suffix'];
-          $gender = $_POST['gender'];
-          $email = $_POST['email'];
-          $phone = $_POST['phone'];
-          $role_as = $_POST['role'];
-          $new_password = substr(md5(microtime()),rand(0,26),8);
-          $password = md5($new_password);
-          $user_type = $role_as;
-          $user_status = '1';
           $uploadDir = '../../assets/files/images/users/';
           $targetFile = $uploadDir . $fileName;
-
           if (move_uploaded_file($fileTmpname, $targetFile)) {
-            $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
-            $query_run = mysqli_query($con, $query);
-
-            if($query_run){
-              $name = htmlentities($_POST['lname']);
-              $email = htmlentities($_POST['email']);
-              $subject = htmlentities('Username and Password Credentials');
-              $message = nl2br("Welcome to Supreme Student Government System! \r\n \r\n Email: $email \r\n Password: $new_password \r\n \r\n Please change your password immediately.");
-              // PHP Mailer
-              require("../../assets/PHPMailer/PHPMailerAutoload.php");
-              require ("../../assets/PHPMailer/class.phpmailer.php");
-              require ("../../assets/PHPMailer/class.smtp.php");
-              $mail = new PHPMailer();
-              $mail->IsSMTP();
-              //$mail->SMTPDebug = 2; // Debug if the gmail doesn't send email when forgetting password.
-              $mail->SMTPAuth = true;
-              $mail->SMTPSecure = 'TLS/STARTTLS';
-              $mail->Host = 'smtp.gmail.com'; // Enter your host here
-              $mail->Port = '587';
-              $mail->IsHTML();
-              $mail->Username = 'ssg.jbi7204@gmail.com'; // Enter your email here
-              $mail->Password = 'fkqlcsiecymvoypb'; //Enter your passwrod here
-              $mail->setFrom($email, $name);
-              $mail->addAddress($_POST['email']);
-              $mail->Subject = ("$email ($subject)");
-              $mail->Body = $message;
-              $mail->send();
-        
-              $_SESSION['status'] = "Officer added successfully, Credentials was sent to their email!";
-              $_SESSION['status_code'] = "success";
-              header("Location: " . base_url . "admin/home/officer_account");
-              exit(0);
-            }
-            else{
-              $_SESSION['status'] = "Officer was not added";
-              $_SESSION['status_code'] = "error";
-              header("Location: " . base_url . "admin/home/officer_account");
-              exit(0);
-            }
+            // emplty code.
           }
-          else{
-            $_SESSION['status']="Error uploading image.";
-            $_SESSION['status_code'] = "error";
-            header("Location: " . base_url . "admin/home/officer_account");
-          }
-
         }
         else{
-          $_SESSION['status']="File is too large file must be 10mb";
+          $_SESSION['status']="Image1 file is too large file must be 10mb";
           $_SESSION['status_code'] = "error"; 
-          header("Location: " . base_url . "admin/home/officer_account");
+          header("Location: " . base_url . "farmer/home/report");
         }
       }
       else{
-        $_SESSION['status']="File Error";
+        $_SESSION['status']="Image1 file error";
         $_SESSION['status_code'] = "error"; 
-        header("Location: " . base_url . "admin/home/officer_account");
+        header("Location: " . base_url . "farmer/home/report");
       }
     }
     else{
-      $_SESSION['status']="Invalid file type";
+      $_SESSION['status']="Image1 invalid file type";
       $_SESSION['status_code'] = "error"; 
-      header("Location: " . base_url . "admin/home/officer_account");
+      header("Location: " . base_url . "farmer/home/report");
     }
+  }
+  $fname = $_POST['fname'];
+  $mname = $_POST['mname'];
+  $lname = $_POST['lname'];
+  $suffix = $_POST['suffix'];
+  $gender = $_POST['gender'];
+  $email = $_POST['email'];
+  $phone = $_POST['phone'];
+  $role_as = $_POST['role'];
+  $new_password = substr(md5(microtime()),rand(0,26),8);
+  $password = md5($new_password);
+  $user_type = $role_as;
+  $user_status = '1';
+
+  $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
+  $query_run = mysqli_query($con, $query);
+
+  if($query_run){
+    $name = htmlentities($_POST['lname']);
+    $email = htmlentities($_POST['email']);
+    $subject = htmlentities('Username and Password Credentials');
+    $message = nl2br("Welcome to Supreme Student Government System! \r\n \r\n Email: $email \r\n Password: $new_password \r\n \r\n Please change your password immediately.");
+    // PHP Mailer
+    require("../../assets/PHPMailer/PHPMailerAutoload.php");
+    require ("../../assets/PHPMailer/class.phpmailer.php");
+    require ("../../assets/PHPMailer/class.smtp.php");
+    $mail = new PHPMailer();
+    $mail->IsSMTP();
+    //$mail->SMTPDebug = 2; // Debug if the gmail doesn't send email when forgetting password.
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'TLS/STARTTLS';
+    $mail->Host = 'smtp.gmail.com'; // Enter your host here
+    $mail->Port = '587';
+    $mail->IsHTML();
+    $mail->Username = 'ssg.jbi7204@gmail.com'; // Enter your email here
+    $mail->Password = 'fkqlcsiecymvoypb'; //Enter your passwrod here
+    $mail->setFrom($email, $name);
+    $mail->addAddress($_POST['email']);
+    $mail->Subject = ("$email ($subject)");
+    $mail->Body = $message;
+    $mail->send();
+
+    $_SESSION['status'] = "Officer added successfully, Credentials was sent to their email!";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "admin/home/officer_account");
+    exit(0);
+  }
+  else{
+    $_SESSION['status'] = "Officer was not added";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/officer_account");
+    exit(0);
+  }
 }
 
 // Update officer account
@@ -183,98 +179,96 @@ if(isset($_POST['officer_delete'])){
 
 // Add parent account
 if(isset($_POST["add_parent"])){
-  $fileImage = $_FILES['image'];
-  $customFileName = 'user_' . date('Ymd_His'); // replace with your desired file name
-  $ext = pathinfo($fileImage['name'], PATHINFO_EXTENSION); // get the file extension
-  $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
-  $fileTmpname = $fileImage['tmp_name'];
-  $fileSize = $fileImage['size'];
-  $fileError = $fileImage['error'];
-  $fileExt = explode('.',$fileName);
-  $fileActExt = strtolower(end($fileExt));
-  $allowed = array('jpg','jpeg','png');
-  
-  if(in_array($fileActExt, $allowed)){
-    if($fileError === 0){
-      if($fileSize < 10485760){
-        $fname = $_POST['fname'];
-        $mname = $_POST['mname'];
-        $lname = $_POST['lname'];
-        $suffix = $_POST['suffix'];
-        $gender = $_POST['gender'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $new_password = substr(md5(microtime()),rand(0,26),8);
-        $password = md5($new_password);
-        $user_type = '7';
-        $user_status = '1';
-        $uploadDir = '../../assets/files/images/users/';
-        $targetFile = $uploadDir . $fileName;
-
-        if (move_uploaded_file($fileTmpname, $targetFile)) {
-          $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
-          $query_run = mysqli_query($con, $query);
-
-          if($query_run){
-            $name = htmlentities($_POST['lname']);
-            $email = htmlentities($_POST['email']);
-            $subject = htmlentities('Username and Password Credentials');
-            $message = nl2br("Welcome to Supreme Student Government System! \r\n \r\n Email: $email \r\n Password: $new_password \r\n \r\n Please change your password immediately.");
-            // PHP Mailer
-            require("../../assets/PHPMailer/PHPMailerAutoload.php");
-            require ("../../assets/PHPMailer/class.phpmailer.php");
-            require ("../../assets/PHPMailer/class.smtp.php");
-            $mail = new PHPMailer();
-            $mail->IsSMTP();
-            //$mail->SMTPDebug = 2; // Debug if the gmail doesn't send email when forgetting password.
-            $mail->SMTPAuth = true;
-            $mail->SMTPSecure = 'TLS/STARTTLS';
-            $mail->Host = 'smtp.gmail.com'; // Enter your host here
-            $mail->Port = '587';
-            $mail->IsHTML();
-            $mail->Username = 'ssg.jbi7204@gmail.com'; // Enter your email here
-            $mail->Password = 'fkqlcsiecymvoypb'; //Enter your passwrod here
-            $mail->setFrom($email, $name);
-            $mail->addAddress($_POST['email']);
-            $mail->Subject = ("$email ($subject)");
-            $mail->Body = $message;
-            $mail->send();
-      
-            $_SESSION['status'] = "Parent added successfully, Credentials was sent to their email!";
-            $_SESSION['status_code'] = "success";
-            header("Location: " . base_url . "admin/home/parent_account");
-            exit(0);
-          }
-          else{
-            $_SESSION['status'] = "Parent was not added";
-            $_SESSION['status_code'] = "error";
-            header("Location: " . base_url . "admin/home/parent_account");
-            exit(0);
+  if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $photo = $_FILES['image'];
+    $customFileName = 'user_' . date('Ymd_His'); // replace with your desired file name
+    $ext = pathinfo($photo['name'], PATHINFO_EXTENSION); // get the file extension
+    $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
+    $fileTmpname = $photo['tmp_name'];
+    $fileSize = $photo['size'];
+    $fileError = $photo['error'];
+    $fileExt = explode('.',$fileName);
+    $fileActExt = strtolower(end($fileExt));
+    $allowed = array('jpg','jpeg','png');
+    if(in_array($fileActExt, $allowed)){
+      if($fileError === 0){
+        if($fileSize < 10485760){
+          $uploadDir = '../../assets/files/images/users/';
+          $targetFile = $uploadDir . $fileName;
+          if (move_uploaded_file($fileTmpname, $targetFile)) {
+            // emplty code.
           }
         }
         else{
-          $_SESSION['status']="Error uploading image.";
-          $_SESSION['status_code'] = "error";
-          header("Location: " . base_url . "admin/home/parent_account");
+          $_SESSION['status']="Image1 file is too large file must be 10mb";
+          $_SESSION['status_code'] = "error"; 
+          header("Location: " . base_url . "farmer/home/report");
         }
-
       }
       else{
-        $_SESSION['status']="File is too large file must be 10mb";
+        $_SESSION['status']="Image1 file error";
         $_SESSION['status_code'] = "error"; 
-        header("Location: " . base_url . "admin/home/parent_account");
+        header("Location: " . base_url . "farmer/home/report");
       }
     }
     else{
-      $_SESSION['status']="File Error";
+      $_SESSION['status']="Image1 invalid file type";
       $_SESSION['status_code'] = "error"; 
-      header("Location: " . base_url . "admin/home/parent_account");
+      header("Location: " . base_url . "farmer/home/report");
     }
   }
-  else{
-    $_SESSION['status']="Invalid file type";
-    $_SESSION['status_code'] = "error"; 
+  $fname = $_POST['fname'];
+  $mname = $_POST['mname'];
+  $lname = $_POST['lname'];
+  $suffix = $_POST['suffix'];
+  $gender = $_POST['gender'];
+  $email = $_POST['email'];
+  $phone = $_POST['phone'];
+  $new_password = substr(md5(microtime()),rand(0,26),8);
+  $password = md5($new_password);
+  $user_type = '7';
+  $user_status = '1';
+  $uploadDir = '../../assets/files/images/users/';
+  $targetFile = $uploadDir . $fileName;
+
+  $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
+  $query_run = mysqli_query($con, $query);
+
+  if($query_run){
+    $name = htmlentities($_POST['lname']);
+    $email = htmlentities($_POST['email']);
+    $subject = htmlentities('Username and Password Credentials');
+    $message = nl2br("Welcome to Supreme Student Government System! \r\n \r\n Email: $email \r\n Password: $new_password \r\n \r\n Please change your password immediately.");
+    // PHP Mailer
+    require("../../assets/PHPMailer/PHPMailerAutoload.php");
+    require ("../../assets/PHPMailer/class.phpmailer.php");
+    require ("../../assets/PHPMailer/class.smtp.php");
+    $mail = new PHPMailer();
+    $mail->IsSMTP();
+    //$mail->SMTPDebug = 2; // Debug if the gmail doesn't send email when forgetting password.
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'TLS/STARTTLS';
+    $mail->Host = 'smtp.gmail.com'; // Enter your host here
+    $mail->Port = '587';
+    $mail->IsHTML();
+    $mail->Username = 'ssg.jbi7204@gmail.com'; // Enter your email here
+    $mail->Password = 'fkqlcsiecymvoypb'; //Enter your passwrod here
+    $mail->setFrom($email, $name);
+    $mail->addAddress($_POST['email']);
+    $mail->Subject = ("$email ($subject)");
+    $mail->Body = $message;
+    $mail->send();
+
+    $_SESSION['status'] = "Parent added successfully, Credentials was sent to their email!";
+    $_SESSION['status_code'] = "success";
     header("Location: " . base_url . "admin/home/parent_account");
+    exit(0);
+  }
+  else{
+    $_SESSION['status'] = "Parent was not added";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/parent_account");
+    exit(0);
   }
 }
 
@@ -340,100 +334,98 @@ if(isset($_POST['parent_delete'])){
 
 // Add student account
 if(isset($_POST["add_student"])){
-  $fileImage = $_FILES['image'];
-  $customFileName = 'user_' . date('Ymd_His'); // replace with your desired file name
-  $ext = pathinfo($fileImage['name'], PATHINFO_EXTENSION); // get the file extension
-  $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
-  $fileTmpname = $fileImage['tmp_name'];
-  $fileSize = $fileImage['size'];
-  $fileError = $fileImage['error'];
-  $fileExt = explode('.',$fileName);
-  $fileActExt = strtolower(end($fileExt));
-  $allowed = array('jpg','jpeg','png');
-  
-  if(in_array($fileActExt, $allowed)){
-    if($fileError === 0){
-      if($fileSize < 10485760){
-        $fname = $_POST['fname'];
-        $mname = $_POST['mname'];
-        $lname = $_POST['lname'];
-        $suffix = $_POST['suffix'];
-        $gender = $_POST['gender'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $student_id = $_POST['student_id'];
-        $level = $_POST['level'];
-        $new_password = substr(md5(microtime()),rand(0,26),8);
-        $password = md5($new_password);
-        $user_type = '6';
-        $user_status = '1';
-        $uploadDir = '../../assets/files/images/users/';
-        $targetFile = $uploadDir . $fileName;
-
-        if (move_uploaded_file($fileTmpname, $targetFile)) {
-          $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$student_id','$level','$fileName','$user_type','$user_status')";
-          $query_run = mysqli_query($con, $query);
-
-          if($query_run){
-            $name = htmlentities($_POST['lname']);
-            $email = htmlentities($_POST['email']);
-            $subject = htmlentities('Username and Password Credentials');
-            $message = nl2br("Welcome to Supreme Student Government System! \r\n \r\n Email: $email \r\n Password: $new_password \r\n \r\n Please change your password immediately.");
-            // PHP Mailer
-            require("../../assets/PHPMailer/PHPMailerAutoload.php");
-            require ("../../assets/PHPMailer/class.phpmailer.php");
-            require ("../../assets/PHPMailer/class.smtp.php");
-            $mail = new PHPMailer();
-            $mail->IsSMTP();
-            //$mail->SMTPDebug = 2; // Debug if the gmail doesn't send email when forgetting password.
-            $mail->SMTPAuth = true;
-            $mail->SMTPSecure = 'TLS/STARTTLS';
-            $mail->Host = 'smtp.gmail.com'; // Enter your host here
-            $mail->Port = '587';
-            $mail->IsHTML();
-            $mail->Username = 'ssg.jbi7204@gmail.com'; // Enter your email here
-            $mail->Password = 'fkqlcsiecymvoypb'; //Enter your passwrod here
-            $mail->setFrom($email, $name);
-            $mail->addAddress($_POST['email']);
-            $mail->Subject = ("$email ($subject)");
-            $mail->Body = $message;
-            $mail->send();
-      
-            $_SESSION['status'] = "Student added successfully, Credentials was sent to their email!";
-            $_SESSION['status_code'] = "success";
-            header("Location: " . base_url . "admin/home/student_account");
-            exit(0);
-          }
-          else{
-            $_SESSION['status'] = "Student was not added";
-            $_SESSION['status_code'] = "error";
-            header("Location: " . base_url . "admin/home/student_account");
-            exit(0);
+  if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $photo = $_FILES['image'];
+    $customFileName = 'user_' . date('Ymd_His'); // replace with your desired file name
+    $ext = pathinfo($photo['name'], PATHINFO_EXTENSION); // get the file extension
+    $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
+    $fileTmpname = $photo['tmp_name'];
+    $fileSize = $photo['size'];
+    $fileError = $photo['error'];
+    $fileExt = explode('.',$fileName);
+    $fileActExt = strtolower(end($fileExt));
+    $allowed = array('jpg','jpeg','png');
+    if(in_array($fileActExt, $allowed)){
+      if($fileError === 0){
+        if($fileSize < 10485760){
+          $uploadDir = '../../assets/files/images/users/';
+          $targetFile = $uploadDir . $fileName;
+          if (move_uploaded_file($fileTmpname, $targetFile)) {
+            // emplty code.
           }
         }
         else{
-          $_SESSION['status']="Error uploading image.";
-          $_SESSION['status_code'] = "error";
-          header("Location: " . base_url . "admin/home/student_account");
+          $_SESSION['status']="Image1 file is too large file must be 10mb";
+          $_SESSION['status_code'] = "error"; 
+          header("Location: " . base_url . "farmer/home/report");
         }
-
       }
       else{
-        $_SESSION['status']="File is too large file must be 10mb";
+        $_SESSION['status']="Image1 file error";
         $_SESSION['status_code'] = "error"; 
-        header("Location: " . base_url . "admin/home/student_account");
+        header("Location: " . base_url . "farmer/home/report");
       }
     }
     else{
-      $_SESSION['status']="File Error";
+      $_SESSION['status']="Image1 invalid file type";
       $_SESSION['status_code'] = "error"; 
-      header("Location: " . base_url . "admin/home/student_account");
+      header("Location: " . base_url . "farmer/home/report");
     }
   }
-  else{
-    $_SESSION['status']="Invalid file type";
-    $_SESSION['status_code'] = "error"; 
+  $fname = $_POST['fname'];
+  $mname = $_POST['mname'];
+  $lname = $_POST['lname'];
+  $suffix = $_POST['suffix'];
+  $gender = $_POST['gender'];
+  $email = $_POST['email'];
+  $phone = $_POST['phone'];
+  $student_id = $_POST['student_id'];
+  $level = $_POST['level'];
+  $new_password = substr(md5(microtime()),rand(0,26),8);
+  $password = md5($new_password);
+  $user_type = '6';
+  $user_status = '1';
+  $uploadDir = '../../assets/files/images/users/';
+  $targetFile = $uploadDir . $fileName;
+
+  $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$student_id','$level','$fileName','$user_type','$user_status')";
+  $query_run = mysqli_query($con, $query);
+
+  if($query_run){
+    $name = htmlentities($_POST['lname']);
+    $email = htmlentities($_POST['email']);
+    $subject = htmlentities('Username and Password Credentials');
+    $message = nl2br("Welcome to Supreme Student Government System! \r\n \r\n Email: $email \r\n Password: $new_password \r\n \r\n Please change your password immediately.");
+    // PHP Mailer
+    require("../../assets/PHPMailer/PHPMailerAutoload.php");
+    require ("../../assets/PHPMailer/class.phpmailer.php");
+    require ("../../assets/PHPMailer/class.smtp.php");
+    $mail = new PHPMailer();
+    $mail->IsSMTP();
+    //$mail->SMTPDebug = 2; // Debug if the gmail doesn't send email when forgetting password.
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'TLS/STARTTLS';
+    $mail->Host = 'smtp.gmail.com'; // Enter your host here
+    $mail->Port = '587';
+    $mail->IsHTML();
+    $mail->Username = 'ssg.jbi7204@gmail.com'; // Enter your email here
+    $mail->Password = 'fkqlcsiecymvoypb'; //Enter your passwrod here
+    $mail->setFrom($email, $name);
+    $mail->addAddress($_POST['email']);
+    $mail->Subject = ("$email ($subject)");
+    $mail->Body = $message;
+    $mail->send();
+
+    $_SESSION['status'] = "Student added successfully, Credentials was sent to their email!";
+    $_SESSION['status_code'] = "success";
     header("Location: " . base_url . "admin/home/student_account");
+    exit(0);
+  }
+  else{
+    $_SESSION['status'] = "Student was not added";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/student_account");
+    exit(0);
   }
 }
 

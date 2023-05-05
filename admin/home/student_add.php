@@ -96,8 +96,8 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <label for="dp" class="required">Profile Picture</label>
-                                                    <input required type="file" name="image" class="input-large btn btn-dark" id="image1" accept=".jpg, .jpeg, .png" onchange="previewImage('frame1', 'image1')">
+                                                    <label for="dp">Profile Picture</label>
+                                                    <input type="file" name="image" class="input-large btn btn-dark" id="image1" accept=".jpg, .jpeg, .png" onchange="previewImage('frame1', 'image1')">
                                                 </div>
 
                                                 <div class="col-md-5 text-center">
