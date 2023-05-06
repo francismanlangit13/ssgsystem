@@ -6,15 +6,15 @@
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $password = mysqli_real_escape_string($con, $_POST['password']);
         $hashed_password = md5($password);
-        $login_query = "SELECT * FROM user WHERE email='$email' AND password= '$hashed_password' AND user_status = 1";
+        $login_query = "SELECT * FROM user WHERE email='$email' AND password= '$hashed_password' AND user_status_id = 1";
         $login_query_run = mysqli_query($con, $login_query);
 
         if(mysqli_num_rows($login_query_run) > 0){
             foreach($login_query_run as $data){
                 $user_id = $data['user_id'];
                 $full_name = $data['fname'].' '.$data['lname'];
-                $u_status = $data['user_status'];
-                $role_as = $data['user_type'];
+                $u_status = $data['user_status_id'];
+                $role_as = $data['user_type_id'];
                 $user_email = $data['email'];
             }
 
