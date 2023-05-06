@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2023 at 03:42 PM
+-- Generation Time: May 06, 2023 at 05:10 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -75,9 +75,16 @@ INSERT INTO `announcement` (`announcement_id`, `activity_id`, `user_id`, `announ
 CREATE TABLE `fines_transaction` (
   `transaction_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `fines_fee` int(100) NOT NULL,
+  `fines_fee` double NOT NULL,
   `fines_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `fines_transaction`
+--
+
+INSERT INTO `fines_transaction` (`transaction_id`, `user_id`, `fines_fee`, `fines_date`) VALUES
+(1, 4, 256.75, '2023-05-02 13:52:35');
 
 -- --------------------------------------------------------
 
@@ -102,9 +109,11 @@ CREATE TABLE `liquidation` (
 CREATE TABLE `payment` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `platform` varchar(255) NOT NULL,
   `referencenumber` varchar(255) NOT NULL,
   `picture` varchar(255) NOT NULL,
-  `date` datetime NOT NULL
+  `date` datetime NOT NULL,
+  `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -324,7 +333,7 @@ ALTER TABLE `announcement`
 -- AUTO_INCREMENT for table `fines_transaction`
 --
 ALTER TABLE `fines_transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `liquidation`
