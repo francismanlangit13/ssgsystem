@@ -9,7 +9,7 @@
                 <?php
                     if(isset($_GET['id'])){
                         $id = $_GET['id'];
-                        $users = "SELECT * FROM user WHERE user_id='$id' AND user_type = 7 AND user_status IN (1,2) ";
+                        $users = "SELECT * FROM user WHERE user_id='$id' AND user_type_id = 7 AND user_status_id IN (1,2) ";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
                             foreach($users_run as $user){
@@ -90,8 +90,8 @@
                                                     <label for="" class="required">Status</label>
                                                     <select name="status" required class="form-control">
                                                         <option value="" selected disabled>Select Status</option>
-                                                        <option value="1" <?= $user['user_status'] == '1' ? 'selected' :'' ?>>Active</option>
-                                                        <option value="2" <?= $user['user_status'] == '2' ? 'selected' :'' ?>>In active</option>
+                                                        <option value="1" <?= $user['user_status_id'] == '1' ? 'selected' :'' ?>>Active</option>
+                                                        <option value="2" <?= $user['user_status_id'] == '2' ? 'selected' :'' ?>>In active</option>
                                                     </select>
                                                 </div>
                                             </div>   

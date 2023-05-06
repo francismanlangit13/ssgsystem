@@ -51,9 +51,9 @@
                                                 INNER JOIN
                                                 user_status
                                                 ON 
-                                                `user`.user_status = user_status.user_status_id
+                                                `user`.user_status_id = user_status.user_status_id
                                                 WHERE
-                                                user_type = 7 AND
+                                                user_type_id = 7 AND
                                                 user_status.user_status_id IN (1, 2)
                                             ";
                                             $query_run = mysqli_query($con, $query);
