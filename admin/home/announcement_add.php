@@ -22,7 +22,7 @@
                                     <div class="card-body">
                                         <form action="code.php" method="post" autocomplete="off" enctype="multipart/form-data">
                                             <div class="row">
-                                            <div class="col-md-5 mb-3">
+                                                <div class="col-md-5 mb-3">
                                                     <?php
                                                         $sql = "SELECT * FROM `activity` WHERE status = 'Active'";
                                                         $all_activity = mysqli_query($con,$sql);

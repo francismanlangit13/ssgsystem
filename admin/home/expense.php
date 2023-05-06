@@ -22,7 +22,7 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Name</th>
+                                            <th>Type</th>
                                             <th>Purpose</th>
                                             <th>Amount</th>
                                             <th>Date</th>
@@ -32,7 +32,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Name</th>
+                                            <th>Type</th>
                                             <th>Purpose</th>
                                             <th>Amount</th>
                                             <th>Date</th>
@@ -42,7 +42,7 @@
                                     <tbody>
                                         <?php
                                             $query = "SELECT
-                                                *
+                                                *, DATE_FORMAT(ssg_expenses.date, '%m-%d-%Y') as short_date_created
                                                 FROM
                                                 ssg_expenses
                                                 INNER JOIN
@@ -56,10 +56,10 @@
                                         ?>
                                         <tr>
                                             <td><?= $row['expense_id']; ?></td>
-                                            <td><?= $row['fname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
+                                            <td><?= $row['type']; ?></td>
                                             <td><?= $row['purpose']; ?></td>
                                             <td><?= $row['amount']; ?></td>
-                                            <td><?= $row['date']; ?></td>
+                                            <td><?= $row['short_date_created']; ?></td>
                                             <td>
                                                 <div class="col-md-3 text-center">
                                                     <a href="expense_view?id=<?=$row['expense_id'];?>" class="btn btn-info btn-icon-split"> 
