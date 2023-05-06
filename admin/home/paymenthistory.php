@@ -59,7 +59,7 @@
                                             <td><?= $row['transaction_id']; ?></td>
                                             <td><?= $row['student_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
-                                            <td><?= $row['fines_fee']; ?></td>
+                                            <td>₱ <?= $row['fines_fee']; ?></td>
                                             <td><?= $row['short_date_created']; ?></td>
                                             <td>
                                                 <div class="col-md-3 text-center">

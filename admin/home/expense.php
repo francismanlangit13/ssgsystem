@@ -58,7 +58,7 @@
                                             <td><?= $row['expense_id']; ?></td>
                                             <td><?= $row['type']; ?></td>
                                             <td><?= $row['purpose']; ?></td>
-                                            <td><?= $row['amount']; ?></td>
+                                            <td>₱ <?= $row['amount']; ?></td>
                                             <td><?= $row['short_date_created']; ?></td>
                                             <td>
                                                 <div class="col-md-3 text-center">

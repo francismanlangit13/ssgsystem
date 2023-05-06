@@ -70,7 +70,7 @@
 
                                             <div class="col-md-3 mb-3">
                                                 <label for="">Amount Paid</label>
-                                                <input type="text" value="<?=$user['fines_fee'];?>" class="form-control" disabled>
+                                                <input type="text" value="₱ <?=$user['fines_fee'];?>" class="form-control" disabled>
                                             </div>
 
                                             <div class="col-md-3 mb-3">
