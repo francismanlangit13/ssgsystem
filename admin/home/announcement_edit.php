@@ -133,3 +133,10 @@
         <?php include ('../includes/bottom.php'); ?>
     </body>
 </html>
+<script>
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var tomorrowISOString = tomorrow.toISOString().slice(0, 16);
+    document.getElementsByName("date_start")[0].setAttribute("min", tomorrowISOString);
+    document.getElementsByName("date_end")[0].setAttribute("min", tomorrowISOString);
+</script>
