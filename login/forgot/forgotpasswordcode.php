@@ -10,24 +10,16 @@
 
     if(isset($_POST['forgot_btn'])){
         $email = mysqli_real_escape_string($con, $_POST['email']);
-        $check_mail = "SELECT email, user_type FROM user WHERE email = '$email' AND user_status = 1 UNION SELECT email, user_type FROM student WHERE email = '$email' AND user_status = 1 AND user_type = 4";
+        $check_mail = "SELECT * FROM user WHERE email = '$email' AND user_status_id = 1";
         $check_mail_run = mysqli_query($con, $check_mail);
 
         if(mysqli_num_rows($check_mail_run) > 0){
             $row = mysqli_fetch_array($check_mail_run);
-            $user_type = $row['user_type'];
-            if($user_type == 4){
-                $get_email = $row['email'];
-                $new_password = substr(md5(microtime()),rand(0,26),8);
-                $hashed_password = md5($new_password);
-                $sql = "UPDATE student SET password='$hashed_password' WHERE email='$email'";
-            }
-            else{
-                $get_email = $row['email'];
-                $new_password = substr(md5(microtime()),rand(0,26),8);
-                $hashed_password = md5($new_password);
-                $sql = "UPDATE user SET password='$hashed_password' WHERE email='$email'";
-            }
+            $user_type = $row['user_type_id'];
+            $get_email = $row['email'];
+            $new_password = substr(md5(microtime()),rand(0,26),8);
+            $hashed_password = md5($new_password);
+            $sql = "UPDATE user SET password='$hashed_password' WHERE email='$email'";
         }
         if (mysqli_query($con, $sql)) {
 
@@ -56,7 +48,7 @@
 
             $_SESSION['status'] = "Your new password is now sent in e-mail.";
             $_SESSION['status_code'] = "success";
-            header("Location: " . base_url . "login/forgot");
+            header("Location: " . base_url . "login");
             exit(0);
         }
         else{
