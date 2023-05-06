@@ -64,7 +64,7 @@
                                         ?>
                                         <tr>
                                             <td><?= $row['user_id']; ?></td>
-                                            <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> </td>
+                                            <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
                                             <td><?= $row['email']; ?></td>
                                             <td>
                                                 <?php if($row['user_type_id'] == 1){

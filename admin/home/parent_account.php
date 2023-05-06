@@ -62,7 +62,7 @@
                                         ?>
                                         <tr>
                                             <td><?= $row['user_id']; ?></td>
-                                            <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> </td>
+                                            <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
                                             <td><?= $row['email']; ?></td>
                                             <td><?= $row['user_status']; ?></td>
                                             <td> 
