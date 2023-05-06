@@ -29,7 +29,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa-bullhorn"></i></div>
                     Manage Announcement
                 </a>
-                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/liquidation.php') !== false)  { echo 'active'; } ?>" href="liquidation">
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/expense.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/expense_view.php') !== false)  { echo 'active'; } ?>" href="expense">
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa-sheet-plastic"></i></div>
                     View Expenses
                 </a>
