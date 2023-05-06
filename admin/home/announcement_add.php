@@ -22,12 +22,7 @@
                                     <div class="card-body">
                                         <form action="code.php" method="post" autocomplete="off" enctype="multipart/form-data">
                                             <div class="row">
-                                                <div class="col-md-8 mb-3">
-                                                    <label for="" class="required">Title</label>
-                                                    <input required type="text" Placeholder="Enter Announcement Name" name="title" class="form-control">
-                                                </div>
-
-                                                <div class="col-md-4 mb-3">
+                                            <div class="col-md-5 mb-3">
                                                     <?php
                                                         $sql = "SELECT * FROM `activity` WHERE status = 'Active'";
                                                         $all_activity = mysqli_query($con,$sql);
@@ -47,6 +42,11 @@
                                                             </option>
                                                         <?php endwhile; ?>
                                                     </select>
+                                                </div>
+
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="" class="required">Title</label>
+                                                    <input required type="text" Placeholder="Enter Announcement Name" name="title" class="form-control">
                                                 </div>
 
                                                 <div class="col-md-12 mb-3">

@@ -29,12 +29,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-8 mb-3">
-                                                <label for="">Title</label>
-                                                <input disabled type="text" value="<?= $user['announcement_title']; ?>" class="form-control">
-                                            </div>
-
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-5 mb-3">
                                                 <?php
                                                     $sql = "SELECT * FROM `activity` WHERE status = 'Active'";
                                                     $all_activity = mysqli_query($con, $sql);
@@ -50,6 +45,11 @@
                                                         </option>
                                                     <?php } ?>
                                                 </select>
+                                            </div>
+
+                                            <div class="col-md-12 mb-3">
+                                                <label for="">Title</label>
+                                                <input disabled type="text" value="<?= $user['announcement_title']; ?>" class="form-control">
                                             </div>
 
                                             <div class="col-md-12 mb-3">
