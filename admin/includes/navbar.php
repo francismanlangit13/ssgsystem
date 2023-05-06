@@ -1,8 +1,8 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-secondary">
     <!-- Navbar Brand-->
     <div style="margin-left:1rem">
-        <a href="<?php echo base_url ?>" style="zoom:8%;"><img src="<?php echo base_url ?>assets/files/images/system/ssg.png" alt="" class="img-fluid"></a>
-        <a class="navbar-brand ps-2" href="index.html" style="font-size:13px; margin-bottom:1rem;">Supreme Student Government</a>
+        <a href="<?php echo base_url ?>admin/home/"><img id="cimg" class="img-fluid card-img-top" style="margin-right:-0.3rem;" src="<?php echo base_url ?>assets/files/images/system/ssg.png" alt="" class="img-fluid"></a>
+        <a class="navbar-brand ps-2" href="<?php echo base_url ?>admin/home/" style="font-size:13px; margin-bottom:1rem;">Supreme Student Government</a>
     </div>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
