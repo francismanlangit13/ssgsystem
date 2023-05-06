@@ -53,9 +53,9 @@
                                                 INNER JOIN
                                                 user_status
                                                 ON 
-                                                `user`.user_status = user_status.user_status_id
+                                                `user`.user_status_id = user_status.user_status_id
                                                 WHERE
-                                                user_type = 6
+                                                user_type_id = 6
                                                 AND
                                                 user_status.user_status_id IN (1, 2)
                                             ";
@@ -66,7 +66,7 @@
                                         <tr>
                                             <td><?= $row['user_id']; ?></td>
                                             <td><?= $row['student_id']; ?></td>
-                                            <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> </td>
+                                            <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
                                             <td><?= $row['email']; ?></td>
                                             <td><?= $row['user_status']; ?></td>
                                             <td> 
