@@ -74,7 +74,7 @@ if(isset($_POST["add_officer"])){
   $user_type = $role_as;
   $user_status = '1';
 
-  $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
+  $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type_id`, `user_status_id`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
   $query_run = mysqli_query($con, $query);
 
   if($query_run){
@@ -136,8 +136,8 @@ if(isset($_POST["update_officer"])){
     `gender`='$gender',
     `email`='$email',
     `phone`='$phone',
-    `user_type`='$user_type',
-    `user_status`='$user_status'
+    `user_type_id`='$user_type',
+    `user_status_id`='$user_status'
     WHERE `user_id`='$user_id'";
     $query_run = mysqli_query($con, $query);
 
@@ -160,7 +160,7 @@ if(isset($_POST['officer_delete'])){
     $user_id= $_POST['officer_delete'];
     $u_status = 3;
 
-    $query = "UPDATE `user` SET `user_status`='$u_status' WHERE user_id='$user_id'";
+    $query = "UPDATE `user` SET `user_status_id`='$u_status' WHERE user_id='$user_id'";
     $query_run = mysqli_query($con, $query);
     
     if($query_run){
@@ -231,7 +231,7 @@ if(isset($_POST["add_parent"])){
   $uploadDir = '../../assets/files/images/users/';
   $targetFile = $uploadDir . $fileName;
 
-  $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
+  $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type_id`, `user_status_id`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
   $query_run = mysqli_query($con, $query);
 
   if($query_run){
@@ -292,7 +292,7 @@ if(isset($_POST["update_parent"])){
   `gender`='$gender',
   `email`='$email',
   `phone`='$phone',
-  `user_status`='$user_status'
+  `user_status_id`='$user_status'
   WHERE `user_id`='$user_id'";
   $query_run = mysqli_query($con, $query);
 
@@ -315,7 +315,7 @@ if(isset($_POST['parent_delete'])){
   $user_id= $_POST['parent_delete'];
   $u_status = 3;
 
-  $query = "UPDATE `user` SET `user_status`='$u_status' WHERE user_id='$user_id'";
+  $query = "UPDATE `user` SET `user_status_id`='$u_status' WHERE user_id='$user_id'";
   $query_run = mysqli_query($con, $query);
   
   if($query_run){
@@ -388,7 +388,7 @@ if(isset($_POST["add_student"])){
   $uploadDir = '../../assets/files/images/users/';
   $targetFile = $uploadDir . $fileName;
 
-  $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$student_id','$level','$fileName','$user_type','$user_status')";
+  $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `photo`, `user_type_id`, `user_status_id`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$student_id','$level','$fileName','$user_type','$user_status')";
   $query_run = mysqli_query($con, $query);
 
   if($query_run){
@@ -453,7 +453,7 @@ if(isset($_POST["update_student"])){
   `phone`='$phone',
   `student_id`='$student_id',
   `level`='$level',
-  `user_status`='$user_status'
+  `user_status_id`='$user_status'
   WHERE `user_id`='$user_id'";
   $query_run = mysqli_query($con, $query);
 
@@ -476,7 +476,7 @@ if(isset($_POST['student_delete'])){
   $user_id= $_POST['student_delete'];
   $u_status = 3;
 
-  $query = "UPDATE `user` SET `user_status`='$u_status' WHERE user_id='$user_id'";
+  $query = "UPDATE `user` SET `user_status_id`='$u_status' WHERE user_id='$user_id'";
   $query_run = mysqli_query($con, $query);
   
   if($query_run){
@@ -524,7 +524,7 @@ if(isset($_POST["add_user"])){
         $targetFile = $uploadDir . $fileName;
 
         if (move_uploaded_file($fileTmpname, $targetFile)) {
-          $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type`, `user_status`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
+          $query = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `photo`, `user_type_id`, `user_status_id`) VALUES ('$fname','$mname','$lname','$suffix','$gender','$email','$phone','$password','$fileName','$user_type','$user_status')";
           $query_run = mysqli_query($con, $query);
 
           if($query_run){
@@ -610,7 +610,7 @@ if(isset($_POST["update_user"])){
   `gender`='$gender',
   `email`='$email',
   `phone`='$phone',
-  `user_status`='$user_status'
+  `user_status_id`='$user_status'
   WHERE `user_id`='$user_id'";
   $query_run = mysqli_query($con, $query);
 
@@ -633,7 +633,7 @@ if(isset($_POST['user_delete'])){
   $user_id= $_POST['user_delete'];
   $u_status = 3;
 
-  $query = "UPDATE `user` SET `user_status`='$u_status' WHERE user_id='$user_id'";
+  $query = "UPDATE `user` SET `user_status_id`='$u_status' WHERE user_id='$user_id'";
   $query_run = mysqli_query($con, $query);
   
   if($query_run){

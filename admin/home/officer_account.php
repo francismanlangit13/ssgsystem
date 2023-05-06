@@ -53,9 +53,9 @@
                                                 INNER JOIN
                                                 user_status
                                                 ON 
-                                                `user`.user_status = user_status.user_status_id
+                                                `user`.user_status_id = user_status.user_status_id
                                                 WHERE
-                                                user_type IN (1, 2, 3, 4, 5) AND
+                                                user_type_id IN (1, 2, 3, 4, 5) AND
                                                 user_status.user_status_id IN (1, 2)
                                             ";
                                             $query_run = mysqli_query($con, $query);
@@ -67,15 +67,15 @@
                                             <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> </td>
                                             <td><?= $row['email']; ?></td>
                                             <td>
-                                                <?php if($row['user_type'] == 1){
+                                                <?php if($row['user_type_id'] == 1){
                                                     echo "Admin";
-                                                } elseif($row['user_type'] == 2){
+                                                } elseif($row['user_type_id'] == 2){
                                                     echo "President";
-                                                } elseif($row['user_type'] == 3){
+                                                } elseif($row['user_type_id'] == 3){
                                                     echo "Vice President";
-                                                } elseif($row['user_type'] == 4){
+                                                } elseif($row['user_type_id'] == 4){
                                                     echo "Secretary";
-                                                } elseif($row['user_type'] == 5){
+                                                } elseif($row['user_type_id'] == 5){
                                                     echo "Treasurer";
                                                 } else { } ?>
                                             </td>
