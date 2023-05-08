@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2023 at 05:10 PM
+-- Generation Time: May 08, 2023 at 05:22 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -115,6 +115,13 @@ CREATE TABLE `payment` (
   `date` datetime NOT NULL,
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`id`, `user_id`, `platform`, `referencenumber`, `picture`, `date`, `status`) VALUES
+(1, 4, 'Gcash', '14568435355', 'user_20230503_232958.jpg', '2023-05-03 15:24:45', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -345,7 +352,7 @@ ALTER TABLE `liquidation`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `qrcode`

@@ -1,4 +1,4 @@
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-secondary">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-secondary noprint">
     <!-- Navbar Brand-->
     <div style="margin-left:1rem">
         <a href="<?php echo base_url ?>admin/home/"><img id="cimg" class="img-fluid card-img-top" style="margin-right:-0.3rem;" src="<?php echo base_url ?>assets/files/images/system/ssg.png" alt="" class="img-fluid"></a>

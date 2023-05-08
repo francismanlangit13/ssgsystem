@@ -1,5 +1,5 @@
 <div id="layoutSidenav_nav">
-    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <nav class="sb-sidenav accordion sb-sidenav-dark noprint" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Home</div>
@@ -44,10 +44,18 @@
                         <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/onlinehistory.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinehistory_view.php') !== false)  { echo 'active'; }?>" href="onlinehistory.php">Online Payment</a>
                     </nav>
                 </div>
-                <a class="nav-link" href="generate_report.php">
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_studentpayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_archivestudent.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_studentdetails.php') !== false)  { echo 'active'; } else { echo 'collapsed'; } ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa-print"></i></div>
                     Generate Report
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
+                <div class="<?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_studentpayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_archivestudent.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_studentdetails.php') !== false)  { echo 'active'; } else { echo 'collapse'; } ?>" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_archivestudent.php') !== false)  { echo 'active'; }?>" href="generate_archivestudent.php">Archive Student</a>
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_studentdetails.php') !== false)  { echo 'active'; }?>" href="generate_studentdetails.php">Student Details</a>
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_studentpayment.php') !== false)  { echo 'active'; }?>" href="generate_studentpayment.php">Student Payment</a>
+                    </nav>
+                </div>
             </div>
         </div>
         <div class="sb-sidenav-footer">

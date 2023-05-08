@@ -25,9 +25,7 @@
                                             <th>No.</th>
                                             <th>Student ID</th>
                                             <th>Name</th>
-                                            <th>Reference Number</th>
                                             <th>Platform</th>
-                                            <th>Receipt</th>
                                             <th>Date Paid</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -38,9 +36,7 @@
                                             <th>No.</th>
                                             <th>Student ID</th>
                                             <th>Name</th>
-                                            <th>Reference Number</th>
                                             <th>Platform</th>
-                                            <th>Receipt</th>
                                             <th>Date Paid</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -65,9 +61,7 @@
                                             <td><?= $row['id']; ?></td>
                                             <td><?= $row['student_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
-                                            <td><?= $row['referencenumber']; ?></td>
                                             <td><?= $row['platform']; ?></td>
-                                            <td><?= $row['picture']; ?></td>
                                             <td><?= $row['short_date_created']; ?></td>
                                             <td><?= $row['status']; ?></td>
                                             <td>
@@ -83,8 +77,6 @@
                                             else{
                                         ?>
                                             <tr>
-                                                <td>No Record Found</td>
-                                                <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>

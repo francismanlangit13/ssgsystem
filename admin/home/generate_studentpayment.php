@@ -1,82 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-<link rel="stylesheet" href="node_modules/mdbootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="node_modules/mdbootstrap/css/mdb.min.css">
-<link rel="stylesheet" href="node_modules/mdbootstrap/css/style.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-   
-<style type="text/css" media="print">
- @media print{
-    .noprint, .noprint *{
-        display: none; !important;
-    }
- }
-
-</style>
-
-
-
-    </head>
-   
-    <body onload="print()">
-        <div class="container">
-            <center>
-                <h3 class="mt-3 mb-3" style="margin-top: 30px;">Liquidation Report</h3>
-            </center>
-            <table id="ready" class="table table-striped table-bordered" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    include('./config/dbcon.php');
-
-                    $query = "SELECT
-                    student.fname, 
-                    student.mname, 
-                    student.lname, 
-                    fines_transaction.fines_fee, 
-                    fines_transaction.fines_date
-                FROM
-                    fines_transaction
-                    INNER JOIN
-                    student
-                    ON 
-                        fines_transaction.fines_id = student.user_id
-                ORDER BY
-                    fines_transaction.fines_date DESC";
-                 $query_run = mysqli_query($con, $query);
-
-                 while($row = mysqli_fetch_array($query_run)){
-                    ?>
-                    <tr>
-                    <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> </td>
-                    <td><?= $row['fines_fee']; ?></td>
-                    <td><?= $row['fines_date']; ?></td>
-                    </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+    <?php include('../includes/header.php'); ?>
+    <?php
+        $from = isset($_POST['from']) ? $_POST['from'] : date("Y-m-d",strtotime(date("Y-m-d"))); 
+        $to = isset($_POST['to']) ? $_POST['to'] : date("Y-m-d",strtotime(date("Y-m-d"))); 
+        function duration($dur = 0){
+            if($dur == 0){
+                return "00:00";
+            }
+            $hours = floor($dur / (60 * 60));
+            $min = floor($dur / (60)) - ($hours*60);
+            $dur = sprintf("%'.02d",$hours).":".sprintf("%'.02d",$min);
+            return $dur;
+        }
+    ?>
+    <body class="sb-nav-fixed">
+        <?php include ('../includes/navbar.php'); ?>
+        <div id="layoutSidenav">
+            <?php include ('../includes/sidebar.php'); ?>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <ol class="breadcrumb mb-4 mt-3 noprint">
+                            <li class="breadcrumb-item">Dashboard</li>
+                            <li class="breadcrumb-item ">Generate</li>
+                            <li class="breadcrumb-item ">Student Payment</li>
+                        </ol>
+                        <div class="container">
+                            <center class="noprint"><h3 class="mt-3 mb-3" style="margin-top: 30px;">Generate Student Payment</h3></center>
+                            <div class="col-xl-12 col-md-12 noprint">
+                                <div class="card bg-danger text-white mb-4">
+                                    <div class="card-body">
+                                        <fieldset>
+                                            <legend>Filter</legend>
+                                            <form action="" id="filter" method="POST">
+                                                <div class="row align-items-end">
+                                                    <div class="form-group col-md-3">
+                                                        <label for="from" class="control-label">Date From</label>
+                                                        <input type="date" name="from" id="from" value="<?= $from ?>" class="form-control form-control-sm rounded-0">
+                                                    </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label for="to" class="control-label">Date To</label>
+                                                        <input type="date" name="to" id="to" value="<?= $to ?>" class="form-control form-control-sm rounded-0">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <button class="btn btn-primary btn-flat btn-sm" id="submit-btn"><i class="fa fa-filter"></i> Filter</button>
+                                                        <button class="btn btn-sm btn-flat btn-success" type="button" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+                                                        <button class="btn btn-sm btn-flat btn-success" type="button" id="export-btn"><i class="fas fa-file-csv"></i> Export</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <style>
+                                #sys_logo{
+                                    object-fit:cover;
+                                    object-position:center center;
+                                    width: 4.5em;
+                                    height: 4.5em;
+                                    margin-top: -4rem;
+                                }
+                            </style>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-2 d-flex justify-content-center align-items-center">
+                                        <img src="<?php echo base_url ?>assets/files/images/system/jbi.jpg" class="img-circle" id="sys_logo" alt="System Logo">
+                                    </div>
+                                    <div class="col-8">
+                                        <h4 class="text-center" style="font-size:14px;"><b>JIMENEZ BETHEL INSTITUTE</b></h4>
+                                        <h3 class="text-center" style="font-size:14px;"><b>SUPREME STUDENT GOVERNMENT</b></h3>
+                                        <h5 class="text-center" style="font-size:12px;">BONIFACIO/BURGOS ST. NAGA, JIMENEZ, MISAMIS OCCIDENTAL - 7204</h5>
+                                        <hr style="border-top: 1.5px solid black !important; opacity: 100 !important;">
+                                        <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5>
+                                    </div>
+                                    <div class="col-2 d-flex justify-content-center align-items-center">
+                                        <img src="<?php echo base_url ?>assets/files/images/system/ssg.png" class="img-circle" id="sys_logo" alt="System Logo">
+                                    </div>
+                                </div>
+                                <table class="table text-center table-hover table-striped">
+                                    <colgroup>
+                                        <col width="5%">
+                                        <col width="20%">
+                                        <col width="30%">
+                                        <col width="20%">
+                                        <col width="25%">
+                                    </colgroup>
+                                    <thead>
+                                        <tr class="bg-danger text-light">
+                                            <th>No.</th>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                            $i = 1;
+                                            $qry = $con->query("SELECT *, DATE_FORMAT(fines_transaction.fines_date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
+                                            FROM fines_transaction INNER JOIN user
+                                            ON 
+                                            fines_transaction.user_id = user.user_id
+                                            AND date(fines_date) between '{$from}' and '{$to}' order by unix_timestamp(fines_date) asc");
+                                            while($row = $qry->fetch_assoc()):
+                                        ?>
+                                        <tr>
+                                            <td class="text-center"><?php echo $row['transaction_id'] ?></td>
+                                            <td class="text-center"><?php echo $row['student_id'] ?></td>
+                                            <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
+                                            <td class=""><p class="m-0">&#8369; <?php echo $row['fines_fee'] ?></p></td>
+                                            <td class=""><?php echo $row['short_date_created'] ?></td>
+                                        </tr>
+                                        <?php endwhile; ?>
+                                        <?php if($qry->num_rows <= 0): ?>
+                                            <tr>
+                                                <th class="py-1 text-center" colspan="12">No Data.</th>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </main>
+                <?php include ('../includes/footer.php'); ?>
+            </div>
         </div>
-        <div class="container">
-            <a href="generate_report.php" type="" class="btn btn-info noprint" style="width:100%;");>CANCEL PRINTING</a>
-        </div>
-
+        <?php include ('../includes/bottom.php'); ?>
     </body>
 </html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function(){
+        $('.select2').select2({
+            width:'100%'
+        })
+        $('#filter').submit(function(e){
+            e.preventDefault();
+            //location.href= './?page=reports/date_wise_transaction&'+$(this).serialize();
+        })
+	})
+</script>
+<script>
+	function printDiv() {
+		var divToPrint = document.getElementById('outprint');
+		var newWin = window.open('', 'Print-Window');
+		newWin.document.open();
+		newWin.document.write('<html><head><title>Print Content</title></head><body>' + divToPrint.innerHTML + '</body></html>');
+		newWin.document.close();
+		newWin.focus();
+		setTimeout(function(){newWin.print();},1000);
+	}
+</script>
+
+<script>
+	const fromInput = document.querySelector('#from');
+	const toInput = document.querySelector('#to');
+
+	// Attach an event listener to the "from" input field
+	fromInput.addEventListener('change', () => {
+		// Get the selected date in the "from" input field
+		const selectedDate = new Date(fromInput.value);
+
+		// Set the minimum value of the "to" input field to be the selected date in the "from" input field
+		toInput.min = selectedDate.toISOString().split('T')[0];
+
+		// Disable the "to" input field and the "Filter" button if the selected date is greater than or equal to today's date
+		const today = new Date();
+		if (selectedDate >= today) {
+		toInput.disabled = true;
+		$('#submit-btn').prop('disabled', true);
+		} else {
+		toInput.disabled = false;
+		$('#submit-btn').prop('disabled', false);
+		}
+	});
+</script>
+
+<!-- <script>
+    function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++) {
+                row.push(cols[j].innerText);
+            }
+
+            csv.push(row.join(","));
+        }
+
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    }
+
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+
+        csvFile = new Blob([csv], {type: "text/csv"});
+        downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+
+    // Export table when clicking on a button
+    document.querySelector("#export-btn").addEventListener("click", function () {
+        var filename = "table.csv";
+        exportTableToCSV(filename);
+    });
+</script> -->
+
+<script>
+    function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++) {
+                row.push(cols[j].innerText);
+            }
+
+            csv.push(row.join(","));
+        }
+
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    }
+
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+
+        // Add BOM to support UTF-8 encoding in Excel
+        var csvData = new Blob(["\ufeff" + csv], {type: 'text/csv;charset=utf-8;'});
+
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(csvData, filename);
+        } else {
+            // Download CSV file
+            downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvData);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+        }
+    }
+
+    // Export table when clicking on a button
+    document.querySelector("#export-btn").addEventListener("click", function () {
+        var filename = "table.csv";
+        exportTableToCSV(filename);
+    });
+</script>
