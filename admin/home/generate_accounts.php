@@ -25,7 +25,6 @@
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Generate</li>
                             <li class="breadcrumb-item ">Archive Accounts</li>
-                            <?php $person_id =  $_SESSION['auth_user']['user_id']; echo $person_id?>
                         </ol>
                         <div class="container">
                             <center class="noprint"><h3 class="mt-3 mb-3" style="margin-top: 30px;">Generate Archive Accounts</h3></center>
