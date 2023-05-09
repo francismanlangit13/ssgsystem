@@ -159,8 +159,18 @@ if(isset($_POST["update_officer"])){
 if(isset($_POST['officer_delete'])){
     $user_id= $_POST['officer_delete'];
     $u_status = 3;
+    // Deleted by person
+    $date = date('Y-m-d H:i:s');
+    $person_id =  $_SESSION['auth_user']['user_id'];
+    $sql = "SELECT * FROM user WHERE user_id='$person_id' ";
+    $sql_run = mysqli_query($con, $sql);
+    if(mysqli_num_rows($sql_run) > 0) {
+      foreach($sql_run as $row){
+        $person = $row['fname'] .' '. $row['lname'];
+      }
+    }
 
-    $query = "UPDATE `user` SET `user_status_id`='$u_status' WHERE user_id='$user_id'";
+    $query = "UPDATE `user` SET `user_status_id`='$u_status', `deleted_by`='$person', `date_deleted`='$date' WHERE user_id='$user_id'";
     $query_run = mysqli_query($con, $query);
     
     if($query_run){
@@ -314,8 +324,18 @@ if(isset($_POST["update_parent"])){
 if(isset($_POST['parent_delete'])){
   $user_id= $_POST['parent_delete'];
   $u_status = 3;
+  // Deleted by person
+  $date = date('Y-m-d H:i:s');
+  $person_id =  $_SESSION['auth_user']['user_id'];
+  $sql = "SELECT * FROM user WHERE user_id='$person_id' ";
+  $sql_run = mysqli_query($con, $sql);
+  if(mysqli_num_rows($sql_run) > 0) {
+    foreach($sql_run as $row){
+      $person = $row['fname'] .' '. $row['lname'];
+    }
+  }
 
-  $query = "UPDATE `user` SET `user_status_id`='$u_status' WHERE user_id='$user_id'";
+  $query = "UPDATE `user` SET `user_status_id`='$u_status', `deleted_by`='$person', `date_deleted`='$date' WHERE user_id='$user_id'";
   $query_run = mysqli_query($con, $query);
   
   if($query_run){
@@ -475,8 +495,18 @@ if(isset($_POST["update_student"])){
 if(isset($_POST['student_delete'])){
   $user_id= $_POST['student_delete'];
   $u_status = 3;
+  // Deleted by person
+  $date = date('Y-m-d H:i:s');
+  $person_id =  $_SESSION['auth_user']['user_id'];
+  $sql = "SELECT * FROM user WHERE user_id='$person_id' ";
+  $sql_run = mysqli_query($con, $sql);
+  if(mysqli_num_rows($sql_run) > 0) {
+    foreach($sql_run as $row){
+      $person = $row['fname'] .' '. $row['lname'];
+    }
+  }
 
-  $query = "UPDATE `user` SET `user_status_id`='$u_status' WHERE user_id='$user_id'";
+  $query = "UPDATE `user` SET `user_status_id`='$u_status', `deleted_by`='$person', `date_deleted`='$date' WHERE user_id='$user_id'";
   $query_run = mysqli_query($con, $query);
   
   if($query_run){
