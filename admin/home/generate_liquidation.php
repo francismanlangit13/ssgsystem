@@ -24,10 +24,10 @@
                         <ol class="breadcrumb mb-4 mt-3 noprint">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Generate</li>
-                            <li class="breadcrumb-item ">Student Payment</li>
+                            <li class="breadcrumb-item ">Liquidation</li>
                         </ol>
                         <div class="container">
-                            <center class="noprint"><h3 class="mt-3 mb-3" style="margin-top: 30px;">Generate Student Payment</h3></center>
+                            <center class="noprint"><h3 class="mt-3 mb-3" style="margin-top: 30px;">Generate Liquidation</h3></center>
                             <div class="col-xl-12 col-md-12 noprint">
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">
@@ -56,74 +56,75 @@
                             </div>
                         </div>
                         <style>
-                                #sys_logo{
-                                    object-fit:cover;
-                                    object-position:center center;
-                                    width: 4.5em;
-                                    height: 4.5em;
-                                    margin-top: -4rem;
-                                }
-                            </style>
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-2 d-flex justify-content-center align-items-center">
-                                        <img src="<?php echo base_url ?>assets/files/images/system/jbi.jpg" class="img-circle" id="sys_logo" alt="System Logo">
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="text-center" style="font-size:14px;"><b>JIMENEZ BETHEL INSTITUTE</b></h4>
-                                        <h3 class="text-center" style="font-size:14px;"><b>SUPREME STUDENT GOVERNMENT</b></h3>
-                                        <h5 class="text-center" style="font-size:12px;">BONIFACIO/BURGOS ST. NAGA, JIMENEZ, MISAMIS OCCIDENTAL - 7204</h5>
-                                        <hr style="border-top: 1.5px solid black !important; opacity: 100 !important;">
-                                        <h5 class="text-center" style="font-size:12px;">(Student Payment Report)</h5>
-                                        <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5>
-                                    </div>
-                                    <div class="col-2 d-flex justify-content-center align-items-center">
-                                        <img src="<?php echo base_url ?>assets/files/images/system/ssg.png" class="img-circle" id="sys_logo" alt="System Logo">
-                                    </div>
+                            #sys_logo{
+                                object-fit:cover;
+                                object-position:center center;
+                                width: 4.5em;
+                                height: 4.5em;
+                                margin-top: -4rem;
+                            }
+                        </style>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                    <img src="<?php echo base_url ?>assets/files/images/system/jbi.jpg" class="img-circle" id="sys_logo" alt="System Logo">
                                 </div>
-                                <table class="table text-center table-hover table-striped">
-                                    <colgroup>
-                                        <col width="5%">
-                                        <col width="20%">
-                                        <col width="30%">
-                                        <col width="20%">
-                                        <col width="25%">
-                                    </colgroup>
-                                    <thead>
-                                        <tr class="bg-danger text-light">
-                                            <th>No.</th>
-                                            <th>Student ID</th>
-                                            <th>Name</th>
-                                            <th>Amount</th>
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                            $i = 1;
-                                            $qry = $con->query("SELECT *, DATE_FORMAT(fines_transaction.fines_date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
-                                            FROM fines_transaction INNER JOIN user
-                                            ON 
-                                            fines_transaction.user_id = user.user_id
-                                            AND date(fines_date) between '{$from}' and '{$to}' order by unix_timestamp(fines_date) asc");
-                                            while($row = $qry->fetch_assoc()):
-                                        ?>
-                                        <tr>
-                                            <td class="text-center"><?php echo $row['transaction_id'] ?></td>
-                                            <td class="text-center"><?php echo $row['student_id'] ?></td>
-                                            <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
-                                            <td class=""><p class="m-0">&#8369; <?php echo $row['fines_fee'] ?></p></td>
-                                            <td class=""><?php echo $row['short_date_created'] ?></td>
-                                        </tr>
-                                        <?php endwhile; ?>
-                                        <?php if($qry->num_rows <= 0): ?>
-                                            <tr>
-                                                <th class="py-1 text-center" colspan="12">No Data.</th>
-                                            </tr>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
+                                <div class="col-8">
+                                    <h4 class="text-center" style="font-size:14px;"><b>JIMENEZ BETHEL INSTITUTE</b></h4>
+                                    <h3 class="text-center" style="font-size:14px;"><b>SUPREME STUDENT GOVERNMENT</b></h3>
+                                    <h5 class="text-center" style="font-size:12px;">BONIFACIO/BURGOS ST. NAGA, JIMENEZ, MISAMIS OCCIDENTAL - 7204</h5>
+                                    <hr style="border-top: 1.5px solid black !important; opacity: 100 !important;">
+                                    <h5 class="text-center" style="font-size:12px;">(Liquidation Report)</h5>
+                                    <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5>
+                                </div>
+                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                    <img src="<?php echo base_url ?>assets/files/images/system/ssg.png" class="img-circle" id="sys_logo" alt="System Logo">
+                                </div>
                             </div>
+                            <table class="table text-center table-hover table-striped">
+                                <colgroup>
+                                    <col width="5%">
+                                    <col width="20%">
+                                    <col width="30%">
+                                    <col width="20%">
+                                    <col width="25%">
+                                </colgroup>
+                                <thead>
+                                    <tr class="bg-danger text-light">
+                                        <th>Activity</th>
+                                        <th>Purpose</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                        $i = 1;
+                                        $qry = $con->query("SELECT *, DATE_FORMAT(fines_transaction.fines_date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
+                                        FROM fines_transaction INNER JOIN user
+                                        ON 
+                                        fines_transaction.user_id = user.user_id
+                                        AND date(fines_date) between '{$from}' and '{$to}' order by unix_timestamp(fines_date) asc");
+                                        while($row = $qry->fetch_assoc()):
+                                    ?>
+                                    <tr>
+                                        <td class="text-center"><?php echo $row['transaction_id'] ?></td>
+                                        <td class="text-center"><?php echo $row['student_id'] ?></td>
+                                        <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
+                                        <td class=""><p class="m-0">&#8369; <?php echo $row['fines_fee'] ?></p></td>
+                                        <td class=""><?php echo $row['short_date_created'] ?></td>
+                                    </tr>
+                                    <?php endwhile; ?>
+                                    <?php if($qry->num_rows <= 0): ?>
+                                        <tr>
+                                            <th class="py-1 text-center" colspan="12">No Data.</th>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </main>
                 <?php include ('../includes/footer.php'); ?>

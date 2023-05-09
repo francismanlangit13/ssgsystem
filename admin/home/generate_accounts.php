@@ -83,6 +83,7 @@
                                         <h3 class="text-center" style="font-size:14px;"><b>SUPREME STUDENT GOVERNMENT</b></h3>
                                         <h5 class="text-center" style="font-size:12px;">BONIFACIO/BURGOS ST. NAGA, JIMENEZ, MISAMIS OCCIDENTAL - 7204</h5>
                                         <hr style="border-top: 1.5px solid black !important; opacity: 100 !important;">
+                                        <h5 class="text-center" style="font-size:12px;">(Archive Accounts)</h5>
                                         <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5>
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center">
