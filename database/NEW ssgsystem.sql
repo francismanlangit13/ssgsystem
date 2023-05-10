@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2023 at 09:14 AM
+-- Generation Time: May 10, 2023 at 11:03 AM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `activity` (
 --
 
 INSERT INTO `activity` (`activity_id`, `user_id`, `activity_title`, `status`) VALUES
-(1, 1, 'new', 'Active');
+(1, 1, 'Instamurals 2023', 'Active');
 
 -- --------------------------------------------------------
 
@@ -84,21 +84,8 @@ CREATE TABLE `fines_transaction` (
 --
 
 INSERT INTO `fines_transaction` (`transaction_id`, `user_id`, `fines_fee`, `fines_date`) VALUES
-(1, 4, 256.75, '2023-05-02 13:52:35');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `liquidation`
---
-
-CREATE TABLE `liquidation` (
-  `liqui_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `liqui_name` varchar(255) NOT NULL,
-  `liqui_purpose` text NOT NULL,
-  `liqui_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(1, 4, 256.75, '2023-04-02 13:52:35'),
+(2, 4, 500, '2023-05-10 08:43:32');
 
 -- --------------------------------------------------------
 
@@ -141,6 +128,25 @@ CREATE TABLE `qrcode` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `remaining_balance`
+--
+
+CREATE TABLE `remaining_balance` (
+  `balance_id` int(11) NOT NULL,
+  `balance` varchar(255) NOT NULL,
+  `balance_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `remaining_balance`
+--
+
+INSERT INTO `remaining_balance` (`balance_id`, `balance`, `balance_date`) VALUES
+(1, '1000', '2023-05-10 15:30:25');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ssg_expenses`
 --
 
@@ -151,6 +157,7 @@ CREATE TABLE `ssg_expenses` (
   `type` varchar(255) NOT NULL,
   `purpose` varchar(255) NOT NULL,
   `amount` varchar(255) NOT NULL,
+  `balance` varchar(255) NOT NULL,
   `or_number` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL,
   `date` datetime NOT NULL
@@ -160,8 +167,9 @@ CREATE TABLE `ssg_expenses` (
 -- Dumping data for table `ssg_expenses`
 --
 
-INSERT INTO `ssg_expenses` (`expense_id`, `user_id`, `activity_id`, `type`, `purpose`, `amount`, `or_number`, `photo`, `date`) VALUES
-(1, 1, 1, 'Materials', 'plywood', '374.75', '1686425', 'user_20230503_232958.jpg', '2023-04-17 15:30:15');
+INSERT INTO `ssg_expenses` (`expense_id`, `user_id`, `activity_id`, `type`, `purpose`, `amount`, `balance`, `or_number`, `photo`, `date`) VALUES
+(1, 1, 1, 'Materials', 'plywood', '374.75', '', '1686425', 'user_20230503_232958.jpg', '2023-04-17 15:30:15'),
+(2, 1, 1, 'Supply', 'Gamit sa intrams', '175', '', '116542', 'user_20230503_232958.jpg', '2023-04-17 15:40:15');
 
 -- --------------------------------------------------------
 
@@ -197,10 +205,10 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `penalty`, `balance`, `photo`, `date_added`, `deleted_by`, `date_deleted`, `user_type_id`, `user_status_id`) VALUES
 (1, 'User', '', 'Admin', '', '', 'admin@gmail.com', '09457664949', '0192023a7bbd73250516f069df18b500', '', '', '', '', 'user_20230504_101038.png', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 1, 1),
-(2, 'Francis', '', 'Carlo', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', '', '', 'user_20230504_101038.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-09 15:10:34', 2, 3),
-(3, 'new parent1', '', 'new', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', '', '', 'user_20230504_104014.png', '2023-05-03 04:06:31', 'User Admin', '2023-05-09 15:12:41', 7, 3),
-(4, 'Student', '', 'Franz', 'Sr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '2019300208', 'Grade 10', '', '', 'user_20230504_140135.png', '2023-04-21 12:07:07', 'User Admin', '2023-05-09 15:13:33', 6, 3),
-(5, 'new', '', 'admin', '', 'Male', 'admin1@gmail.com', '09457664949', 'f7b8bb95e0c1c5138688c03f2fce0b2a', '', '', '', '', 'user_20230504_150919.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-01 03:11:07', 2, 3);
+(2, 'Francis', '', 'Carlo', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', '', '', 'user_20230504_101038.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-09 15:10:34', 2, 1),
+(3, 'new parent1', '', 'new', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', '', '', 'user_20230504_104014.png', '2023-05-03 04:06:31', 'User Admin', '2023-05-09 15:12:41', 4, 1),
+(4, 'Student', '', 'Franz', 'Sr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '2019300208', 'Grade 10', '', '', 'user_20230504_140135.png', '2023-04-21 12:07:07', 'User Admin', '2023-05-09 15:13:33', 6, 1),
+(5, 'new', '', 'admin', '', 'Male', 'admin1@gmail.com', '09457664949', 'f7b8bb95e0c1c5138688c03f2fce0b2a', '', '', '', '', 'user_20230504_150919.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-01 03:11:07', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -273,13 +281,6 @@ ALTER TABLE `fines_transaction`
   ADD KEY `user_id` (`user_id`) USING BTREE;
 
 --
--- Indexes for table `liquidation`
---
-ALTER TABLE `liquidation`
-  ADD PRIMARY KEY (`liqui_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
 -- Indexes for table `payment`
 --
 ALTER TABLE `payment`
@@ -292,6 +293,12 @@ ALTER TABLE `payment`
 ALTER TABLE `qrcode`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `remaining_balance`
+--
+ALTER TABLE `remaining_balance`
+  ADD PRIMARY KEY (`balance_id`);
 
 --
 -- Indexes for table `ssg_expenses`
@@ -341,13 +348,7 @@ ALTER TABLE `announcement`
 -- AUTO_INCREMENT for table `fines_transaction`
 --
 ALTER TABLE `fines_transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `liquidation`
---
-ALTER TABLE `liquidation`
-  MODIFY `liqui_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -362,10 +363,16 @@ ALTER TABLE `qrcode`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `remaining_balance`
+--
+ALTER TABLE `remaining_balance`
+  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `ssg_expenses`
 --
 ALTER TABLE `ssg_expenses`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -407,12 +414,6 @@ ALTER TABLE `announcement`
 --
 ALTER TABLE `fines_transaction`
   ADD CONSTRAINT `fines_transaction_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `liquidation`
---
-ALTER TABLE `liquidation`
-  ADD CONSTRAINT `liquidation_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `payment`

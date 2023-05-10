@@ -82,39 +82,43 @@
                                 </div>
                             </div>
                             <table class="table text-center table-hover table-striped">
-                                <colgroup>
+                                <!-- <colgroup>
                                     <col width="5%">
                                     <col width="20%">
-                                    <col width="30%">
                                     <col width="20%">
-                                    <col width="25%">
-                                </colgroup>
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                </colgroup> -->
                                 <thead>
                                     <tr class="bg-danger text-light">
                                         <th>Activity</th>
-                                        <th>Purpose</th>
-                                        <th>Amount</th>
                                         <th>Date</th>
-                                        <th>Type</th>
-                                        <th>Action</th>
+                                        <th class="noprint">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php 
-                                        $i = 1;
-                                        $qry = $con->query("SELECT *, DATE_FORMAT(fines_transaction.fines_date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
-                                        FROM fines_transaction INNER JOIN user
+                                        $qry = $con->query("SELECT *, DATE_FORMAT(ssg_expenses.date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
+                                        FROM activity 
+                                        INNER JOIN ssg_expenses
+                                        ON
+                                        ssg_expenses.activity_id = activity.activity_id
+                                        INNER JOIN user
                                         ON 
-                                        fines_transaction.user_id = user.user_id
-                                        AND date(fines_date) between '{$from}' and '{$to}' order by unix_timestamp(fines_date) asc");
+                                        activity.user_id = user.user_id
+                                        AND date(ssg_expenses.date) between '{$from}' and '{$to}' GROUP BY activity.activity_id order by unix_timestamp(ssg_expenses.date) asc");
                                         while($row = $qry->fetch_assoc()):
                                     ?>
                                     <tr>
-                                        <td class="text-center"><?php echo $row['transaction_id'] ?></td>
-                                        <td class="text-center"><?php echo $row['student_id'] ?></td>
-                                        <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
-                                        <td class=""><p class="m-0">&#8369; <?php echo $row['fines_fee'] ?></p></td>
-                                        <td class=""><?php echo $row['short_date_created'] ?></td>
+                                        <td class="text-center"><?php echo $row['activity_title'] ?></td>
+                                        <td class=""><p class="m-0"><?php echo $row['short_date_created'] ?></p></td>
+                                        <td class="noprint">
+                                            <form action="generate_tresurer_report.php" method="POST" target="_blank">  
+                                                <input type="hidden" name="id" value="<?php echo $row['activity_id']?>">
+                                                <button type="submit" class="btn btn-primary btn-xs" onclick="printReport()">GENERATE</button> 
+                                            </form>   
+                                        </td>
                                     </tr>
                                     <?php endwhile; ?>
                                     <?php if($qry->num_rows <= 0): ?>
