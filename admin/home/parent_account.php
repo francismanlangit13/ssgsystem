@@ -19,6 +19,7 @@
                                 List of Parent Account
                                 <div class="float-end">
                                     <a type="button" class="btn btn-primary" href="parent_add" style="zoom:75%"><i class="fa fa-plus"></i> Add Parent Account</a>
+                                    <a type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCSV" style="zoom:75%"><i class="fa fa-file-csv"></i> Import CSV</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -134,6 +135,37 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal Import CSV -->
+<div class="modal fade" id="exampleModalCSV" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelCSV" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="code.php" method="post" name="upload_excel" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-file-csv"></i> Import CSV</h5>
+                </div>
+                <div class="col-sm-12 p-3 mr-4 mb-4 rounded">
+                    <div class="form-group">
+                        <div class="input-group flex-nowrap">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="border-radius:0rem !important;">
+                                    <i class="fa-solid fa-file-csv fa-xl"></i>
+                                </span>
+                            </div>
+                            <input id="import_parents" type="file" class="form-control" name="file" placeholder="File" aria-label="File" accept=".csv" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" name="import_parents" class="btn btn-success">
+                        <i class="fal fa-upload"></i> Upload
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!-- JavaScript -->

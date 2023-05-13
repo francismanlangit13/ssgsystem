@@ -1078,3 +1078,83 @@ if (isset($_POST["import_students"])) {
   // Close database connection
   mysqli_close($con);
 }
+
+if (isset($_POST["import_parents"])) {
+  $filename = $_FILES["file"]["tmp_name"];
+  $allowed_extensions = array('csv');
+  $date = date('Y-m-d H:i:s');
+
+  // Get file extension of csv
+  $file_extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+
+  // Check if file extension is allowed
+  if (!in_array($file_extension, $allowed_extensions)) {
+      $_SESSION['status'] = "Invalid file extension";
+      $_SESSION['status_code'] = "error";
+      header("Location: " . base_url . "admin/home/parent_account.php");
+      exit;
+  }
+
+  // Open CSV file for reading
+  $file = fopen($filename, "r");
+  if (!$file) {
+      $_SESSION['status'] = "Error opening file";
+      $_SESSION['status_code'] = "error";
+      header("Location: " . base_url . "admin/home/parent_account.php");
+      exit;
+  }
+  // Read CSV file row by row and insert into database
+  $i = 0;
+  while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE) {
+      if ($i > 0) {
+          // Insert row into database
+          $var0 = addslashes($emapData[0]);
+          $var1 = addslashes($emapData[1]);
+          $var2 = addslashes($emapData[2]);
+          $var3 = addslashes($emapData[3]);
+          $var4 = addslashes($emapData[4]);
+          $var5 = addslashes($emapData[5]);
+          $var6 = addslashes($emapData[6]);
+          $new_password = addslashes($emapData[7]); // password
+          $var7 = md5($new_password);
+          $var8 = $date;
+          $var9 = '7';
+          $var10 = '1';
+          
+          $sql = "INSERT INTO `user`(`fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `date_added`, `user_type_id`, `user_status_id`)
+          VALUES (
+              '$var0',
+              '$var1',
+              '$var2',
+              '$var3',
+              '$var4',
+              '$var5',
+              '$var6',
+              '$var7',
+              '$var8',
+              '$var9',
+              '$var10')";
+          $result = mysqli_query($con, $sql);
+
+          if (!$result) {
+              $_SESSION['status'] = "Error inserting row " . ($i + 1);
+              $_SESSION['status_code'] = "error";
+              header("Location: " . base_url . "admin/home/parent_account.php");
+              exit;
+          }
+      }
+      $i++;
+  }
+
+  // Close CSV file
+  fclose($file);
+
+  // Set import status
+  $_SESSION['status'] = "The CSV/File has been successfully imported.";
+  $_SESSION['status_code'] = "success";
+  header("Location: " . base_url . "admin/home/parent_account.php");
+  exit;
+
+  // Close database connection
+  mysqli_close($con);
+}

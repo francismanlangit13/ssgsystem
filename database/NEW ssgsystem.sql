@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2023 at 04:16 PM
+-- Generation Time: May 13, 2023 at 06:34 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -189,7 +189,15 @@ INSERT INTO `user` (`user_id`, `fname`, `mname`, `lname`, `suffix`, `gender`, `e
 (2, 'Francis', '', 'Carlo', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', '', '', 'user_20230504_101038.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-09 15:10:34', 2, 1),
 (3, 'new parent1', '', 'new', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', '', '', 'user_20230504_104014.png', '2023-05-03 04:06:31', 'User Admin', '2023-05-09 15:12:41', 4, 1),
 (4, 'Student', '', 'Franz', 'Sr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '2019300208', 'Grade 10', '', '', 'user_20230504_140135.png', '2023-04-21 12:07:07', 'User Admin', '2023-05-09 15:13:33', 6, 1),
-(5, 'new', '', 'admin', '', 'Male', 'admin1@gmail.com', '09457664949', 'f7b8bb95e0c1c5138688c03f2fce0b2a', '', '', '', '', 'user_20230504_150919.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-01 03:11:07', 5, 1);
+(5, 'new', '', 'admin', '', 'Male', 'admin1@gmail.com', '09457664949', 'f7b8bb95e0c1c5138688c03f2fce0b2a', '', '', '', '', 'user_20230504_150919.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-01 03:11:07', 5, 1),
+(10, 'Francis Carlo', 'A', 'Manlangit', '', 'Male', 'franzcarl13@yahoo.com', '9457664949', 'edf44baefd0446161387123dda451842', '3-2019300208', 'Grade 12', '', '', '', '2023-05-13 23:57:05', '', '0000-00-00 00:00:00', 6, 1),
+(11, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 11', '', '', '', '2023-05-13 23:57:05', '', '0000-00-00 00:00:00', 6, 1),
+(12, 'Andrie', 'A', 'Manlangit', '', 'Male', 'andrie164@yahoo.com', '9452671554', 'edf44baefd0446161387123dda451842', '3-2019300208', '', '', '', '', '2023-05-14 00:28:14', 'User Admin', '2023-05-14 00:29:45', 6, 3),
+(13, 'Karl', 'S', 'Tare', '', 'Male', 'karltare@gmail.com', '9154625468', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', '', '', '', '', '2023-05-14 00:28:14', 'User Admin', '2023-05-14 00:29:49', 6, 3),
+(14, 'Andrie', 'A', 'Manlangit', '', 'Male', 'andrie164@yahoo.com', '9452671554', 'edf44baefd0446161387123dda451842', '', '', '', '', '', '2023-05-14 00:29:59', 'User Admin', '2023-05-14 00:30:04', 7, 3),
+(15, 'Karl', 'S', 'Tare', '', 'Male', 'karltare@gmail.com', '9154625468', '9757a3ae2eee5925ce7db02aa692241e', '', '', '', '', '', '2023-05-14 00:29:59', 'User Admin', '2023-05-14 00:30:07', 7, 3),
+(16, 'Andrie', 'A', 'Manlangit', '', 'Male', 'andrie164@yahoo.com', '9452671554', 'edf44baefd0446161387123dda451842', '', '', '', '', '', '2023-05-14 00:30:34', '', '0000-00-00 00:00:00', 7, 1),
+(17, 'Karl', 'S', 'Tare', '', 'Male', 'karltare@gmail.com', '9154625468', '9757a3ae2eee5925ce7db02aa692241e', '', '', '', '', '', '2023-05-14 00:30:34', '', '0000-00-00 00:00:00', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -347,7 +355,7 @@ ALTER TABLE `ssg_expenses`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `user_status`
