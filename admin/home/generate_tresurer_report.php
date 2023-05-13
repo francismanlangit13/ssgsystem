@@ -337,7 +337,13 @@
                                             SSG President</h3>
                                         </td>
                                         <td>Noted by:<br><br>
-                                            <h5> <b style="border-bottom: 2px solid;">JUNREY M. LAPUT</b><br>SSG Adviser</h3>
+                                        <?php $query = "SELECT * FROM user WHERE user_type_id = 1";
+                                            $query_run = mysqli_query($con, $query);
+                                            if(mysqli_num_rows($query_run) > 0){
+                                                foreach($query_run as $row){ ?>
+                                            <h5> <b style="border-bottom: 2px solid;"><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?></b><br>
+                                        <?php } } else{ echo 'error!'; } ?>
+                                            SSG Adviser</h3>
                                         </td>
                                     </tr>
                                     <tr>
