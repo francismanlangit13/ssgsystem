@@ -17,6 +17,7 @@
                             `user`
                             ON 
                             fines_transaction.`user_id` = `user`.user_id
+                            WHERE transaction_id = '$id'
                         ";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){

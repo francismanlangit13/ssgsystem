@@ -17,6 +17,7 @@
                             `user`
                             ON 
                             payment.`user_id` = `user`.user_id
+                            WHERE payment.id = '$id'
                         ";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
