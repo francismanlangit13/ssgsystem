@@ -53,9 +53,9 @@
                                                         <input type="date" name="to" id="to" value="<?= $to ?>" class="form-control form-control-sm rounded-0">
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <button class="btn btn-primary btn-flat btn-sm" id="submit-btn"><i class="fa fa-filter"></i> Filter</button>
-                                                        <button class="btn btn-sm btn-flat btn-success" type="button" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
-                                                        <button class="btn btn-sm btn-flat btn-success" type="button" id="export-btn"><i class="fas fa-file-csv"></i> Export</button>
+                                                        <button class="btn btn-primary btn-flat btn-sm" name="submit-btn" id="submit-btn"><i class="fa fa-filter"></i> Filter</button>
+                                                        <button class="btn btn-sm btn-flat btn-success" type="button" onclick="window.print()" <?php if(isset($_POST['submit-btn'])) { } else { echo "disabled";} ?>><i class="fa fa-print"></i> Print</button>
+                                                        <button class="btn btn-sm btn-flat btn-success" type="button" id="export-btn" <?php if(isset($_POST['submit-btn'])) { } else { echo "disabled";} ?>><i class="fas fa-file-csv"></i> Export</button>
                                                     </div>
                                                 </div>
                                             </form>

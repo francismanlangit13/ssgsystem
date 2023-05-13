@@ -44,9 +44,9 @@
                                                         <input type="month" name="to" id="to" value="<?= date('Y-m', strtotime($to)) ?>" class="form-control form-control-sm rounded-0">
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <button class="btn btn-primary btn-flat btn-sm" id="submit-btn"><i class="fa fa-filter"></i> Filter</button>
-                                                        <button class="btn btn-sm btn-flat btn-success" type="button" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
-                                                        <button class="btn btn-sm btn-flat btn-success" type="button" id="export-btn"><i class="fas fa-file-csv"></i> Export</button>
+                                                        <button class="btn btn-primary btn-flat btn-sm" name="submit-btn" id="submit-btn"><i class="fa fa-filter"></i> Filter</button>
+                                                        <button class="btn btn-sm btn-flat btn-success" type="button" onclick="window.print()" <?php if(isset($_POST['submit-btn'])) { } else { echo "disabled";} ?>><i class="fa fa-print"></i> Print</button>
+                                                        <button class="btn btn-sm btn-flat btn-success" type="button" id="export-btn" <?php if(isset($_POST['submit-btn'])) { } else { echo "disabled";} ?>><i class="fas fa-file-csv"></i> Export</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -75,7 +75,7 @@
                                     <h5 class="text-center" style="font-size:12px;">BONIFACIO/BURGOS ST. NAGA, JIMENEZ, MISAMIS OCCIDENTAL - 7204</h5>
                                     <hr style="border-top: 1.5px solid black !important; opacity: 100 !important;">
                                     <h5 class="text-center" style="font-size:12px;">(Liquidation Report)</h5>
-                                    <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5>
+                                    <h5 class="text-center" style="font-size:12px;"><?php echo date("F Y", strtotime($from)). " - ".date("F Y", strtotime($to)); ?></h5>
                                 </div>
                                 <div class="col-2 d-flex justify-content-center align-items-center">
                                     <img src="<?php echo base_url ?>assets/files/images/system/ssg.png" class="img-circle" id="sys_logo" alt="System Logo">
