@@ -2,8 +2,8 @@
 <html lang="en">
     <?php include('../includes/header.php'); ?>
     <?php
-        $from = isset($_POST['from']) ? $_POST['from'] : date("Y-m-d",strtotime(date("Y-m-d"))); 
-        $to = isset($_POST['to']) ? $_POST['to'] : date("Y-m-d",strtotime(date("Y-m-d"))); 
+        $from = isset($_POST['from']) ? $_POST['from'] . "-01" : date("Y-m-01");
+        $to = isset($_POST['to']) ? $_POST['to'] . "-01" : date("Y-m-01");
         function duration($dur = 0){
             if($dur == 0){
                 return "00:00";
@@ -37,11 +37,11 @@
                                                 <div class="row align-items-end">
                                                     <div class="form-group col-md-3">
                                                         <label for="from" class="control-label">Date From</label>
-                                                        <input type="date" name="from" id="from" value="<?= $from ?>" class="form-control form-control-sm rounded-0">
+                                                        <input type="month" name="from" id="from" value="<?= date('Y-m', strtotime($from)) ?>" class="form-control form-control-sm rounded-0">
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                         <label for="to" class="control-label">Date To</label>
-                                                        <input type="date" name="to" id="to" value="<?= $to ?>" class="form-control form-control-sm rounded-0">
+                                                        <input type="month" name="to" id="to" value="<?= date('Y-m', strtotime($to)) ?>" class="form-control form-control-sm rounded-0">
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                         <button class="btn btn-primary btn-flat btn-sm" id="submit-btn"><i class="fa fa-filter"></i> Filter</button>

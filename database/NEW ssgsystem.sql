@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2023 at 11:03 AM
+-- Generation Time: May 13, 2023 at 04:16 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -84,8 +84,9 @@ CREATE TABLE `fines_transaction` (
 --
 
 INSERT INTO `fines_transaction` (`transaction_id`, `user_id`, `fines_fee`, `fines_date`) VALUES
-(1, 4, 256.75, '2023-04-02 13:52:35'),
-(2, 4, 500, '2023-05-10 08:43:32');
+(1, 4, 256.75, '2023-03-02 13:52:35'),
+(2, 4, 500, '2023-04-10 08:43:32'),
+(3, 4, 1000, '2023-05-01 15:54:33');
 
 -- --------------------------------------------------------
 
@@ -128,25 +129,6 @@ CREATE TABLE `qrcode` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `remaining_balance`
---
-
-CREATE TABLE `remaining_balance` (
-  `balance_id` int(11) NOT NULL,
-  `balance` varchar(255) NOT NULL,
-  `balance_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `remaining_balance`
---
-
-INSERT INTO `remaining_balance` (`balance_id`, `balance`, `balance_date`) VALUES
-(1, '1000', '2023-05-10 15:30:25');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `ssg_expenses`
 --
 
@@ -157,7 +139,6 @@ CREATE TABLE `ssg_expenses` (
   `type` varchar(255) NOT NULL,
   `purpose` varchar(255) NOT NULL,
   `amount` varchar(255) NOT NULL,
-  `balance` varchar(255) NOT NULL,
   `or_number` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL,
   `date` datetime NOT NULL
@@ -167,9 +148,9 @@ CREATE TABLE `ssg_expenses` (
 -- Dumping data for table `ssg_expenses`
 --
 
-INSERT INTO `ssg_expenses` (`expense_id`, `user_id`, `activity_id`, `type`, `purpose`, `amount`, `balance`, `or_number`, `photo`, `date`) VALUES
-(1, 1, 1, 'Materials', 'plywood', '374.75', '', '1686425', 'user_20230503_232958.jpg', '2023-04-17 15:30:15'),
-(2, 1, 1, 'Supply', 'Gamit sa intrams', '175', '', '116542', 'user_20230503_232958.jpg', '2023-04-17 15:40:15');
+INSERT INTO `ssg_expenses` (`expense_id`, `user_id`, `activity_id`, `type`, `purpose`, `amount`, `or_number`, `photo`, `date`) VALUES
+(1, 1, 1, 'Materials', 'plywood', '374.75', '1686425', 'user_20230503_232958.jpg', '2023-04-17 15:30:15'),
+(2, 1, 1, 'Supply', 'Gamit sa intrams', '175', '116542', 'user_20230503_232958.jpg', '2023-04-17 15:40:15');
 
 -- --------------------------------------------------------
 
@@ -295,12 +276,6 @@ ALTER TABLE `qrcode`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `remaining_balance`
---
-ALTER TABLE `remaining_balance`
-  ADD PRIMARY KEY (`balance_id`);
-
---
 -- Indexes for table `ssg_expenses`
 --
 ALTER TABLE `ssg_expenses`
@@ -348,7 +323,7 @@ ALTER TABLE `announcement`
 -- AUTO_INCREMENT for table `fines_transaction`
 --
 ALTER TABLE `fines_transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -361,12 +336,6 @@ ALTER TABLE `payment`
 --
 ALTER TABLE `qrcode`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `remaining_balance`
---
-ALTER TABLE `remaining_balance`
-  MODIFY `balance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ssg_expenses`

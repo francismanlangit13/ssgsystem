@@ -83,34 +83,72 @@
                                         <th style="width: 80px;">PHP</th>
                                         <th style="width: 500px; text-align: right;">
                                         <?php
-                                            $total_balance = "SELECT SUM(`fines_fee`) AS total 
-                                            FROM fines_transaction 
-                                            WHERE fines_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01') 
-                                            AND fines_date <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))";
-                                            $total_balance_query_run = mysqli_query($con, $total_balance);
-                                            if(mysqli_num_rows($total_balance_query_run) > 0){
-                                                $balance_result = mysqli_fetch_assoc($total_balance_query_run);
-                                                $total = $balance_result["total"];
-                                                echo $total;
-                                            }
-                                        ?>
-
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th style="width: 500px; text-align: left;">Earnings Month of (<?php $two_months_ago = date('F', strtotime('0 months')); echo $two_months_ago; ?>)</th>
-                                        <th style="width: 80px;"></th>
-                                        <th style="width: 500px; text-align: right;">
-                                            <?php
-                                                $total_balance = "SELECT SUM(`fines_fee`) AS total FROM fines_transaction WHERE fines_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
+                                            if(isset($_POST['id'])){
+                                                $id = $_POST['id'];
+                                                $total_balance = "SELECT SUM(fines_transaction.fines_fee) AS total 
+                                                FROM fines_transaction 
+                                                WHERE fines_transaction.fines_date BETWEEN 
+                                                (SELECT DATE_SUB(DATE_ADD(LAST_DAY(DATE_SUB(MAX(date), INTERVAL 2 MONTH)), INTERVAL 1 DAY), INTERVAL 1 MONTH) 
+                                                FROM ssg_expenses 
+                                                WHERE activity_id = '$id' 
+                                                ORDER BY date DESC 
+                                                LIMIT 1) 
+                                                AND 
+                                                (SELECT DATE_ADD(LAST_DAY(DATE_SUB(MAX(date), INTERVAL 1 MONTH)), INTERVAL 1 DAY) 
+                                                FROM ssg_expenses 
+                                                WHERE activity_id = '$id' 
+                                                ORDER BY date DESC 
+                                                LIMIT 1)";
                                                 $total_balance_query_run = mysqli_query($con, $total_balance);
                                                 if(mysqli_num_rows($total_balance_query_run) > 0){
                                                     $balance_result = mysqli_fetch_assoc($total_balance_query_run);
                                                     $total = $balance_result["total"];
                                                     echo $total;
                                                 }
-                                            ?>
+                                            }
+                                        ?>
+
                                         </th>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 500px; text-align: left;">Earnings Month of 
+                                            (<?php
+                                                if(isset($_POST['id'])){
+                                                    $id = $_POST['id'];
+                                                    $total_balance = "SELECT DATE_FORMAT(date, '%M') as short_month FROM ssg_expenses WHERE activity_id='$id'";
+                                                    $total_balance_query_run = mysqli_query($con, $total_balance);
+                                                    if(mysqli_num_rows($total_balance_query_run) > 0){
+                                                        $balance_result = mysqli_fetch_assoc($total_balance_query_run);
+                                                        $month_name = $balance_result["short_month"];
+                                                        $last_month_name = date('F', strtotime("-1 month", strtotime($month_name)));
+                                                        echo $last_month_name;
+                                                    }
+                                                }
+                                            ?>)
+                                        </th>
+                                        <th style="width: 80px;"></th>
+                                        <th style="width: 500px; text-align: right;">
+                                        <?php
+                                            if(isset($_POST['id'])){
+                                                $id = $_POST['id'];
+                                                $total_balance = "SELECT SUM(fines_transaction.fines_fee) AS total 
+                                                FROM fines_transaction 
+                                                WHERE fines_transaction.fines_date BETWEEN 
+                                                (SELECT DATE_SUB(MAX(date), INTERVAL 1 MONTH) 
+                                                FROM ssg_expenses 
+                                                WHERE activity_id = '$id') 
+                                                AND 
+                                                (SELECT MAX(date) 
+                                                FROM ssg_expenses 
+                                                WHERE activity_id = '$id')";
+                                                $total_balance_query_run = mysqli_query($con, $total_balance);
+                                                if(mysqli_num_rows($total_balance_query_run) > 0){
+                                                    $balance_result = mysqli_fetch_assoc($total_balance_query_run);
+                                                    $total = $balance_result["total"];
+                                                    echo $total;
+                                                }
+                                            }
+                                        ?>
                                     </tr>
                                     <tbody style="text-align:left;">
                                     </tbody>
@@ -120,12 +158,24 @@
                                             <th></th>
                                             <th style="text-align: right;">
                                                 <?php
-                                                    $total_balance = "SELECT SUM(`fines_fee`) AS total FROM fines_transaction";
-                                                    $total_balance_query_run = mysqli_query($con, $total_balance);
-                                                    if(mysqli_num_rows($total_balance_query_run) > 0){
-                                                        $balance_result = mysqli_fetch_assoc($total_balance_query_run);
-                                                        $total = $balance_result["total"];
-                                                        echo $total;
+                                                    if(isset($_POST['id'])){
+                                                        $id = $_POST['id'];
+                                                        $total_balance = "SELECT SUM(fines_fee) AS total
+                                                        FROM fines_transaction
+                                                        WHERE fines_date >= 
+                                                        (SELECT DATE_SUB(MAX(date), INTERVAL 2 MONTH)
+                                                        FROM ssg_expenses 
+                                                        WHERE activity_id = '$id')
+                                                        AND fines_date <= 
+                                                        (SELECT DATE_ADD(MAX(date), INTERVAL 0 DAY)
+                                                        FROM ssg_expenses 
+                                                        WHERE activity_id = '$id')";
+                                                        $total_balance_query_run = mysqli_query($con, $total_balance);
+                                                        if(mysqli_num_rows($total_balance_query_run) > 0){
+                                                            $balance_result = mysqli_fetch_assoc($total_balance_query_run);
+                                                            $total = $balance_result["total"];
+                                                            echo $total;
+                                                        }
                                                     }
                                                 ?>
                                             </th>
@@ -153,25 +203,36 @@
                                             <th style="width: 80px;"></th>
                                             <th style="width: 500px; text-align:right;">
                                                 <?php
-                                                    // get the total fines fees
-                                                    $total_fines_balance = "SELECT SUM(`fines_fee`) AS total FROM fines_transaction";
-                                                    $total_fines_balance_query_run = mysqli_query($con, $total_fines_balance);
-                                                    if(mysqli_num_rows($total_fines_balance_query_run) > 0){
-                                                        $fines_balance_result = mysqli_fetch_assoc($total_fines_balance_query_run);
-                                                        $total_fines = $fines_balance_result["total"];
-                                                    }
+                                                    // get the total revenue
+                                                    if(isset($_POST['id'])){
+                                                        $id = $_POST['id'];
+                                                        $total_balance = "SELECT SUM(fines_fee) AS total
+                                                        FROM fines_transaction
+                                                        WHERE fines_date >= 
+                                                        (SELECT DATE_SUB(MAX(date), INTERVAL 2 MONTH)
+                                                        FROM ssg_expenses 
+                                                        WHERE activity_id = '$id')
+                                                        AND fines_date <= 
+                                                        (SELECT DATE_ADD(MAX(date), INTERVAL 0 DAY)
+                                                        FROM ssg_expenses 
+                                                        WHERE activity_id = '$id')";
+                                                        $total_balance_query_run = mysqli_query($con, $total_balance);
+                                                        if(mysqli_num_rows($total_balance_query_run) > 0){
+                                                            $balance_result = mysqli_fetch_assoc($total_balance_query_run);
+                                                            $total = $balance_result["total"];
+                                                        }
+                                                        // get the total expenses for the specific activity
+                                                        $total_expenses_balance = "SELECT SUM(`amount`) AS total FROM ssg_expenses WHERE ssg_expenses.activity_id='$id'";
+                                                        $total_expenses_balance_query_run = mysqli_query($con, $total_expenses_balance);
+                                                        if(mysqli_num_rows($total_expenses_balance_query_run) > 0){
+                                                            $expenses_balance_result = mysqli_fetch_assoc($total_expenses_balance_query_run);
+                                                            $total_expenses = $expenses_balance_result["total"];
+                                                        }
 
-                                                    // get the total expenses for the specific activity
-                                                    $total_expenses_balance = "SELECT SUM(`amount`) AS total FROM ssg_expenses WHERE ssg_expenses.activity_id='$id'";
-                                                    $total_expenses_balance_query_run = mysqli_query($con, $total_expenses_balance);
-                                                    if(mysqli_num_rows($total_expenses_balance_query_run) > 0){
-                                                        $expenses_balance_result = mysqli_fetch_assoc($total_expenses_balance_query_run);
-                                                        $total_expenses = $expenses_balance_result["total"];
+                                                        // subtract expenses from fines and display the remaining balance
+                                                        $remaining_balance = $total - $total_expenses;
+                                                        echo $remaining_balance;
                                                     }
-
-                                                    // subtract expenses from fines and display the remaining balance
-                                                    $remaining_balance = $total_fines - $total_expenses;
-                                                    echo $remaining_balance;
                                                 ?>
                                             </th>
                                         </tr>
