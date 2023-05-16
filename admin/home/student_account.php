@@ -30,6 +30,7 @@
                                             <th>Student ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
+                                            <th>Grade</th>
                                             <th>Status</th>
                                             <th>ACTION</th>
                                         </tr>
@@ -40,6 +41,7 @@
                                             <th>Student ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
+                                            <th>Grade</th>
                                             <th>Status</th>
                                             <th>ACTION</th>
                                         </tr>
@@ -69,6 +71,7 @@
                                             <td><?= $row['student_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
                                             <td><?= $row['email']; ?></td>
+                                            <td><?= $row['level']; ?></td>
                                             <td><?= $row['user_status']; ?></td>
                                             <td> 
                                                 <div class="row d-inline-flex justify-content-center">
@@ -98,6 +101,7 @@
                                             else{
                                         ?>
                                             <tr>
+                                                <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
