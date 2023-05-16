@@ -40,8 +40,8 @@
                 </a>
                 <div class="<?php if (strpos($_SERVER['PHP_SELF'], 'home/paymenthistory.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/paymenthistory_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinehistory.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinehistory_view.php') !== false)  { echo 'active'; } else { echo 'collapse'; } ?>" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/paymenthistory.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/paymenthistory_view.php') !== false)  { echo 'active'; }?>" href="paymenthistory.php">Via Cash</a>
-                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/onlinehistory.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinehistory_view.php') !== false)  { echo 'active'; }?>" href="onlinehistory.php">Online Payment</a>
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/paymenthistory.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/paymenthistory_view.php') !== false)  { echo 'active'; }?>" href="paymenthistory">Via Cash</a>
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/onlinehistory.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinehistory_view.php') !== false)  { echo 'active'; }?>" href="onlinehistory">Online Payment</a>
                     </nav>
                 </div>
                 <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/database.php') !== false)  { echo 'active'; } ?>" href="database">
@@ -55,9 +55,9 @@
                 </a>
                 <div class="<?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_liquidation.php') !== false)  { echo 'active'; } else { echo 'collapse'; } ?>" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false)  { echo 'active'; }?>" href="generate_accounts.php">Accounts</a>
-                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_liquidation.php') !== false)  { echo 'active'; }?>" href="generate_liquidation.php">Liquidation</a>
-                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false)  { echo 'active'; }?>" href="generate_payments.php">Payments</a>
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false)  { echo 'active'; }?>" href="generate_accounts">Accounts</a>
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_liquidation.php') !== false)  { echo 'active'; }?>" href="generate_liquidation">Liquidation</a>
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false)  { echo 'active'; }?>" href="generate_payments">Payments</a>
                     </nav>
                 </div>
             </div>
