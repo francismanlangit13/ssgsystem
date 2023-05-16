@@ -51,7 +51,7 @@
                 </a>
                 <div class="<?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_studentpayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_liquidation.php') !== false)  { echo 'active'; } else { echo 'collapse'; } ?>" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false)  { echo 'active'; }?>" href="generate_accounts.php">Archive Accounts</a>
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false)  { echo 'active'; }?>" href="generate_accounts.php">Accounts</a>
                         <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_liquidation.php') !== false)  { echo 'active'; }?>" href="generate_liquidation.php">Liquidation</a>
                         <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_studentpayment.php') !== false)  { echo 'active'; }?>" href="generate_studentpayment.php">Student Payment</a>
                     </nav>

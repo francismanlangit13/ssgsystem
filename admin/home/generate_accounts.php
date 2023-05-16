@@ -27,7 +27,7 @@
                             <li class="breadcrumb-item ">Archive Accounts</li>
                         </ol>
                         <div class="container">
-                            <center class="noprint"><h3 class="mt-3 mb-3" style="margin-top: 30px;">Generate Archive Accounts</h3></center>
+                            <center class="noprint"><h3 class="mt-3 mb-3" style="margin-top: 30px;">Generate Accounts</h3></center>
                             <div class="col-xl-12 col-md-12 noprint">
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">
@@ -44,11 +44,20 @@
                                                             <option value="Student">Student</option> 
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-md-3">
+                                                    <div class="form-group col-md-2">
+                                                        <label for="status" class="required">Type</label>
+                                                        <select class="form-control" name="status" id="status" required>
+                                                            <option value="" selected="true" disabled="disabled">Select Type</option>
+                                                            <option value="1">Active</option>    
+                                                            <option value="2">In active</option> 
+                                                            <option value="3">Archive</option> 
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-2">
                                                         <label for="from" class="control-label">Date From</label>
                                                         <input type="date" name="from" id="from" value="<?= $from ?>" class="form-control form-control-sm rounded-0">
                                                     </div>
-                                                    <div class="form-group col-md-3">
+                                                    <div class="form-group col-md-2">
                                                         <label for="to" class="control-label">Date To</label>
                                                         <input type="date" name="to" id="to" value="<?= $to ?>" class="form-control form-control-sm rounded-0">
                                                     </div>
@@ -83,7 +92,7 @@
                                         <h3 class="text-center" style="font-size:14px;"><b>SUPREME STUDENT GOVERNMENT</b></h3>
                                         <h5 class="text-center" style="font-size:12px;">BONIFACIO/BURGOS ST. NAGA, JIMENEZ, MISAMIS OCCIDENTAL - 7204</h5>
                                         <hr style="border-top: 1.5px solid black !important; opacity: 100 !important;">
-                                        <h5 class="text-center" style="font-size:12px;">(Archive Accounts)</h5>
+                                        <h5 class="text-center" style="font-size:12px;"><?php if(isset($_POST['status'])){ if($_POST['status'] == '1') { echo"(Active Accounts)"; } elseif($_POST['status'] == '2') { echo"(In active Accounts)"; } else{ echo"(Archive Accounts)"; } } else { } ?></h5>
                                         <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5>
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center">
@@ -112,9 +121,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
+                                                <?php
+                                                    $user_status_id= $_POST['status'];
                                                     $qry = $con->query("SELECT *, DATE_FORMAT(date_deleted, '%m-%d-%Y %h:%i:%s %p') as short_date_deleted
-                                                    FROM user WHERE user_type_id = 6 AND user_status_id = 3
+                                                    FROM user WHERE user_type_id = 6 AND user_status_id = $user_status_id
                                                     AND date(date_deleted) between '{$from}' and '{$to}' order by unix_timestamp(date_deleted) asc");
                                                     while($row = $qry->fetch_assoc()):
                                                 ?>
@@ -153,9 +163,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
+                                                <?php
+                                                    $user_status_id= $_POST['status'];
                                                     $qry = $con->query("SELECT *, DATE_FORMAT(date_deleted, '%m-%d-%Y %h:%i:%s %p') as short_date_deleted
-                                                    FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.user_type_id IN (1,2,3,4,5) AND user_status_id = 3
+                                                    FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.user_type_id IN (1,2,3,4,5) AND user_status_id = $user_status_id
                                                     AND date(date_deleted) between '{$from}' and '{$to}' order by unix_timestamp(date_deleted) asc");
                                                     while($row = $qry->fetch_assoc()):
                                                 ?>
@@ -192,8 +203,9 @@
                                             </thead>
                                             <tbody>
                                                 <?php 
+                                                    $user_status_id= $_POST['status'];
                                                     $qry = $con->query("SELECT *, DATE_FORMAT(date_deleted, '%m-%d-%Y %h:%i:%s %p') as short_date_deleted
-                                                    FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.user_type_id = 7 AND user_status_id = 3
+                                                    FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.user_type_id = 7 AND user_status_id = $user_status_id
                                                     AND date(date_deleted) between '{$from}' and '{$to}' order by unix_timestamp(date_deleted) asc");
                                                     while($row = $qry->fetch_assoc()):
                                                 ?>
