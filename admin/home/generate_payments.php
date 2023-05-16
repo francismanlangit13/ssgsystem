@@ -24,10 +24,10 @@
                         <ol class="breadcrumb mb-4 mt-3 noprint">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Generate</li>
-                            <li class="breadcrumb-item ">Student Payment</li>
+                            <li class="breadcrumb-item ">Payments</li>
                         </ol>
                         <div class="container">
-                            <center class="noprint"><h3 class="mt-3 mb-3" style="margin-top: 30px;">Generate Student Payment</h3></center>
+                            <center class="noprint"><h3 class="mt-3 mb-3" style="margin-top: 30px;">Generate Payments</h3></center>
                             <div class="col-xl-12 col-md-12 noprint">
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">
@@ -36,6 +36,14 @@
                                             <form action="" id="filter" method="POST">
                                                 <div class="row align-items-end">
                                                     <div class="form-group col-md-3">
+                                                        <label for="payment_method" class="control-label">Payment method</label>
+                                                        <select class="form-control" name="payment_method" id="payment_method" required>
+                                                            <option value="" selected="true" disabled="disabled">Select Payment method</option>
+                                                            <option value="Online">Online</option>    
+                                                            <option value="Cash">Cash</option> 
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-3">
                                                         <label for="from" class="control-label">Date From</label>
                                                         <input type="date" name="from" id="from" value="<?= $from ?>" class="form-control form-control-sm rounded-0">
                                                     </div>
@@ -43,7 +51,7 @@
                                                         <label for="to" class="control-label">Date To</label>
                                                         <input type="date" name="to" id="to" value="<?= $to ?>" class="form-control form-control-sm rounded-0">
                                                     </div>
-                                                    <div class="form-group col-md-4">
+                                                    <div class="form-group col-md-4 mt-3">
                                                         <button class="btn btn-primary btn-flat btn-sm" name="submit-btn" id="submit-btn"><i class="fa fa-filter"></i> Filter</button>
                                                         <button class="btn btn-sm btn-flat btn-success" type="button" onclick="window.print()" <?php if(isset($_POST['submit-btn'])) { } else { echo "disabled";} ?>><i class="fa fa-print"></i> Print</button>
                                                         <button class="btn btn-sm btn-flat btn-success" type="button" id="export-btn" <?php if(isset($_POST['submit-btn'])) { } else { echo "disabled";} ?>><i class="fas fa-file-csv"></i> Export</button>
@@ -74,55 +82,104 @@
                                         <h3 class="text-center" style="font-size:14px;"><b>SUPREME STUDENT GOVERNMENT</b></h3>
                                         <h5 class="text-center" style="font-size:12px;">BONIFACIO/BURGOS ST. NAGA, JIMENEZ, MISAMIS OCCIDENTAL - 7204</h5>
                                         <hr style="border-top: 1.5px solid black !important; opacity: 100 !important;">
-                                        <h5 class="text-center" style="font-size:12px;">(Student Payment Report)</h5>
+                                        <h5 class="text-center" style="font-size:12px;">Student Payment <?php if(isset($_POST['payment_method'])){ if($_POST['payment_method'] == 'Online') { echo"(Online)"; } else{ echo"(Cash)"; } } ?></h5>
                                         <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5>
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center">
                                         <img src="<?php echo base_url ?>assets/files/images/system/ssg.png" class="img-circle" id="sys_logo" alt="System Logo">
                                     </div>
                                 </div>
-                                <table class="table text-center table-hover table-striped">
-                                    <colgroup>
-                                        <col width="5%">
-                                        <col width="20%">
-                                        <col width="30%">
-                                        <col width="20%">
-                                        <col width="25%">
-                                    </colgroup>
-                                    <thead>
-                                        <tr class="bg-danger text-light">
-                                            <th>No.</th>
-                                            <th>Student ID</th>
-                                            <th>Name</th>
-                                            <th>Amount</th>
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                            $i = 1;
-                                            $qry = $con->query("SELECT *, DATE_FORMAT(fines_transaction.fines_date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
-                                            FROM fines_transaction INNER JOIN user
-                                            ON 
-                                            fines_transaction.user_id = user.user_id
-                                            AND date(fines_date) between '{$from}' and '{$to}' order by unix_timestamp(fines_date) asc");
-                                            while($row = $qry->fetch_assoc()):
-                                        ?>
-                                        <tr>
-                                            <td class="text-center"><?php echo $row['transaction_id'] ?></td>
-                                            <td class="text-center"><?php echo $row['student_id'] ?></td>
-                                            <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
-                                            <td class=""><p class="m-0">&#8369; <?php echo $row['fines_fee'] ?></p></td>
-                                            <td class=""><?php echo $row['short_date_created'] ?></td>
-                                        </tr>
-                                        <?php endwhile; ?>
-                                        <?php if($qry->num_rows <= 0): ?>
-                                            <tr>
-                                                <th class="py-1 text-center" colspan="12">No Data.</th>
-                                            </tr>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
+                                <?php if(isset($_POST['payment_method'])){ ?>
+                                    <?php if($_POST['payment_method'] == 'Online') { ?>
+                                        <table class="table text-center table-hover table-striped">
+                                            <!-- <colgroup>
+                                                <col width="5%">
+                                                <col width="20%">
+                                                <col width="30%">
+                                                <col width="20%">
+                                                <col width="25%">
+                                            </colgroup> -->
+                                            <thead>
+                                                <tr class="bg-danger text-light">
+                                                    <th>No.</th>
+                                                    <th>Student ID</th>
+                                                    <th>Name</th>
+                                                    <th>Platform</th>
+                                                    <th>Reference Number</th>
+                                                    <th>Date</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+                                                    $qry = $con->query("SELECT *, DATE_FORMAT(payment.date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
+                                                    FROM payment INNER JOIN user
+                                                    ON 
+                                                    payment.user_id = user.user_id
+                                                    AND date(date) between '{$from}' and '{$to}' order by unix_timestamp(date) asc");
+                                                    while($row = $qry->fetch_assoc()):
+                                                ?>
+                                                <tr>
+                                                    <td class="text-center"><?php echo $row['id'] ?></td>
+                                                    <td class="text-center"><?php echo $row['student_id'] ?></td>
+                                                    <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
+                                                    <td class=""><p class="m-0"><?php echo $row['platform'] ?></p></td>
+                                                    <td class="text-center"><?php echo $row['referencenumber'] ?></td>
+                                                    <td class=""><?php echo $row['short_date_created'] ?></td>
+                                                    <td class=""><p class="m-0"><?php echo $row['status'] ?></p></td>
+                                                </tr>
+                                                <?php endwhile; ?>
+                                                <?php if($qry->num_rows <= 0): ?>
+                                                    <tr>
+                                                        <th class="py-1 text-center" colspan="12">No Data.</th>
+                                                    </tr>
+                                                <?php endif; ?>
+                                            </tbody>
+                                        </table>
+                                    <?php } else{ ?>
+                                        <table class="table text-center table-hover table-striped">
+                                            <colgroup>
+                                                <col width="5%">
+                                                <col width="20%">
+                                                <col width="30%">
+                                                <col width="20%">
+                                                <col width="25%">
+                                            </colgroup>
+                                            <thead>
+                                                <tr class="bg-danger text-light">
+                                                    <th>No.</th>
+                                                    <th>Student ID</th>
+                                                    <th>Name</th>
+                                                    <th>Amount</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+                                                    $qry = $con->query("SELECT *, DATE_FORMAT(fines_transaction.fines_date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
+                                                    FROM fines_transaction INNER JOIN user
+                                                    ON 
+                                                    fines_transaction.user_id = user.user_id
+                                                    AND date(fines_date) between '{$from}' and '{$to}' order by unix_timestamp(fines_date) asc");
+                                                    while($row = $qry->fetch_assoc()):
+                                                ?>
+                                                <tr>
+                                                    <td class="text-center"><?php echo $row['transaction_id'] ?></td>
+                                                    <td class="text-center"><?php echo $row['student_id'] ?></td>
+                                                    <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
+                                                    <td class=""><p class="m-0">&#8369; <?php echo $row['fines_fee'] ?></p></td>
+                                                    <td class=""><?php echo $row['short_date_created'] ?></td>
+                                                </tr>
+                                                <?php endwhile; ?>
+                                                <?php if($qry->num_rows <= 0): ?>
+                                                    <tr>
+                                                        <th class="py-1 text-center" colspan="12">No Data.</th>
+                                                    </tr>
+                                                <?php endif; ?>
+                                            </tbody>
+                                        </table>
+                                    <?php } ?>
+                                <?php } ?>
                             </div>
                     </div>
                 </main>

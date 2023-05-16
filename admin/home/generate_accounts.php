@@ -37,11 +37,23 @@
                                                 <div class="row align-items-end">
                                                     <div class="form-group col-md-2">
                                                         <label for="accounts" class="required">Accounts</label>
-                                                        <select class="form-control" name="accounts" id="accounts" required>
+                                                        <select class="form-control" name="accounts" onchange="showTextarea()" id="accounts" required>
                                                             <option value="" selected="true" disabled="disabled">Select Accounts</option>
                                                             <option value="Official">Official</option>    
                                                             <option value="Parent">Parent</option> 
                                                             <option value="Student">Student</option> 
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-2 mt-2" id="textarea-container" style="display:none">
+                                                        <label for="level" class="required">Year Level</label>
+                                                        <select class="form-control" name="level" id="level">
+                                                            <option value="" selected="true" disabled="disabled">Select Year Level</option>
+                                                            <option value="Grade 7">Grade 7</option>    
+                                                            <option value="Grade 8">Grade 8</option> 
+                                                            <option value="Grade 9">Grade 9</option> 
+                                                            <option value="Grade 10">Grade 10</option> 
+                                                            <option value="Grade 11">Grade 11</option> 
+                                                            <option value="Grade 12">Grade 12</option> 
                                                         </select>
                                                     </div>
                                                     <div class="form-group col-md-2">
@@ -61,7 +73,7 @@
                                                         <label for="to" class="control-label">Date To</label>
                                                         <input type="date" name="to" id="to" value="<?= $to ?>" class="form-control form-control-sm rounded-0">
                                                     </div>
-                                                    <div class="form-group col-md-4">
+                                                    <div class="form-group col-md-6 mt-4">
                                                         <button class="btn btn-primary btn-flat btn-sm" name="submit-btn" id="submit-btn"><i class="fa fa-filter"></i> Filter</button>
                                                         <button class="btn btn-sm btn-flat btn-success" type="button" onclick="window.print()" <?php if(isset($_POST['submit-btn'])) { } else { echo "disabled";} ?>><i class="fa fa-print"></i> Print</button>
                                                         <button class="btn btn-sm btn-flat btn-success" type="button" id="export-btn" <?php if(isset($_POST['submit-btn'])) { } else { echo "disabled";} ?>><i class="fas fa-file-csv"></i> Export</button>
@@ -92,7 +104,7 @@
                                         <h3 class="text-center" style="font-size:14px;"><b>SUPREME STUDENT GOVERNMENT</b></h3>
                                         <h5 class="text-center" style="font-size:12px;">BONIFACIO/BURGOS ST. NAGA, JIMENEZ, MISAMIS OCCIDENTAL - 7204</h5>
                                         <hr style="border-top: 1.5px solid black !important; opacity: 100 !important;">
-                                        <h5 class="text-center" style="font-size:12px;"><?php if(isset($_POST['status'])){ if($_POST['status'] == '1') { echo"(Active Accounts)"; } elseif($_POST['status'] == '2') { echo"(In active Accounts)"; } else{ echo"(Archive Accounts)"; } } else { } ?></h5>
+                                        <h5 class="text-center" style="font-size:12px;"><?php if(isset($_POST['accounts'])){ if($_POST['accounts'] == 'Official') { echo"Officials"; } elseif ($_POST['accounts'] == 'Parents') { echo"Parent"; } else{ echo"Students"; } }?> <?php if(isset($_POST['status'])){ if($_POST['status'] == '1') { echo"(Active Accounts)"; } elseif($_POST['status'] == '2') { echo"(In active Accounts)"; } else{ echo"(Archive Accounts)"; } } else { } ?></h5>
                                         <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5>
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center">
@@ -102,30 +114,41 @@
                                 <?php if(isset($_POST['accounts'])){ ?>
                                     <?php if($_POST['accounts'] == 'Student') { ?>
                                         <table class="table text-center table-hover table-striped">
-                                            <colgroup>
+                                            <!-- <colgroup>
                                                 <col width="5%">
                                                 <col width="20%">
                                                 <col width="20%">
                                                 <col width="15%">
                                                 <col width="20%">
                                                 <col width="20%">
-                                            </colgroup>
+                                            </colgroup> -->
                                             <thead>
                                                 <tr class="bg-danger text-light">
                                                     <th>No.</th>
                                                     <th>Student ID</th>
                                                     <th>Name</th>
                                                     <th>Year Level</th>
-                                                    <th>Date Deleted</th>
-                                                    <th>Deleted By</th>
+                                                    <?php if($_POST['status'] == '3'){ ?>
+                                                        <th>Date Deleted</th>
+                                                        <th>Deleted By</th>
+                                                    <?php } ?>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    $user_status_id= $_POST['status'];
+                                                    $user_status_id = $_POST['status'];
+                                                    $level = $_POST['level'];
+                                                    // Escape the variables and enclose them in quotes for the SQL query
+                                                    $user_status_id = $con->real_escape_string($user_status_id);
+                                                    $level = $con->real_escape_string($level);
+                                                    
                                                     $qry = $con->query("SELECT *, DATE_FORMAT(date_deleted, '%m-%d-%Y %h:%i:%s %p') as short_date_deleted
-                                                    FROM user WHERE user_type_id = 6 AND user_status_id = $user_status_id
-                                                    AND date(date_deleted) between '{$from}' and '{$to}' order by unix_timestamp(date_deleted) asc");
+                                                    FROM user 
+                                                    WHERE level = '$level' 
+                                                    AND user_type_id = 6 
+                                                    AND user_status_id = '$user_status_id'
+                                                    AND date(date_deleted) BETWEEN '{$from}' AND '{$to}' 
+                                                    ORDER BY UNIX_TIMESTAMP(date_deleted) ASC");
                                                     while($row = $qry->fetch_assoc()):
                                                 ?>
                                                 <tr>
@@ -133,8 +156,10 @@
                                                     <td class="text-center"><?php echo $row['student_id'] ?></td>
                                                     <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
                                                     <td class=""><p class="m-0"><?php echo $row['level'] ?></p></td>
-                                                    <td class=""><?php echo $row['short_date_deleted'] ?></td>
-                                                    <td class=""><?php echo $row['deleted_by'] ?></td>
+                                                    <?php if($_POST['status'] == '3'){ ?>
+                                                        <td class=""><?php echo $row['short_date_deleted'] ?></td>
+                                                        <td class=""><?php echo $row['deleted_by'] ?></td>
+                                                    <?php } ?>
                                                 </tr>
                                                 <?php endwhile; ?>
                                                 <?php if($qry->num_rows <= 0): ?>
@@ -146,24 +171,27 @@
                                         </table>
                                     <?php } elseif($_POST['accounts'] == 'Official') {?>
                                         <table class="table text-center table-hover table-striped">
-                                            <colgroup>
+                                            <!-- <colgroup>
                                                 <col width="5%">
                                                 <col width="20%">
                                                 <col width="25%">
                                                 <col width="25%">
                                                 <col width="25%">
-                                            </colgroup>
+                                            </colgroup> -->
                                             <thead>
                                                 <tr class="bg-danger text-light">
                                                     <th>No.</th>
                                                     <th>Position</th>
                                                     <th>Name</th>
-                                                    <th>Date Deleted</th>
-                                                    <th>Deleted By</th>
+                                                    <?php if($_POST['status'] == '3'){ ?>
+                                                        <th>Date Deleted</th>
+                                                        <th>Deleted By</th>
+                                                    <?php } ?>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
+                                                    $user_status_id= $_POST['status'];
                                                     $user_status_id= $_POST['status'];
                                                     $qry = $con->query("SELECT *, DATE_FORMAT(date_deleted, '%m-%d-%Y %h:%i:%s %p') as short_date_deleted
                                                     FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.user_type_id IN (1,2,3,4,5) AND user_status_id = $user_status_id
@@ -174,8 +202,10 @@
                                                     <td class="text-center"><?php echo $row['user_id'] ?></td>
                                                     <td class="text-center"><?php echo $row['user_type'] ?></td>
                                                     <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
-                                                    <td class=""><?php echo $row['short_date_deleted'] ?></td>
-                                                    <td class=""><?php echo $row['deleted_by'] ?></td>
+                                                    <?php if($_POST['status'] == '3'){ ?>
+                                                        <td class=""><?php echo $row['short_date_deleted'] ?></td>
+                                                        <td class=""><?php echo $row['deleted_by'] ?></td>
+                                                    <?php } ?>
                                                 </tr>
                                                 <?php endwhile; ?>
                                                 <?php if($qry->num_rows <= 0): ?>
@@ -187,18 +217,20 @@
                                         </table>
                                     <?php } elseif($_POST['accounts'] == 'Parent') { ?>
                                         <table class="table text-center table-hover table-striped">
-                                            <colgroup>
+                                            <!-- <colgroup>
                                                 <col width="10%">
                                                 <col width="30%">
                                                 <col width="30%">
                                                 <col width="30%">
-                                            </colgroup>
+                                            </colgroup> -->
                                             <thead>
                                                 <tr class="bg-danger text-light">
                                                     <th>No.</th>
                                                     <th>Name</th>
-                                                    <th>Date Deleted</th>
-                                                    <th>Deleted By</th>
+                                                    <?php if($_POST['status'] == '3'){ ?>
+                                                        <th>Date Deleted</th>
+                                                        <th>Deleted By</th>
+                                                    <?php } ?>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -212,8 +244,10 @@
                                                 <tr>
                                                     <td class="text-center"><?php echo $row['user_id'] ?></td>
                                                     <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
-                                                    <td class=""><?php echo $row['short_date_deleted'] ?></td>
-                                                    <td class=""><?php echo $row['deleted_by'] ?></td>
+                                                    <?php if($_POST['status'] == '3'){ ?>
+                                                        <td class=""><?php echo $row['short_date_deleted'] ?></td>
+                                                        <td class=""><?php echo $row['deleted_by'] ?></td>
+                                                    <?php } ?>
                                                 </tr>
                                                 <?php endwhile; ?>
                                                 <?php if($qry->num_rows <= 0): ?>
@@ -365,4 +399,20 @@
         var filename = "table.csv";
         exportTableToCSV(filename);
     });
+</script>
+
+<script>
+    function showTextarea() {
+        var status = document.getElementById('accounts').value;
+        var container = document.getElementById('textarea-container');
+        var textarea = container.getElementsByTagName('select')[0];
+        if (status == 'Student') {
+            container.style.display = 'block';
+            textarea.setAttribute('required', true);
+        } else {
+            container.style.display = 'none';
+            textarea.removeAttribute('required');
+            textarea.value = '';
+        }
+    }
 </script>

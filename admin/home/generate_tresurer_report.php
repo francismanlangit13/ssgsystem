@@ -273,7 +273,7 @@
                                             <td class="text-center"><?php echo $row['purpose'] ?></td>
                                             <td class=""><p class="m-0"><?php echo $row['or_number'] ?></p></td>
                                             <td></td>
-                                            <td class="">&#8369;<?php echo $row['amount'] ?></td>
+                                            <td class=""><?php echo $row['amount'] ?></td>
                                         </tr>
                                         <?php
                                                 }
@@ -297,7 +297,7 @@
                                                 if(mysqli_num_rows($total_balance_query_run) > 0){
                                                     $balance_result = mysqli_fetch_assoc($total_balance_query_run);
                                                     $total = $balance_result["total"];
-                                                    echo "₱" . $total;
+                                                    echo $total;
                                                 }
                                             ?>
                                         </th>

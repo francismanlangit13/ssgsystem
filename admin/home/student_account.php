@@ -146,7 +146,7 @@
 <div class="modal fade" id="exampleModalCSV" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelCSV" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="code.php" method="post" name="upload_excel" enctype="multipart/form-data">
+            <form action="code.php" method="post" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-file-csv"></i> Import CSV</h5>
                 </div>
@@ -159,6 +159,18 @@
                                 </span>
                             </div>
                             <input id="import_students" type="file" class="form-control" name="file" placeholder="File" aria-label="File" accept=".csv" required>
+                        </div>
+                        <div class="form-group col-md-12 mt-2">
+                            <label for="level" class="required">Year Level</label>
+                            <select class="form-control" name="level" id="level" required>
+                                <option value="" selected="true" disabled="disabled">Select Year Level</option>
+                                <option value="Grade 7">Grade 7</option>    
+                                <option value="Grade 8">Grade 8</option> 
+                                <option value="Grade 9">Grade 9</option> 
+                                <option value="Grade 10">Grade 10</option> 
+                                <option value="Grade 11">Grade 11</option> 
+                                <option value="Grade 12">Grade 12</option> 
+                            </select>
                         </div>
                     </div>
                 </div>

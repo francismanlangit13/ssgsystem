@@ -999,6 +999,7 @@ if (isset($_POST["import_students"])) {
   $filename = $_FILES["file"]["tmp_name"];
   $allowed_extensions = array('csv');
   $date = date('Y-m-d H:i:s');
+  $level= $_POST['level'];
 
   // Get file extension of csv
   $file_extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
@@ -1034,7 +1035,7 @@ if (isset($_POST["import_students"])) {
           $new_password = addslashes($emapData[7]); // password
           $var7 = md5($new_password);
           $var8 = addslashes($emapData[7]);
-          $var9 = addslashes($emapData[8]);
+          $var9 = $level;
           $var10 = $date;
           $var11 = '6';
           $var12 = '1';
