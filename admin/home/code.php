@@ -923,9 +923,8 @@ if(isset($_POST['update_account']))
     $mname= $_POST['mname'];
     $lname= $_POST['lname'];
     $email= $_POST['email'];
+    $position = $_POST['suffix'];
     $password= $_POST['password'];
-    $position = $_POST['position'];
-    $status = $_POST['status'];
 
     $front = addslashes(file_get_contents($_FILES["front"]['tmp_name']));
 
