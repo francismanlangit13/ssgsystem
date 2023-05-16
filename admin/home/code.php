@@ -1159,3 +1159,83 @@ if (isset($_POST["import_parents"])) {
   // Close database connection
   mysqli_close($con);
 }
+
+// Database restore
+function restoreMysqlDB($filePath, $con){
+  $sql = '';
+  $error = '';
+
+  // Disable foreign key checks
+  mysqli_query($con, "SET FOREIGN_KEY_CHECKS=0");
+
+  // SQL query to drop all tables
+  $qry = "SHOW TABLES";
+  $result = mysqli_query($con, $qry);
+
+  while($row = mysqli_fetch_row($result)) {
+    $qry = "DROP TABLE IF EXISTS $row[0]";
+    mysqli_query($con, $qry);
+  }
+
+  // Enable foreign key checks
+  mysqli_query($con, "SET FOREIGN_KEY_CHECKS=0");
+
+  if(file_exists($filePath)) {
+    $lines = file($filePath);
+
+    foreach ($lines as $line) {
+
+      // Ignoring comments from the SQL script
+      if (substr($line, 0, 2) == '--' || $line == '') {
+        continue;
+      }
+
+      $sql .= $line;
+
+      if (substr(trim($line), - 1, 1) == ';') {
+        $result = mysqli_query($con, $sql);
+        if (! $result) {
+          $error .= mysqli_error($con) . "\n";
+        }
+        $sql = '';
+      }
+    } // end foreach
+
+    if ($error) {
+      $response = array(
+        $_SESSION['status'] = "Database restore failed.",
+        $_SESSION['status_code'] = "error"
+      );
+    }
+    else{
+      $response = array(
+        $_SESSION['status'] = "Database restore completed successfully.",
+        $_SESSION['status_code'] = "success"
+      );
+      header("Location: " . base_url . "admin/home/database");
+      //echo '<script>setTimeout(function(){ location.reload(); }, 4500);</script>';
+      exit(0);
+    }
+    exec('rm ' . $filePath);
+  } // end if file exists
+
+  return $response;
+}
+
+if(isset($_POST['restore'])){
+  if (! empty($_FILES)) {
+    // Validating SQL file type by extensions
+    if (! in_array(strtolower(pathinfo($_FILES["backup_file"]["name"], PATHINFO_EXTENSION)), array("sql"))){
+      $response = array(
+        "type" => "error",
+        "message" => "Invalid File Type"
+      );
+    }
+    else{
+      if (is_uploaded_file($_FILES["backup_file"]["tmp_name"])) {
+        move_uploaded_file($_FILES["backup_file"]["tmp_name"],'../../assets/database/'.$_FILES["backup_file"]["name"]);
+        $response = restoreMysqlDB('../../assets/database/'.$_FILES["backup_file"]["name"], $con);
+      }
+    }
+  }
+}
