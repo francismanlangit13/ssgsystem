@@ -1,39 +1,40 @@
 <?php
-include('authentication.php');
+include('../../db_conn.php');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-if(isset($_POST['logout_btn']))
-{
+require '../../assets/PHPMailer/src/Exception.php';
+require '../../assets/PHPMailer/src/PHPMailer.php';
+require '../../assets/PHPMailer/src/SMTP.php';
+
+// Logout
+if(isset($_POST['logout_btn'])){
     // session_destroy();
     unset( $_SESSION['auth']);
     unset( $_SESSION['auth_role']);
     unset( $_SESSION['auth_user']);
 
-    $_SESSION['message'] = "Logout Successfully";
-    header("Location: ../login/index.php");
+    $_SESSION['status'] = "Logout Successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "login");
     exit(0);
 }
-?>
 
-
-
-<?php
 if(isset($_POST['update_account']))
 {
+
     $user_id= $_POST['user_id'];
     $fname= $_POST['fname'];
     $mname= $_POST['mname'];
     $lname= $_POST['lname'];
     $email= $_POST['email'];
+    $position = $_POST['suffix'];
     $password= $_POST['password'];
-    $position = $_POST['position'];
-    $status = $_POST['status'];
-    $front = $_FILES['front'];
-    $back = $_FILES['back'];
-    $front = addslashes(file_get_contents($_FILES["front"]['tmp_name']));
-    $back = addslashes(file_get_contents($_FILES["back"]['tmp_name']));
 
-    $query = "UPDATE `user` SET `fname`='$fname',`mname`='$mname',`lname`='$lname',`email`='$email',`password`='$password',`front`='$front',`back`='$back' WHERE `user_id`='$user_id'";
+    $front = addslashes(file_get_contents($_FILES["front"]['tmp_name']));
+
+    $query = "UPDATE `user` SET `fname`='$fname',`mname`='$mname',`lname`='$lname',`email`='$email',`password`='$password',`front`='$front' WHERE `user_id`='$user_id'";
     $query_run = mysqli_query($con, $query);
     
     if($query_run)
@@ -47,8 +48,7 @@ if(isset($_POST['update_account']))
     {
         $_SESSION['status'] = "Something is wrong!";
         $_SESSION['status_code'] = "error";
-        header('Location: officer_account.php');
+        header('Location: settings.php');
         exit(0);
     }
 }
-?>
