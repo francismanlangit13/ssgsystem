@@ -64,10 +64,10 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
                                     <?php
-                                        $total_fines = "SELECT * FROM `fines_transaction`";
+                                        $total_fines = "SELECT * FROM `payment`";
                                         $total_fines_query_run = mysqli_query($con, $total_fines);
                                     ?>
-                                    <div class="card-body"><i class="fas fa-wallet"></i> Total Fines Transaction
+                                    <div class="card-body"><i class="fas fa-wallet"></i> Total Transaction
                                         <label class="float-end">
                                             <?php
                                                 if($fines_count = mysqli_num_rows($total_fines_query_run)){
