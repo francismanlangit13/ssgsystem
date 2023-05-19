@@ -116,11 +116,12 @@
                                                     FROM payment INNER JOIN user
                                                     ON 
                                                     payment.user_id = user.user_id
-                                                    AND date(date) between '{$from}' and '{$to}' order by unix_timestamp(date) asc");
+                                                    WHERE payment.platform != 'Cash'
+                                                    AND date(date) between '{$from}' and '{$to}' order by unix_timestamp(date) desc");
                                                     while($row = $qry->fetch_assoc()):
                                                 ?>
                                                 <tr>
-                                                    <td class="text-center"><?php echo $row['id'] ?></td>
+                                                    <td class="text-center"><?php echo $row['payment_id'] ?></td>
                                                     <td class="text-center"><?php echo $row['student_id'] ?></td>
                                                     <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
                                                     <td class=""><p class="m-0"><?php echo $row['platform'] ?></p></td>
@@ -156,18 +157,19 @@
                                             </thead>
                                             <tbody>
                                                 <?php 
-                                                    $qry = $con->query("SELECT *, DATE_FORMAT(fines_transaction.fines_date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
-                                                    FROM fines_transaction INNER JOIN user
+                                                    $qry = $con->query("SELECT *, DATE_FORMAT(payment.date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
+                                                    FROM payment INNER JOIN user
                                                     ON 
-                                                    fines_transaction.user_id = user.user_id
-                                                    AND date(fines_date) between '{$from}' and '{$to}' order by unix_timestamp(fines_date) asc");
+                                                    payment.user_id = user.user_id
+                                                    WHERE payment.platform = 'Cash'
+                                                    AND date(payment.date) between '{$from}' and '{$to}' order by unix_timestamp(payment.date) desc");
                                                     while($row = $qry->fetch_assoc()):
                                                 ?>
                                                 <tr>
-                                                    <td class="text-center"><?php echo $row['transaction_id'] ?></td>
+                                                    <td class="text-center"><?php echo $row['payment_id'] ?></td>
                                                     <td class="text-center"><?php echo $row['student_id'] ?></td>
                                                     <td class=""><p class="m-0"><?php echo $row['fname'] ?> <?php echo $row['lname'] ?> <?php echo $row['suffix'] ?></p></td>
-                                                    <td class=""><p class="m-0">&#8369; <?php echo $row['fines_fee'] ?></p></td>
+                                                    <td class=""><p class="m-0">&#8369; <?php echo $row['amount'] ?></p></td>
                                                     <td class=""><?php echo $row['short_date_created'] ?></td>
                                                 </tr>
                                                 <?php endwhile; ?>

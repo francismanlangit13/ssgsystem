@@ -51,14 +51,14 @@
                                                 INNER JOIN
                                                 `user`
                                                 ON 
-                                                payment.`user_id` = `user`.user_id
+                                                payment.`user_id` = `user`.user_id WHERE payment.platform IN ('GCash', 'Maya', 'Shopee Pay', 'Lazada Pay')
                                             ";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){
                                         ?>
                                         <tr>
-                                            <td><?= $row['id']; ?></td>
+                                            <td><?= $row['payment_id']; ?></td>
                                             <td><?= $row['student_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
                                             <td><?= $row['platform']; ?></td>

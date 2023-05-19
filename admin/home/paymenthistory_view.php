@@ -10,14 +10,14 @@
                     if(isset($_GET['id'])){
                         $id = $_GET['id'];
                         $users = "SELECT
-                            *, DATE_FORMAT(fines_transaction.fines_date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
+                            *, DATE_FORMAT(payment.date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
                             FROM
-                            fines_transaction
+                            payment
                             INNER JOIN
                             `user`
                             ON 
-                            fines_transaction.`user_id` = `user`.user_id
-                            WHERE transaction_id = '$id'
+                            payment.`user_id` = `user`.user_id
+                            WHERE payment_id = '$id' AND payment.platform = 'Cash'
                         ";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
@@ -71,7 +71,7 @@
 
                                             <div class="col-md-3 mb-3">
                                                 <label for="">Amount Paid</label>
-                                                <input type="text" value="₱ <?=$user['fines_fee'];?>" class="form-control" disabled>
+                                                <input type="text" value="₱ <?=$user['amount'];?>" class="form-control" disabled>
                                             </div>
 
                                             <div class="col-md-3 mb-3">

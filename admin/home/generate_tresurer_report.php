@@ -82,32 +82,42 @@
                                         <th style="width:500px; text-align:left;">SSG BALANCE</th>
                                         <th style="width: 80px;">PHP</th>
                                         <th style="width: 500px; text-align: right;">
-                                        <?php
-                                            if(isset($_POST['id'])){
-                                                $id = $_POST['id'];
-                                                $total_balance = "SELECT SUM(fines_transaction.fines_fee) AS total 
-                                                FROM fines_transaction 
-                                                WHERE fines_transaction.fines_date BETWEEN 
-                                                (SELECT DATE_SUB(DATE_ADD(LAST_DAY(DATE_SUB(MAX(date), INTERVAL 2 MONTH)), INTERVAL 1 DAY), INTERVAL 1 MONTH) 
-                                                FROM ssg_expenses 
-                                                WHERE activity_id = '$id' 
-                                                ORDER BY date DESC 
-                                                LIMIT 1) 
-                                                AND 
-                                                (SELECT DATE_ADD(LAST_DAY(DATE_SUB(MAX(date), INTERVAL 1 MONTH)), INTERVAL 1 DAY) 
-                                                FROM ssg_expenses 
-                                                WHERE activity_id = '$id' 
-                                                ORDER BY date DESC 
-                                                LIMIT 1)";
-                                                $total_balance_query_run = mysqli_query($con, $total_balance);
-                                                if(mysqli_num_rows($total_balance_query_run) > 0){
-                                                    $balance_result = mysqli_fetch_assoc($total_balance_query_run);
-                                                    $total = $balance_result["total"];
-                                                    echo $total;
+                                            <?php
+                                                if (isset($_POST['id'])) {
+                                                    $id = $_POST['id'];
+                                                    $total_balance = "SELECT SUM(payment.amount) AS total 
+                                                    FROM payment 
+                                                    WHERE payment.status IN ('Approved', 'Partial') AND payment.date BETWEEN 
+                                                    (SELECT DATE_SUB(DATE_ADD(LAST_DAY(DATE_SUB(MAX(date), INTERVAL 2 MONTH)), INTERVAL 1 DAY), INTERVAL 1 MONTH) 
+                                                    FROM ssg_expenses 
+                                                    WHERE activity_id = ? 
+                                                    ORDER BY date DESC 
+                                                    LIMIT 1) 
+                                                    AND 
+                                                    (SELECT DATE_ADD(LAST_DAY(DATE_SUB(MAX(date), INTERVAL 1 MONTH)), INTERVAL 1 DAY) 
+                                                    FROM ssg_expenses 
+                                                    WHERE activity_id = ? 
+                                                    ORDER BY date DESC 
+                                                    LIMIT 1)";
+                                                    $stmt = $con->prepare($total_balance);
+                                                    $stmt->bind_param('ss', $id, $id);
+                                                    $stmt->execute();
+                                                    $result = $stmt->get_result();
+                                                    if ($result->num_rows > 0) {
+                                                        $balance_result = $result->fetch_assoc();
+                                                        $total = $balance_result["total"];
+                                                        if ($total !== null && $total !== "") {
+                                                            echo $total;
+                                                        } else {
+                                                            echo "0";
+                                                        }
+                                                    }
+                                                    else {
+                                                        echo "No balance found.";
+                                                    }
+                                                    $stmt->close();
                                                 }
-                                            }
-                                        ?>
-
+                                            ?>
                                         </th>
                                     </tr>
                                     <tr>
@@ -128,27 +138,40 @@
                                         </th>
                                         <th style="width: 80px;"></th>
                                         <th style="width: 500px; text-align: right;">
-                                        <?php
-                                            if(isset($_POST['id'])){
-                                                $id = $_POST['id'];
-                                                $total_balance = "SELECT SUM(fines_transaction.fines_fee) AS total 
-                                                FROM fines_transaction 
-                                                WHERE fines_transaction.fines_date BETWEEN 
-                                                (SELECT DATE_SUB(MAX(date), INTERVAL 1 MONTH) 
-                                                FROM ssg_expenses 
-                                                WHERE activity_id = '$id') 
-                                                AND 
-                                                (SELECT MAX(date) 
-                                                FROM ssg_expenses 
-                                                WHERE activity_id = '$id')";
-                                                $total_balance_query_run = mysqli_query($con, $total_balance);
-                                                if(mysqli_num_rows($total_balance_query_run) > 0){
-                                                    $balance_result = mysqli_fetch_assoc($total_balance_query_run);
-                                                    $total = $balance_result["total"];
-                                                    echo $total;
+                                            <?php
+                                                if (isset($_POST['id'])) {
+                                                    $id = $_POST['id'];
+                                                    $total_balance = "SELECT SUM(payment.amount) AS total 
+                                                    FROM payment 
+                                                    WHERE payment.status IN ('Approved', 'Partial') AND payment.date BETWEEN 
+                                                    (SELECT DATE_SUB(MAX(date), INTERVAL 1 MONTH) 
+                                                    FROM ssg_expenses 
+                                                    WHERE activity_id = ?) 
+                                                    AND 
+                                                    (SELECT MAX(date) 
+                                                    FROM ssg_expenses 
+                                                    WHERE activity_id = ?)";
+                                                    $stmt = $con->prepare($total_balance);
+                                                    $stmt->bind_param('ss', $id, $id);
+                                                    $stmt->execute();
+                                                    $result = $stmt->get_result();
+                                                    if ($result->num_rows > 0) {
+                                                        $balance_result = $result->fetch_assoc();
+                                                        $total = $balance_result["total"];
+                                                        if (!empty($total)) {
+                                                            echo $total;
+                                                        }
+                                                        else {
+                                                            echo "0";
+                                                        }
+                                                    }
+                                                    else {
+                                                        echo "No balance found.";
+                                                    }
+                                                    $stmt->close();
                                                 }
-                                            }
-                                        ?>
+                                            ?>
+                                        </th>
                                     </tr>
                                     <tbody style="text-align:left;">
                                     </tbody>
@@ -158,24 +181,37 @@
                                             <th></th>
                                             <th style="text-align: right;">
                                                 <?php
-                                                    if(isset($_POST['id'])){
+                                                    if (isset($_POST['id'])) {
                                                         $id = $_POST['id'];
-                                                        $total_balance = "SELECT SUM(fines_fee) AS total
-                                                        FROM fines_transaction
-                                                        WHERE fines_date >= 
+                                                        $total_balance = "SELECT SUM(payment.amount) AS total
+                                                        FROM payment
+                                                        WHERE payment.date >= 
                                                         (SELECT DATE_SUB(MAX(date), INTERVAL 2 MONTH)
                                                         FROM ssg_expenses 
-                                                        WHERE activity_id = '$id')
-                                                        AND fines_date <= 
+                                                        WHERE activity_id = ?)
+                                                        AND payment.date <= 
                                                         (SELECT DATE_ADD(MAX(date), INTERVAL 0 DAY)
                                                         FROM ssg_expenses 
-                                                        WHERE activity_id = '$id')";
-                                                        $total_balance_query_run = mysqli_query($con, $total_balance);
-                                                        if(mysqli_num_rows($total_balance_query_run) > 0){
-                                                            $balance_result = mysqli_fetch_assoc($total_balance_query_run);
+                                                        WHERE activity_id = ?)";
+                                                        $stmt = $con->prepare($total_balance);
+                                                        $stmt->bind_param('ss', $id, $id);
+                                                        $stmt->execute();
+                                                        $result = $stmt->get_result();
+                                                        if ($result->num_rows > 0) {
+                                                            $balance_result = $result->fetch_assoc();
                                                             $total = $balance_result["total"];
-                                                            echo $total;
+                                                        
+                                                            if ($total !== null && $total !== "") {
+                                                                echo $total;
+                                                            }
+                                                            else {
+                                                                echo "0";
+                                                            }
                                                         }
+                                                        else {
+                                                            echo "No balance found.";
+                                                        }
+                                                        $stmt->close();
                                                     }
                                                 ?>
                                             </th>
@@ -206,13 +242,13 @@
                                                     // get the total revenue
                                                     if(isset($_POST['id'])){
                                                         $id = $_POST['id'];
-                                                        $total_balance = "SELECT SUM(fines_fee) AS total
-                                                        FROM fines_transaction
-                                                        WHERE fines_date >= 
+                                                        $total_balance = "SELECT SUM(payment.amount) AS total
+                                                        FROM payment
+                                                        WHERE payment.date >= 
                                                         (SELECT DATE_SUB(MAX(date), INTERVAL 2 MONTH)
                                                         FROM ssg_expenses 
                                                         WHERE activity_id = '$id')
-                                                        AND fines_date <= 
+                                                        AND payment.date <= 
                                                         (SELECT DATE_ADD(MAX(date), INTERVAL 0 DAY)
                                                         FROM ssg_expenses 
                                                         WHERE activity_id = '$id')";
