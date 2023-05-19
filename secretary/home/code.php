@@ -95,38 +95,38 @@ if(isset($_POST['announcement_delete'])){
     }
 }
 
-if(isset($_POST['addfinesbtn']))
-{
-    $user_id= $_POST['user_id'];
-    $fines = $_POST['addfines'];
+// if(isset($_POST['addfinesbtn']))
+// {
+//     $user_id= $_POST['user_id'];
+//     $fines = $_POST['addfines'];
    
-    $q1= "SELECT fines, balance FROM student WHERE user_id = '$user_id' ";
-    $q1_run = $con->query($q1);
-    $data = $q1_run->fetch_assoc();
-    $fee = $data['fines'];
-    $bal = $data['balance'];
+//     $q1= "SELECT fines, balance FROM student WHERE user_id = '$user_id' ";
+//     $q1_run = $con->query($q1);
+//     $data = $q1_run->fetch_assoc();
+//     $fee = $data['fines'];
+//     $bal = $data['balance'];
 
-    $newfee = $fines + $fee;
-    $newbal = $fines + $bal;
+//     $newfee = $fines + $fee;
+//     $newbal = $fines + $bal;
 
-    $query = "UPDATE `student` SET `fines`='$newfee',`balance`='$newbal' WHERE `user_id` = '$user_id'";
-    $query_run = mysqli_query($con, $query);
+//     $query = "UPDATE `student` SET `fines`='$newfee',`balance`='$newbal' WHERE `user_id` = '$user_id'";
+//     $query_run = mysqli_query($con, $query);
     
-    if($query_run)
-    {
-        $_SESSION['status'] = "Fee Added";
-        $_SESSION['status_code'] = "success";
-        header('Location: fines.php');
-        exit(0);
-    }
-    else
-    {
-        $_SESSION['status'] = "Something is wrong!";
-        $_SESSION['status_code'] = "error";
-        header('Location: fines.php');
-        exit(0);
-    }
-}
+//     if($query_run)
+//     {
+//         $_SESSION['status'] = "Fee Added";
+//         $_SESSION['status_code'] = "success";
+//         header('Location: fines.php');
+//         exit(0);
+//     }
+//     else
+//     {
+//         $_SESSION['status'] = "Something is wrong!";
+//         $_SESSION['status_code'] = "error";
+//         header('Location: fines.php');
+//         exit(0);
+//     }
+// }
 
 
 
@@ -162,79 +162,106 @@ if(isset($_POST['update_account']))
     }
 }
 
-if(isset($_POST['payfines_btn']))
-{
-    $id = $_POST['user_id'];
-    $payment = $_POST['pay'];
-    $date = date('Y-m-d', strtotime($_POST['date']));
+// if(isset($_POST['payfines_btn']))
+// {
+//     $id = $_POST['user_id'];
+//     $payment = $_POST['pay'];
+//     $date = date('Y-m-d', strtotime($_POST['date']));
 
 
-    $query= "SELECT fines, balance FROM student WHERE user_id = '$id' ";
-    $query_run = $con->query($query);
-    $data = $query_run->fetch_assoc();
-    $fee = $data['fines'];
+//     $query= "SELECT fines, balance FROM student WHERE user_id = '$id' ";
+//     $query_run = $con->query($query);
+//     $data = $query_run->fetch_assoc();
+//     $fee = $data['fines'];
       
 
-    if($data['balance'] > 0)
-    {
-        $query2 = "INSERT INTO `fines_transaction`(`fines_id`, `fines_fee`, `fines_date`) VALUES ('$id','$payment','$date')";
-        $con->query($query2);
+//     if($data['balance'] > 0)
+//     {
+//         $query2 = "INSERT INTO `fines_transaction`(`fines_id`, `fines_fee`, `fines_date`) VALUES ('$id','$payment','$date')";
+//         $con->query($query2);
         
-        $sq1 = "SELECT sum(fines_fee) as totalpaid FROM fines_transaction WHERE `fines_id` = '$id'";
-        $sq1_run = $con->query($sq1);
-        $row = $sq1_run->fetch_assoc();
-        $totalpaid = $row['totalpaid'];
-        $newbal = $fee - $totalpaid;
+//         $sq1 = "SELECT sum(fines_fee) as totalpaid FROM fines_transaction WHERE `fines_id` = '$id'";
+//         $sq1_run = $con->query($sq1);
+//         $row = $sq1_run->fetch_assoc();
+//         $totalpaid = $row['totalpaid'];
+//         $newbal = $fee - $totalpaid;
 
-        $sq3 = "UPDATE `student` SET `balance`='$newbal' WHERE user_id = '$id'";
-        $con->query($sq3);
+//         $sq3 = "UPDATE `student` SET `balance`='$newbal' WHERE user_id = '$id'";
+//         $con->query($sq3);
 
-        if($con)
-        {
-            {
-                $_SESSION['status']="Successfully paid fines";
-                $_SESSION['status_code'] = "success"; 
-                header('Location: penaltyfee_view.php');
-                exit(0);
-            }
-        }
-        else
-        {
-            $_SESSION['status']="Something went wrong!";
-            $_SESSION['status_code'] = "error"; 
-            header('Location: penaltyfee_view.php');
-            exit(0);
-        }
+//         if($con)
+//         {
+//             {
+//                 $_SESSION['status']="Successfully paid fines";
+//                 $_SESSION['status_code'] = "success"; 
+//                 header('Location: penaltyfee_view.php');
+//                 exit(0);
+//             }
+//         }
+//         else
+//         {
+//             $_SESSION['status']="Something went wrong!";
+//             $_SESSION['status_code'] = "error"; 
+//             header('Location: penaltyfee_view.php');
+//             exit(0);
+//         }
     
-    }
-}
+//     }
+// }
 
-if(isset($_POST['penalty_add'])){
-  $user_id= $_POST['penalty_add'];
+if (isset($_POST['penalty_add'])) {
+  $user_id = $_POST['penalty_add'];
   $penalty_reason = $_POST['name'];
   $penalty = $_POST['amount'];
   $date = date('Y-m-d H:i:s');
-  
-  $q1= "SELECT * FROM user WHERE user_id = '$user_id' ";
-  $q1_run = $con->query($q1);
-  $data = $q1_run->fetch_assoc();
-  $bal = $data['balance'];
 
-  $newbal = $penalty + $bal;
-  $stmt = "INSERT INTO `penalties`(`user_id`, `penalty_fee`, `penalty_reason`, `penalty_date`) VALUES ('$user_id','$penalty','$penalty_reason','$date')";
-  $query = "UPDATE `user` SET `balance`='$newbal' WHERE `user_id` = '$user_id'";
-  $query_run = mysqli_query($con, $query);
-  
-  if($query_run){
-    $_SESSION['status'] = "Penalty added successfully";
-    $_SESSION['status_code'] = "success";
-    header("Location: " . base_url . "secretary/home/penalties");
-    exit(0);
-  }
-  else{
-    $_SESSION['status'] = "Something is wrong!";
+  // Check if the user exists
+  $q1 = "SELECT * FROM user WHERE user_id = ?";
+  $stmt1 = $con->prepare($q1);
+  $stmt1->bind_param('s', $user_id);
+  $stmt1->execute();
+  $result = $stmt1->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $bal = $row['balance'];
+
+    // Calculate new balance
+    $newbal = $penalty + $bal;
+
+    // Insert penalty into the penalties table
+    $q2 = "INSERT INTO penalties (user_id, penalty_fee, penalty_reason, penalty_date) VALUES (?, ?, ?, ?)";
+    $stmt2 = $con->prepare($q2);
+    $stmt2->bind_param('siss', $user_id, $penalty, $penalty_reason, $date);
+    $inserted = $stmt2->execute();
+
+    if ($inserted) {
+      // Update user's balance
+      $q3 = "UPDATE user SET balance = ? WHERE user_id = ?";
+      $stmt3 = $con->prepare($q3);
+      $stmt3->bind_param('is', $newbal, $user_id);
+      $updated = $stmt3->execute();
+
+      if ($updated) {
+        $_SESSION['status'] = "Penalty added successfully";
+        $_SESSION['status_code'] = "success";
+      } else {
+        $_SESSION['status'] = "Failed to update user's balance";
+        $_SESSION['status_code'] = "error";
+      }
+    } else {
+      $_SESSION['status'] = "Failed to insert penalty";
+      $_SESSION['status_code'] = "error";
+    }
+  } else {
+    $_SESSION['status'] = "User not found";
     $_SESSION['status_code'] = "error";
-    header("Location: " . base_url . "secretary/home/penalties");
-    exit(0);
   }
+
+  $stmt1->close();
+  $stmt2->close();
+  $stmt3->close();
+
+  header("Location: " . base_url . "secretary/home/penalties");
+  exit(0);
 }

@@ -106,24 +106,24 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="col-md-12 mb-3">
-                    <label for="" class="required">Penalty Name</label>
-                    <input required type="text" Placeholder="Enter Penalty Name" name="name" class="form-control">
-                </div>
+            <form action="code.php" method="POST">
+                <div class="modal-body">
+                    <div class="col-md-12 mb-3">
+                        <label for="" class="required">Penalty Name</label>
+                        <input required type="text" Placeholder="Enter Penalty Name" name="name" class="form-control">
+                    </div>
 
-                <div class="col-md-12 mb-3">
-                    <label for="" class="required">Penalty amount</label>
-                    <input required type="number" Placeholder="Enter Amount" name="amount" class="form-control">
+                    <div class="col-md-12 mb-3">
+                        <label for="" class="required">Penalty amount</label>
+                        <input required type="number" Placeholder="Enter Amount" name="amount" class="form-control">
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <form action="code.php" method="POST">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <input type="hidden" id="delete_id" name="penalty_add" value="">
                     <button type="submit" class="btn btn-success">Add</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
