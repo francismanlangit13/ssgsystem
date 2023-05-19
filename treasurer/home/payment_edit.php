@@ -40,6 +40,7 @@
                                     <div class="card-body">
                                         <form action="code.php" method="POST" enctype="multipart/form-data">
                                             <div class="row">
+                                                <input type="text" name="user_id" value="<?=$id;?>" class="form-control" hidden>
                                                 <div class="col-md-3 mb-3">
                                                     <label for="">First Name</label>
                                                     <input type="text" value="<?=$user['fname'];?>" class="form-control" disabled>
@@ -72,12 +73,22 @@
 
                                                 <div class="col-md-3 mb-3">
                                                     <label for="">Amount Paid</label>
-                                                    <input type="text" value="₱ <?=$user['amount'];?>" name="amount" class="form-control" required>
+                                                    <input type="text" value="<?=$user['amount'];?>" name="amount" class="form-control" required>
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
                                                     <label for="">Date and Time Paid</label>
                                                     <input type="text" value="<?=$user['short_date_created'];?>" class="form-control" disabled>
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="" class="required">Status</label>
+                                                    <select name="status" required class="form-control">
+                                                        <option value="" selected disabled>Select Status</option>
+                                                        <option value="Approved" <?= $user['status'] == 'Approved' ? 'selected' :'' ?>>Approved</option>
+                                                        <option value="Partial" <?= $user['status'] == 'Partial' ? 'selected' :'' ?>>Partial</option>
+                                                        <option value="Deny" <?= $user['status'] == 'Deny' ? 'selected' :'' ?>>Deny</option>
+                                                    </select>
                                                 </div>
 
                                             </div>

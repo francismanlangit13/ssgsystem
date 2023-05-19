@@ -185,39 +185,59 @@ if (isset($_POST['penalty_add'])){
   exit(0);
 }
 
-//Update Payment
-if (isset($_POST['update_payment'])){
-  $user_id = $_POST['update_payment'];
-  $penalty_reason = $_POST['name'];
-  $penalty = $_POST['amount'];
+// Update Payment
+if (isset($_POST['update_payment'])) {
+  $user_id = $_POST['user_id'];
+  $amount = $_POST['amount'];
+  $status = $_POST['status'];
   $date = date('Y-m-d H:i:s');
+  $platform = 'Cash';
 
   // Check if the user exists
-  $q1 = "SELECT * FROM user WHERE user_id = ?";
+  $q1 = "SELECT * FROM payment INNER JOIN user ON user.user_id = payment.user_id WHERE user_id = ?";
   $stmt1 = $con->prepare($q1);
   $stmt1->bind_param('s', $user_id);
   $stmt1->execute();
   $result = $stmt1->get_result();
 
-  if ($result->num_rows > 0){
+  if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
+    $user_id_new = $row['user_id'];
+    $prev_bal = $row['amount'];
     $bal = $row['balance'];
 
     // Calculate new balance
-    $newbal = $penalty + $bal;
+    $final_result = $prev_bal + $bal;
 
-    // Insert penalty into the penalties table
-    $q2 = "INSERT INTO penalties (user_id, penalty_fee, penalty_reason, penalty_date) VALUES (?, ?, ?, ?)";
-    $stmt2 = $con->prepare($q2);
-    $stmt2->bind_param('siss', $user_id, $penalty, $penalty_reason, $date);
-    $inserted = $stmt2->execute();
+    $q3 = "UPDATE user SET balance = ? WHERE user_id = ?";
+    $stmt3 = $con->prepare($q3);
+    
+    if (!$stmt3) {
+      $_SESSION['status'] = "Failed to prepare statement: " . $con->error;
+      $_SESSION['status_code'] = "error";
+      header("Location: " . base_url . "treasurer/home/payment");
+      exit(0);
+    }
 
-    if ($inserted) {
-      // Update user's balance
-      $q3 = "UPDATE user SET balance = ? WHERE user_id = ?";
-      $stmt3 = $con->prepare($q3);
-      $stmt3->bind_param('is', $newbal, $user_id);
-      $updated = $stmt3->execute();
+    $stmt3->bind_param('ss', $final_result, $user_id_new);
+    $updated_user = $stmt3->execute();
+
+    if ($updated_user) {
+      $final_results = $final_result - $amount;
+      
+      // Insert penalty into the payment table
+      $q2 = "UPDATE payment SET platform = ?, amount = ?, date = ?, status = ? WHERE user_id = ?";
+      $stmt2 = $con->prepare($q2);
+      
+      if (!$stmt2) {
+        $_SESSION['status'] = "Failed to prepare statement: " . $con->error;
+        $_SESSION['status_code'] = "error";
+        header("Location: " . base_url . "treasurer/home/payment");
+        exit(0);
+      }
+
+      $stmt2->bind_param('sssss', $platform, $amount, $date, $status, $user_id_new);
+      $updated = $stmt2->execute();
 
       if ($updated) {
         $_SESSION['status'] = "Penalty added successfully";
@@ -227,7 +247,7 @@ if (isset($_POST['update_payment'])){
         $_SESSION['status_code'] = "error";
       }
     } else {
-      $_SESSION['status'] = "Failed to insert penalty";
+      $_SESSION['status'] = "Failed to update penalty";
       $_SESSION['status_code'] = "error";
     }
   } else {
@@ -239,6 +259,6 @@ if (isset($_POST['update_payment'])){
   $stmt2->close();
   $stmt3->close();
 
-  header("Location: " . base_url . "secretary/home/penalties");
+  header("Location: " . base_url . "treasurer/home/payment");
   exit(0);
 }
