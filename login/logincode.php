@@ -54,7 +54,7 @@
             elseif( $_SESSION['auth_role'] == '5'){
                 $_SESSION['status'] = "Welcome $full_name";
                 $_SESSION['status_code'] = "success";
-                header("Location: " . base_url . "tresurer");
+                header("Location: " . base_url . "treasurer");
                 exit(0);
             }
             elseif( $_SESSION['auth_role'] == '6'){
