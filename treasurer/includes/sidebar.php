@@ -1,54 +1,48 @@
 <div id="layoutSidenav_nav">
-    
-<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading"></div>
-                            <div class="sb-sidenav-menu-heading">MANAGE</div>
-
-                            <a class="nav-link" href="index.php">
-                                <div class="sb-nav-link-icon"><i class="fa-sharp fa-solid fa-money-bill"></i></div>
-                               Penalty Fee
-                            </a>
-
-                            <a class="nav-link" href="liquidation.php">
-                                <div class="sb-nav-link-icon"><i class="fa-sharp fa-solid fa-sheet-plastic"></i></div>
-                               SSG Expenses
-                            </a>
-                            
-                            
-                            <a class="nav-link" href="qr.php">
-                                <div class="sb-nav-link-icon"><i class="fa-sharp fa-solid fa-qrcode"></i></div>
-                                Generate QR
-                            </a>
-
-                            <a class="nav-link" href="announcement.php">
-                                <div class="sb-nav-link-icon"><i class="fa-sharp fa-solid fa-bullhorn"></i></div>
-                                Announcement
-                            </a>
-                            
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-clock"></i></div>
-                                Payment History
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="paymenthistory.php">Via Cash</a>
-                                    <a class="nav-link" href="cash.php">Gcash</a>
-                                </nav>
-                            </div>
-                            
-                            
-
-
-                        
-                           
-                        </div>
-                    </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Treasurer
-                    </div>
-                </nav>
+    <nav class="sb-sidenav accordion sb-sidenav-dark noprint" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <div class="sb-sidenav-menu-heading">Home</div>
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/index.php') !== false)  { echo 'active'; } ?>" href="<?php echo base_url ?>secretary/home">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Dashboard
+                </a>
+                <div class="sb-sidenav-menu-heading">MANAGE</div>
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/announcement.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/announcement_add.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/announcement_edit.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/announcement_view.php') !== false)  { echo 'active'; } ?>" href="announcement">
+                    <div class="sb-nav-link-icon"><i class="fas fa-solid fa-bullhorn"></i></div>
+                    Manage Announcement
+                </a>
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/penalties.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/penalties_add.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/penalties_edit.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/penalties_view.php') !== false)  { echo 'active'; } ?>" href="penalties">
+                    <div class="sb-nav-link-icon"><i class="fas fa-solid fa fa-file-signature"></i></div>
+                    Manage Penalties
+                </a>
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/payment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_edit.php') !== false)  { echo 'active'; } else { echo 'collapsed'; } ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    Manage Payment
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="<?php if (strpos($_SERVER['PHP_SELF'], 'home/payment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_edit.php') !== false)  { echo 'active'; } else { echo 'collapse'; } ?>" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/payment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_edit.php') !== false)  { echo 'active'; }?>" href="payment">Via Cash</a>
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/onlinepayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_edit.php') !== false)  { echo 'active'; }?>" href="onlinepayment">Online Payment</a>
+                    </nav>
+                </div>
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_liquidation.php') !== false)  { echo 'active'; } else { echo 'collapsed'; } ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-solid fa-print"></i></div>
+                    Generate Report
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="<?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false)  { echo 'active'; } else { echo 'collapse'; } ?>" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false)  { echo 'active'; }?>" href="generate_accounts">Accounts</a>
+                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false)  { echo 'active'; }?>" href="generate_payments">Payments</a>
+                    </nav>
+                </div>
             </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Logged in as:</div>
+            Treasurer
+        </div>
+    </nav>
+</div>
