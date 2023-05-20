@@ -17,7 +17,7 @@
                             `user`
                             ON 
                             payment.`user_id` = `user`.user_id
-                            WHERE payment.platform = 'Cash' AND payment_id = '$id'
+                            WHERE payment.payment_id = '$id'
                         ";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
@@ -27,8 +27,7 @@
                     <div class="container-fluid px-4">
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
-                            <li class="breadcrumb-item ">Payment</li>
-                            <li class="breadcrumb-item ">Via Cash</li>
+                            <li class="breadcrumb-item ">Pending Online Payment</li>
                             <li class="breadcrumb-item active">View</li>
                         </ol>
                         <div class="row">
@@ -38,9 +37,10 @@
                                         <h4>Payment Information</h4>
                                     </div>
                                     <div class="card-body">
-                                        <form action="code.php" method="POST" enctype="multipart/form-data">
+                                        <form action="code.php" method="post" autocomplete="off" enctype="multipart/form-data">
                                             <div class="row">
-                                                <input type="text" name="id" value="<?=$id;?>" class="form-control" hidden>
+                                                <input type="text" name="user_id" value="<?=$user['user_id'];?>" class="form-control" hidden>
+                                                <input type="text" name="id" value="<?=$id?>" class="form-control" hidden>
                                                 <div class="col-md-3 mb-3">
                                                     <label for="">First Name</label>
                                                     <input type="text" value="<?=$user['fname'];?>" class="form-control" disabled>
@@ -63,17 +63,12 @@
 
                                                 <div class="col-md-3 mb-3">
                                                     <label for="">Student ID</label>
-                                                    <input required type="text" value="<?=$user['student_id'];?>" class="form-control" disabled>
+                                                    <input type="text" value="<?=$user['student_id'];?>" class="form-control" disabled>
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
                                                     <label for="">Year Level</label>
-                                                    <input required type="text" value="<?=$user['level'];?>" class="form-control" disabled>
-                                                </div>
-
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="">Amount Paid</label>
-                                                    <input type="text" value="<?=$user['amount'];?>" name="amount" class="form-control" required>
+                                                    <input type="text" value="<?=$user['level'];?>" class="form-control" disabled>
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
@@ -82,19 +77,48 @@
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
+                                                    <label for="">Reference Number</label>
+                                                    <input type="text" value="<?=$user['referencenumber'];?>" class="form-control" disabled>
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="" class="required">Amount</label>
+                                                    <input required type="number" value="" name="amount" class="form-control">
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
                                                     <label for="" class="required">Status</label>
                                                     <select name="status" required class="form-control">
                                                         <option value="" selected disabled>Select Status</option>
-                                                        <option value="Approved" <?= $user['status'] == 'Approved' ? 'selected' :'' ?>>Approved</option>
-                                                        <option value="Partial" <?= $user['status'] == 'Partial' ? 'selected' :'' ?>>Partial</option>
-                                                        <option value="Deny" <?= $user['status'] == 'Deny' ? 'selected' :'' ?>>Deny</option>
+                                                        <option value="Approved">Approved</option>
+                                                        <option value="Partial">Partial</option>
                                                     </select>
                                                 </div>
 
+                                                <div class="col-md-6 text-center">
+                                                    <br>
+                                                    <h5>Online receipt photo</h5>
+                                                    <img class="mt-2" id="frame1" src ="
+                                                    <?php
+                                                        if(isset($user['picture'])){
+                                                            if(!empty($user['picture'])) {
+                                                                echo base_url . 'assets/files/images/onlinepayment/' . $user['picture'];
+                                                        } else { echo base_url . 'assets/files/images/system/no-image.png'; } }
+                                                    ?>" alt="Receipt Picture" width="240px" height="180px"/>
+                                                    <br><br>
+                                                    <?php
+                                                        if(isset($user['picture'])){
+                                                            if(!empty($user['picture'])) { ?>
+                                                            <a class="btn btn-secondary btn-icon-split" href="<?php echo base_url ?>assets/files/images/onlinepayment/<?=$user['picture']?>" download><i class="fa fa-download"></i> Download</a>
+                                                    <?php } else { } } ?>
+                                                    <br>
+                                                </div>
+
                                             </div>
+                                            <br><br>
                                             <div class="float-end">
-                                                <a href="payment.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                                <button type="submit" name="update_payment" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
+                                                <a href="onlinepay.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <button type="submit" name="payment_add_online" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
                                             </div>
                                         </form>
                                     </div>
@@ -112,8 +136,7 @@
                         <div class="container-fluid px-4">
                             <ol class="breadcrumb mb-4 mt-3">
                                 <li class="breadcrumb-item">Dashboard</li>
-                                <li class="breadcrumb-item ">Payment</li>
-                                <li class="breadcrumb-item ">Via Cash</li>
+                                <li class="breadcrumb-item ">Pending Online Payment</li>
                                 <li class="breadcrumb-item active">View</li>
                             </ol>
                             <div class="row">
@@ -125,7 +148,7 @@
                                         <div class="card-body">
                                             <h4>No Record Found!</h4>
                                             <div class="float-end">
-                                                <a href="payment.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <a href="onlinepay.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                             </div>
                                         </div>
                                     </div>

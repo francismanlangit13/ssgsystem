@@ -14,65 +14,67 @@
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
+                                <?php
+                                    if(isset($_GET['id'])){
+                                        $id = $_GET['id'];
+                                        $sql = "SELECT
+                                        *, DATE_FORMAT(penalties.penalty_date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
+                                        FROM
+                                        penalties
+                                        INNER JOIN
+                                        `user`
+                                        ON 
+                                        penalties.`user_id` = `user`.user_id
+                                        WHERE penalties.user_id = '$id'";
+                                        $sql_run = mysqli_query($con, $sql);
+                                        if(mysqli_num_rows($sql_run) > 0){
+                                            $row = mysqli_fetch_assoc($sql_run); // Fetch the single row result
+                                ?>
                                 <i class="fas fa-table me-1"></i>
-                                List of Penalties
+                                List of Penalties (<?= $row['fname']; ?> <?= $row['lname']; ?>)
+                                <?php } else{ echo "Undefined"; } } ?> 
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple" style="text-align:center;">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Student ID</th>
-                                            <th>Name</th>
-                                            <th>Year Level</th>
-                                            <th>Balance</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Penalty Type</th>
+                                            <th>Penalty Amount</th>
+                                            <th>Penalty Date</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Student ID</th>
-                                            <th>Name</th>
-                                            <th>Year Level</th>
-                                            <th>Balance</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Penalty Type</th>
+                                            <th>Penalty Amount</th>
+                                            <th>Penalty Date</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                            $query = "SELECT
-                                            *
-                                            FROM
-                                            `user`
-                                            INNER JOIN
-                                            penalties
-                                            ON
-                                            penalties.user_id = user.user_id
-                                            WHERE user_status_id IN (1,2) GROUP BY `user`.user_id";
-                                            $query_run = mysqli_query($con, $query);
-                                            if(mysqli_num_rows($query_run) > 0){
-                                                foreach($query_run as $row){
+                                           if(isset($_GET['id'])){
+                                                $id = $_GET['id'];
+                                                $query = "SELECT
+                                                    *, DATE_FORMAT(penalties.penalty_date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
+                                                    FROM
+                                                    penalties
+                                                    INNER JOIN
+                                                    `user`
+                                                    ON 
+                                                    penalties.`user_id` = `user`.user_id
+                                                    WHERE penalties.user_id = '$id'
+                                                ";
+                                                $query_run = mysqli_query($con, $query);
+                                                if(mysqli_num_rows($query_run) > 0){
+                                                    foreach($query_run as $row){
                                         ?>
                                         <tr>
-                                            <td><?= $row['user_id']; ?></td>
-                                            <td><?= $row['student_id']; ?></td>
-                                            <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
-                                            <td><?= $row['level']; ?></td>
-                                            <td>₱<?php if($row['balance'] <= 0){ echo"0"; } else { echo $row['balance']; } ?></td>
-                                            <th><?php if($row['balance'] <= 0){ echo"Cleared";} else{ echo"Uncleared"; } ?></th>
-                                            <td> 
-                                                <div class="row d-inline-flex justify-content-center">
-                                                    <div class="col-md-12">
-                                                        <a href="penalties_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
-                                                            <span class="icon text-white-50"></span>
-                                                            <span class="text ml-2 mr-2">View</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td><?= $row['penalty_id']; ?></td>
+                                            <td><?= $row['penalty_reason']; ?></td>
+                                            <td><?= $row['penalty_fee']; ?></td>
+                                            <td><?= $row['short_date_created']; ?></td>
                                         </tr>
                                         <?php } }
                                             else{
@@ -82,13 +84,13 @@
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
-                                                <td>No Record Found</td>
-                                                <td>No Record Found</td>
-                                                <td>No Record Found</td>
                                             </tr>
-                                        <?php } ?>
+                                        <?php } } ?>
                                     </tbody>
                                 </table>
+                                <div class="float-end">
+                                    <a href="penalties.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                </div>
                             </div>
                         </div>
                     </div>

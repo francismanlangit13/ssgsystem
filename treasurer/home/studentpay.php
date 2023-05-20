@@ -10,12 +10,12 @@
                     <div class="container-fluid px-4">
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
-                            <li class="breadcrumb-item ">Penalties</li>
+                            <li class="breadcrumb-item ">Students</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                List of Penalties
+                                List of Students
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple" style="text-align:center;">
@@ -47,11 +47,7 @@
                                             *
                                             FROM
                                             `user`
-                                            INNER JOIN
-                                            penalties
-                                            ON
-                                            penalties.user_id = user.user_id
-                                            WHERE user_status_id IN (1,2) GROUP BY `user`.user_id";
+                                            WHERE user_status_id IN (1,2) AND user_type_id = 6";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){
@@ -66,10 +62,11 @@
                                             <td> 
                                                 <div class="row d-inline-flex justify-content-center">
                                                     <div class="col-md-12">
-                                                        <a href="penalties_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
-                                                            <span class="icon text-white-50"></span>
-                                                            <span class="text ml-2 mr-2">View</span>
-                                                        </a>
+                                                        <button type="button" data-toggle="modal" value="<?=$row['user_id']; ?>" data-firstname="<?=$row['fname']; ?> <?=$row['lname']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-warning btn-icon-split">
+                                                            <span class="icon text-white-50">
+                                                            </span>
+                                                            <span class="text">Pay</span>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -104,7 +101,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Penalty Student (<label id="label"></label>)</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Add Pay Student (<label id="label"></label>)</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -112,19 +109,14 @@
             <form action="code.php" method="POST">
                 <div class="modal-body">
                     <div class="col-md-12 mb-3">
-                        <label for="" class="required">Penalty Name</label>
-                        <input required type="text" Placeholder="Enter Penalty Name" name="name" class="form-control">
-                    </div>
-
-                    <div class="col-md-12 mb-3">
-                        <label for="" class="required">Penalty amount</label>
+                        <label for="" class="required">Payment amount</label>
                         <input required type="number" Placeholder="Enter Amount" name="amount" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <input type="hidden" id="delete_id" name="penalty_add" value="">
-                    <button type="submit" class="btn btn-success">Add</button>
+                    <input type="hidden" id="delete_id" name="payment_add_cash" value="">
+                    <button type="submit" class="btn btn-success">Pay</button>
                 </div>
             </form>
         </div>

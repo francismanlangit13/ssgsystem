@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2023 at 12:07 PM
+-- Generation Time: May 20, 2023 at 06:34 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -88,9 +88,14 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`payment_id`, `user_id`, `platform`, `amount`, `referencenumber`, `picture`, `date`, `status`) VALUES
-(1, 4, 'Gcash', 12.54, '14568435355', 'user_20230503_232958.jpg', '2023-04-13 15:24:45', 'Approved'),
-(2, 21, 'Cash', 400, '56546546', 'sdasdasd', '2023-05-19 18:01:48', 'Approved'),
-(3, 21, 'Cash', 400, '56546546', 'sdasdasd', '2023-05-19 18:01:48', 'Approved');
+(1, 4, 'Gcash', 5, '14568435355', 'user_20230503_232958.jpg', '2023-05-21 00:33:16', 'Approved'),
+(2, 21, 'Cash', 300, '56546546', 'sdasdasd', '2023-05-20 22:19:05', 'Approved'),
+(3, 21, 'Cash', 300, '56546546', 'sdasdasd', '2023-05-20 23:07:54', 'Approved'),
+(4, 21, '0', 300, '', '', '2023-05-20 23:45:22', ''),
+(5, 21, '0', 20, '', '', '2023-05-20 23:46:51', ''),
+(6, 21, 'Cash', 20, '', '', '2023-05-20 23:49:03', ''),
+(7, 21, 'Cash', 50, '', '', '2023-05-20 23:49:31', ''),
+(8, 21, 'Cash', 1, '', '', '2023-05-20 23:49:45', '');
 
 -- --------------------------------------------------------
 
@@ -177,7 +182,6 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `student_id` varchar(255) NOT NULL,
   `level` varchar(255) NOT NULL,
-  `penalty` varchar(255) NOT NULL,
   `balance` double NOT NULL,
   `photo` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
@@ -191,24 +195,24 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `penalty`, `balance`, `photo`, `date_added`, `deleted_by`, `date_deleted`, `user_type_id`, `user_status_id`) VALUES
-(1, 'User', '', 'Admin', '', '', 'admin@gmail.com', '09457664949', '0192023a7bbd73250516f069df18b500', '', '', '', 0, 'user_20230504_101038.png', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 5, 1),
-(2, 'Francis', '', 'Carlo', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', '', 0, 'user_20230504_101038.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-09 15:10:34', 2, 1),
-(3, 'new parent1', '', 'new', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', '', 0, 'user_20230504_104014.png', '2023-05-03 04:06:31', 'User Admin', '2023-05-09 15:12:41', 4, 1),
-(4, 'Student', '', 'Franz', 'Sr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '2019300208', 'Grade 10', '', 0, 'user_20230504_140135.png', '2023-04-21 12:07:07', 'User Admin', '2023-05-09 15:13:33', 6, 1),
-(5, 'new', '', 'admin', '', 'Male', 'admin1@gmail.com', '09457664949', 'f7b8bb95e0c1c5138688c03f2fce0b2a', '', '', '', 0, 'user_20230504_150919.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-01 03:11:07', 5, 1),
-(10, 'Francis Carlo', 'A', 'Manlangit', '', 'Male', 'franzcarl13@yahoo.com', '9457664949', 'edf44baefd0446161387123dda451842', '3-2019300208', 'Grade 12', '', 0, '', '2023-05-13 23:57:05', 'User Admin', '2023-05-16 16:00:32', 6, 3),
-(11, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 11', '', 0, '', '2023-05-13 23:57:05', 'User Admin', '2023-05-16 16:00:35', 6, 3),
-(12, 'Andrie', 'A', 'Manlangit', '', 'Male', 'andrie164@yahoo.com', '9452671554', 'edf44baefd0446161387123dda451842', '3-2019300208', '', '', 0, '', '2023-05-14 00:28:14', 'User Admin', '2023-05-14 00:29:45', 6, 3),
-(13, 'Karl', 'S', 'Tare', '', 'Male', 'karltare@gmail.com', '9154625468', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', '', '', 0, '', '2023-05-14 00:28:14', 'User Admin', '2023-05-14 00:29:49', 6, 3),
-(14, 'Andrie', 'A', 'Manlangit', '', 'Male', 'andrie164@yahoo.com', '9452671554', 'edf44baefd0446161387123dda451842', '', '', '', 0, '', '2023-05-14 00:29:59', 'User Admin', '2023-05-14 00:30:04', 7, 3),
-(15, 'Karl', 'S', 'Tare', '', 'Male', 'karltare@gmail.com', '9154625468', '9757a3ae2eee5925ce7db02aa692241e', '', '', '', 0, '', '2023-05-14 00:29:59', 'User Admin', '2023-05-14 00:30:07', 7, 3),
-(16, 'Andrie', 'A', 'Manlangit', '', 'Male', 'andrie164@yahoo.com', '9452671554', 'edf44baefd0446161387123dda451842', '', '', '', 0, '', '2023-05-14 00:30:34', '', '0000-00-00 00:00:00', 7, 1),
-(17, 'Karl', 'S', 'Tare', '', 'Male', 'karltare@gmail.com', '9154625468', '9757a3ae2eee5925ce7db02aa692241e', '', '', '', 0, '', '2023-05-14 00:30:34', '', '0000-00-00 00:00:00', 7, 1),
-(18, 'Francis Carlo', 'A', 'Manlangit', '', 'Male', 'franzcarl13@yahoo.com', '9457664949', 'edf44baefd0446161387123dda451842', '3-2019300208', 'Grade 7', '', 0, '', '2023-05-16 16:00:47', 'User Admin', '2023-05-16 16:02:12', 6, 3),
-(19, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 7', '', 0, '', '2023-05-16 16:00:47', 'User Admin', '2023-05-16 16:02:15', 6, 3),
-(20, 'Francis Carlo', 'A', 'Manlangit', '', 'Male', 'franzcarl13@yahoo.com', '9457664949', 'edf44baefd0446161387123dda451842', '3-2019300208', 'Grade 11', '', -1, '', '2023-05-16 16:02:23', '', '0000-00-00 00:00:00', 6, 1),
-(21, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 11', '', 391, '', '2023-05-16 16:02:23', '', '0000-00-00 00:00:00', 6, 1);
+INSERT INTO `user` (`user_id`, `fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `balance`, `photo`, `date_added`, `deleted_by`, `date_deleted`, `user_type_id`, `user_status_id`) VALUES
+(1, 'User', '', 'Admin', '', '', 'admin@gmail.com', '09457664949', '0192023a7bbd73250516f069df18b500', '', '', 0, 'user_20230504_101038.png', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 5, 1),
+(2, 'Francis', '', 'Carlo', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', 0, 'user_20230504_101038.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-09 15:10:34', 2, 1),
+(3, 'new parent1', '', 'new', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', 0, 'user_20230504_104014.png', '2023-05-03 04:06:31', 'User Admin', '2023-05-09 15:12:41', 4, 1),
+(4, 'Student', '', 'Franz', 'Sr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '2019300208', 'Grade 10', 0, 'user_20230504_140135.png', '2023-04-21 12:07:07', 'User Admin', '2023-05-09 15:13:33', 6, 1),
+(5, 'new', '', 'admin', '', 'Male', 'admin1@gmail.com', '09457664949', 'f7b8bb95e0c1c5138688c03f2fce0b2a', '', '', 0, 'user_20230504_150919.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-01 03:11:07', 5, 1),
+(10, 'Francis Carlo', 'A', 'Manlangit', '', 'Male', 'franzcarl13@yahoo.com', '9457664949', 'edf44baefd0446161387123dda451842', '3-2019300208', 'Grade 12', 0, '', '2023-05-13 23:57:05', 'User Admin', '2023-05-16 16:00:32', 6, 3),
+(11, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 11', 0, '', '2023-05-13 23:57:05', 'User Admin', '2023-05-16 16:00:35', 6, 3),
+(12, 'Andrie', 'A', 'Manlangit', '', 'Male', 'andrie164@yahoo.com', '9452671554', 'edf44baefd0446161387123dda451842', '3-2019300208', '', 0, '', '2023-05-14 00:28:14', 'User Admin', '2023-05-14 00:29:45', 6, 3),
+(13, 'Karl', 'S', 'Tare', '', 'Male', 'karltare@gmail.com', '9154625468', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', '', 0, '', '2023-05-14 00:28:14', 'User Admin', '2023-05-14 00:29:49', 6, 3),
+(14, 'Andrie', 'A', 'Manlangit', '', 'Male', 'andrie164@yahoo.com', '9452671554', 'edf44baefd0446161387123dda451842', '', '', 0, '', '2023-05-14 00:29:59', 'User Admin', '2023-05-14 00:30:04', 7, 3),
+(15, 'Karl', 'S', 'Tare', '', 'Male', 'karltare@gmail.com', '9154625468', '9757a3ae2eee5925ce7db02aa692241e', '', '', 0, '', '2023-05-14 00:29:59', 'User Admin', '2023-05-14 00:30:07', 7, 3),
+(16, 'Andrie', 'A', 'Manlangit', '', 'Male', 'andrie164@yahoo.com', '9452671554', 'edf44baefd0446161387123dda451842', '', '', 0, '', '2023-05-14 00:30:34', '', '0000-00-00 00:00:00', 7, 1),
+(17, 'Karl', 'S', 'Tare', '', 'Male', 'karltare@gmail.com', '9154625468', '9757a3ae2eee5925ce7db02aa692241e', '', '', 0, '', '2023-05-14 00:30:34', '', '0000-00-00 00:00:00', 7, 1),
+(18, 'Francis Carlo', 'A', 'Manlangit', '', 'Male', 'franzcarl13@yahoo.com', '9457664949', 'edf44baefd0446161387123dda451842', '3-2019300208', 'Grade 7', 0, '', '2023-05-16 16:00:47', 'User Admin', '2023-05-16 16:02:12', 6, 3),
+(19, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 7', 0, '', '2023-05-16 16:00:47', 'User Admin', '2023-05-16 16:02:15', 6, 3),
+(20, 'Francis Carlo', 'A', 'Manlangit', '', 'Male', 'franzcarl13@yahoo.com', '9457664949', 'edf44baefd0446161387123dda451842', '3-2019300208', 'Grade 11', -1, '', '2023-05-16 16:02:23', '', '0000-00-00 00:00:00', 6, 1),
+(21, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 11', 0, '', '2023-05-16 16:02:23', '', '0000-00-00 00:00:00', 6, 1);
 
 -- --------------------------------------------------------
 
@@ -342,7 +346,7 @@ ALTER TABLE `announcement`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `penalties`

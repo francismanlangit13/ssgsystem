@@ -10,13 +10,13 @@
                     <div class="container-fluid px-4">
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
-                            <li class="breadcrumb-item ">Payment History</li>
+                            <li class="breadcrumb-item ">Manage Payment</li>
                             <li class="breadcrumb-item ">Via Cash</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                List of Payment History of Students
+                                List of Payment of Students Via Cash
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple" style="text-align:center;">

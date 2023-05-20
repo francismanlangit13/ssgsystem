@@ -3,7 +3,7 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Home</div>
-                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/index.php') !== false)  { echo 'active'; } ?>" href="<?php echo base_url ?>secretary/home">
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/index.php') !== false)  { echo 'active'; } ?>" href="<?php echo base_url ?>treasurer/home">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
@@ -14,7 +14,15 @@
                 </a>
                 <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/penalties.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/penalties_add.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/penalties_edit.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/penalties_view.php') !== false)  { echo 'active'; } ?>" href="penalties">
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa fa-file-signature"></i></div>
-                    Manage Penalties
+                    View Penalties
+                </a>
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/studentpay.php') !== false)  { echo 'active'; } ?>" href="studentpay">
+                    <div class="sb-nav-link-icon"><i class="fas fa-solid fa fa-users"></i></div>
+                    Students
+                </a>
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/onlinepay.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepay_view.php') !== false)  { echo 'active'; } ?>" href="onlinepay">
+                    <div class="sb-nav-link-icon"><i class="fas fa-solid fa fa-users"></i></div>
+                    Pending Online Payment
                 </a>
                 <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/payment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_edit.php') !== false)  { echo 'active'; } else { echo 'collapsed'; } ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-file-invoice-dollar"></i></div>

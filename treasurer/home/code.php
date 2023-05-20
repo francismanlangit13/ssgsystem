@@ -127,12 +127,13 @@ if(isset($_POST['update_account']))
     }
 }
 
-//Penalty Add
-if (isset($_POST['penalty_add'])){
-  $user_id = $_POST['penalty_add'];
-  $penalty_reason = $_POST['name'];
-  $penalty = $_POST['amount'];
+// Payment cash Add
+if (isset($_POST['payment_add_cash'])) {
+  $user_id = $_POST['payment_add_cash'];
+  $amount = $_POST['amount'];
   $date = date('Y-m-d H:i:s');
+  $platform = 'Cash';
+  $status = 'Approved';
 
   // Check if the user exists
   $q1 = "SELECT * FROM user WHERE user_id = ?";
@@ -141,17 +142,17 @@ if (isset($_POST['penalty_add'])){
   $stmt1->execute();
   $result = $stmt1->get_result();
 
-  if ($result->num_rows > 0){
+  if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $bal = $row['balance'];
 
     // Calculate new balance
-    $newbal = $penalty + $bal;
+    $newbal = $bal - $amount;
 
-    // Insert penalty into the penalties table
-    $q2 = "INSERT INTO penalties (user_id, penalty_fee, penalty_reason, penalty_date) VALUES (?, ?, ?, ?)";
+    // Insert payment into the payment table
+    $q2 = "INSERT INTO payment (user_id, platform, amount, date, status) VALUES (?, ?, ?, ?, ?)";
     $stmt2 = $con->prepare($q2);
-    $stmt2->bind_param('siss', $user_id, $penalty, $penalty_reason, $date);
+    $stmt2->bind_param('ssdss', $user_id, $platform, $amount, $date, $status); // Use 'ssds' as the binding parameter types
     $inserted = $stmt2->execute();
 
     if ($inserted) {
@@ -162,14 +163,14 @@ if (isset($_POST['penalty_add'])){
       $updated = $stmt3->execute();
 
       if ($updated) {
-        $_SESSION['status'] = "Penalty added successfully";
+        $_SESSION['status'] = "Payment added successfully";
         $_SESSION['status_code'] = "success";
       } else {
         $_SESSION['status'] = "Failed to update user's balance";
         $_SESSION['status_code'] = "error";
       }
     } else {
-      $_SESSION['status'] = "Failed to insert penalty";
+      $_SESSION['status'] = "Failed to insert payment";
       $_SESSION['status_code'] = "error";
     }
   } else {
@@ -181,20 +182,20 @@ if (isset($_POST['penalty_add'])){
   $stmt2->close();
   $stmt3->close();
 
-  header("Location: " . base_url . "secretary/home/penalties");
+  header("Location: " . base_url . "treasurer/home/studentpay");
   exit(0);
 }
 
-// Update Payment
-if (isset($_POST['update_payment'])) {
+// Payment onlinepayment Add
+if (isset($_POST['payment_add_online'])) {
   $user_id = $_POST['user_id'];
+  $id = $_POST['id'];
   $amount = $_POST['amount'];
-  $status = $_POST['status'];
   $date = date('Y-m-d H:i:s');
-  $platform = 'Cash';
+  $status = $_POST['status'];
 
   // Check if the user exists
-  $q1 = "SELECT * FROM payment INNER JOIN user ON user.user_id = payment.user_id WHERE user_id = ?";
+  $q1 = "SELECT * FROM user WHERE user_id = ?";
   $stmt1 = $con->prepare($q1);
   $stmt1->bind_param('s', $user_id);
   $stmt1->execute();
@@ -202,12 +203,72 @@ if (isset($_POST['update_payment'])) {
 
   if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $user_id_new = $row['user_id'];
+    $bal = $row['balance'];
+
+    // Calculate new balance
+    $newbal = $bal - $amount;
+
+    // Update payment in the payment table
+    $q2 = "UPDATE payment SET amount = ?, date = ?, status = ? WHERE user_id = ?";
+    $stmt2 = $con->prepare($q2);
+    $stmt2->bind_param('ssss', $amount, $date, $status, $user_id);
+
+    if ($stmt2->execute()) {
+      // Update user's balance
+      $q3 = "UPDATE user SET balance = ? WHERE user_id = ?";
+      $stmt3 = $con->prepare($q3);
+      $stmt3->bind_param('is', $newbal, $user_id);
+
+      if ($stmt3->execute()) {
+        $_SESSION['status'] = "Payment updated successfully";
+        $_SESSION['status_code'] = "success";
+      } else {
+        $_SESSION['status'] = "Failed to update user's balance";
+        $_SESSION['status_code'] = "error";
+      }
+
+      $stmt3->close();
+    } else {
+      $_SESSION['status'] = "Failed to insert payment";
+      $_SESSION['status_code'] = "error";
+    }
+
+    $stmt2->close();
+  } else {
+    $_SESSION['status'] = "User not found";
+    $_SESSION['status_code'] = "error";
+  }
+
+  $stmt1->close();
+
+  header("Location: " . base_url . "treasurer/home/onlinepay");
+  exit(0);
+}
+
+// Update Payment
+if (isset($_POST['update_payment'])) {
+  $id = $_POST['id'];
+  $amount = $_POST['amount'];
+  $status = $_POST['status'];
+  $date = date('Y-m-d H:i:s');
+  $platform = 'Cash';
+
+  // Check if the user exists
+  $q1 = "SELECT * FROM payment INNER JOIN user ON user.user_id = payment.user_id WHERE payment_id = ?";
+  $stmt1 = $con->prepare($q1);
+  $stmt1->bind_param('s', $id);
+  $stmt1->execute();
+  $result = $stmt1->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $user_id = $row['user_id'];
     $prev_bal = $row['amount'];
     $bal = $row['balance'];
 
     // Calculate new balance
     $final_result = $prev_bal + $bal;
+    $new_final_result = $final_result - $amount;
 
     $q3 = "UPDATE user SET balance = ? WHERE user_id = ?";
     $stmt3 = $con->prepare($q3);
@@ -219,14 +280,13 @@ if (isset($_POST['update_payment'])) {
       exit(0);
     }
 
-    $stmt3->bind_param('ss', $final_result, $user_id_new);
+    $stmt3->bind_param('ss', $new_final_result, $user_id);
     $updated_user = $stmt3->execute();
 
     if ($updated_user) {
-      $final_results = $final_result - $amount;
       
       // Insert penalty into the payment table
-      $q2 = "UPDATE payment SET platform = ?, amount = ?, date = ?, status = ? WHERE user_id = ?";
+      $q2 = "UPDATE payment SET platform = ?, amount = ?, date = ?, status = ? WHERE payment_id = ?";
       $stmt2 = $con->prepare($q2);
       
       if (!$stmt2) {
@@ -236,11 +296,11 @@ if (isset($_POST['update_payment'])) {
         exit(0);
       }
 
-      $stmt2->bind_param('sssss', $platform, $amount, $date, $status, $user_id_new);
+      $stmt2->bind_param('sssss', $platform, $amount, $date, $status, $id);
       $updated = $stmt2->execute();
 
       if ($updated) {
-        $_SESSION['status'] = "Penalty added successfully";
+        $_SESSION['status'] = "Penalty updated successfully";
         $_SESSION['status_code'] = "success";
       } else {
         $_SESSION['status'] = "Failed to update user's balance";
