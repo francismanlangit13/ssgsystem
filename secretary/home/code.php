@@ -38,7 +38,8 @@ if(isset($_POST['add_announcement'])){
     $_SESSION['status_code'] = "success";
     header("Location: " . base_url . "secretary/home/announcement");
     exit(0);
-  }else{
+  }
+  else{
     $_SESSION['status'] = "Something went wrong!";
     $_SESSION['status_code'] = "error";
     header("Location: " . base_url . "secretary/home/announcement");
@@ -64,7 +65,8 @@ if(isset($_POST['update_announcement'])){
     $_SESSION['status_code'] = "success";
     header("Location: " . base_url . "secretary/home/announcement");
     exit(0);
-  }else{
+  }
+  else{
     $_SESSION['status'] = "Something went wrong!";
     $_SESSION['status_code'] = "error";
     header("Location: " . base_url . "secretary/home/announcement");
