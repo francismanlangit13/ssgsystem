@@ -43,27 +43,29 @@
                                     <tbody>
                                         <?php
                                             $query = "SELECT
-                                                *, DATE_FORMAT(fines_transaction.fines_date, '%m-%d-%Y') as short_date_created
+                                                *, DATE_FORMAT(payment.date, '%m-%d-%Y') as short_date_created
                                                 FROM
-                                                fines_transaction
+                                                payment
                                                 INNER JOIN
                                                 `user`
                                                 ON 
-                                                fines_transaction.`user_id` = `user`.user_id
+                                                payment.`user_id` = `user`.user_id
+                                                WHERE payment.platform = 'Cash'
+                                                GROUP BY payment.user_id
                                             ";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){
                                         ?>
                                         <tr>
-                                            <td><?= $row['transaction_id']; ?></td>
+                                            <td><?= $row['payment_id']; ?></td>
                                             <td><?= $row['student_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
-                                            <td>₱ <?= $row['fines_fee']; ?></td>
+                                            <td>₱ <?= $row['amount']; ?></td>
                                             <td><?= $row['short_date_created']; ?></td>
                                             <td>
                                                 <div class="col-md-3 text-center">
-                                                    <a href="paymenthistory_view?id=<?=$row['transaction_id'];?>" class="btn btn-info btn-icon-split"> 
+                                                    <a href="paymenthistory_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                         <span class="icon text-white-50"></span>
                                                         <span class="text ml-2 mr-2">View</span>
                                                     </a>

@@ -6,139 +6,101 @@
         <div id="layoutSidenav">
             <?php include ('../includes/sidebar.php'); ?>
             <div id="layoutSidenav_content">
-                <?php
-                    if(isset($_GET['id'])){
-                        $id = $_GET['id'];
-                        $users = "SELECT
-                            *, DATE_FORMAT(payment.date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
-                            FROM
-                            payment
-                            INNER JOIN
-                            `user`
-                            ON 
-                            payment.`user_id` = `user`.user_id
-                            WHERE payment.id = '$id'
-                        ";
-                        $users_run = mysqli_query($con, $users);
-                        if(mysqli_num_rows($users_run) > 0){
-                            foreach($users_run as $user){
-                ?>
                 <main>
                     <div class="container-fluid px-4">
                         <ol class="breadcrumb mb-4 mt-3">
-                            <li class="breadcrumb-item">Dashboard</li>
+                        <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Payment History</li>
                             <li class="breadcrumb-item ">Online Payment</li>
-                            <li class="breadcrumb-item active">View</li>
+                            <li class="breadcrumb-item ">View</li>
                         </ol>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4>Payment Information</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">First Name</label>
-                                                <input type="text" value="<?=$user['fname'];?>" class="form-control" disabled>
-                                            </div>
-
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Middle Name</label>
-                                                <input type="text" value="<?=$user['mname'];?>" class="form-control" disabled>
-                                            </div>
-
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Last Name</label>
-                                                <input type="text" value="<?=$user['lname'];?>" class="form-control" disabled>
-                                            </div>
-
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Suffix</label>
-                                                <input type="text" value="<?=$user['suffix'];?>" class="form-control" disabled>
-                                            </div>
-
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Student ID</label>
-                                                <input required type="text" value="<?=$user['student_id'];?>" class="form-control" disabled>
-                                            </div>
-
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Year Level</label>
-                                                <input required type="text" value="<?=$user['level'];?>" class="form-control" disabled>
-                                            </div>
-
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Date and Time Paid</label>
-                                                <input type="text" value="<?=$user['short_date_created'];?>" class="form-control" disabled>
-                                            </div>
-
-                                            <div class="col-md-3 mb-3">
-                                                <label for="">Status</label>
-                                                <input type="text" value="<?=$user['status'];?>" class="form-control" disabled>
-                                            </div>
-
-                                            <div class="col-md-6 text-center">
-                                                <br>
-                                                <h5>Online receipt photo</h5>
-                                                <img class="mt-2" id="frame1" src ="
-                                                <?php
-                                                    if(isset($user['picture'])){
-                                                        if(!empty($user['picture'])) {
-                                                            echo base_url . 'assets/files/images/onlinepayment/' . $user['picture'];
-                                                    } else { echo base_url . 'assets/files/images/system/no-image.png'; } }
-                                                ?>" alt="Receipt Picture" width="240px" height="180px"/>
-                                                <br><br>
-                                                <?php
-                                                    if(isset($user['picture'])){
-                                                        if(!empty($user['picture'])) { ?>
-                                                        <a class="btn btn-secondary btn-icon-split" href="<?php echo base_url ?>assets/files/images/onlinepayment/<?=$user['picture']?>" download><i class="fa fa-download"></i> Download</a>
-                                                <?php } else { } } ?>
-                                                <br>
-                                            </div>
-
-                                        </div>
-                                        <div class="float-end">
-                                            <a href="paymenthistory.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                        </div>
-                                    </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <?php
+                                    if(isset($_GET['id'])){
+                                        $id = $_GET['id'];
+                                        $sql = "SELECT
+                                        *, DATE_FORMAT(payment.date, '%m-%d-%Y %h:%i:%s %p') as short_date_created
+                                        FROM
+                                        payment
+                                        INNER JOIN
+                                        `user`
+                                        ON 
+                                        payment.`user_id` = `user`.user_id
+                                        WHERE payment.platform != 'Cash' AND payment.user_id = '$id'";
+                                        $sql_run = mysqli_query($con, $sql);
+                                        if(mysqli_num_rows($sql_run) > 0){
+                                            $row = mysqli_fetch_assoc($sql_run); // Fetch the single row result
+                                ?>
+                                <i class="fas fa-table me-1"></i>
+                                List of Payment History (<?= $row['fname']; ?> <?= $row['lname']; ?>)
+                                <?php } else{ echo "Undefined"; } } ?>
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple" style="text-align:center;">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Platform</th>
+                                            <th>Amount Paid</th>
+                                            <th>Date Paid</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Platform</th>
+                                            <th>Amount Paid</th>
+                                            <th>Date Paid</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <?php
+                                            if(isset($_GET['id'])){
+                                                $id = $_GET['id'];
+                                                $query = "SELECT
+                                                    *, DATE_FORMAT(payment.date, '%m-%d-%Y') as short_date_created
+                                                    FROM
+                                                    payment
+                                                    INNER JOIN
+                                                    `user`
+                                                    ON 
+                                                    payment.`user_id` = `user`.user_id
+                                                    WHERE payment.platform != 'Cash' AND payment.user_id = '$id'
+                                                ";
+                                                $query_run = mysqli_query($con, $query);
+                                                if(mysqli_num_rows($query_run) > 0){
+                                                    foreach($query_run as $row){
+                                        ?>
+                                        <tr>
+                                            <td><?= $row['payment_id']; ?></td>
+                                            <td><?= $row['platform']; ?></td>
+                                            <td>₱ <?= $row['amount']; ?></td>
+                                            <td><?= $row['short_date_created']; ?></td>
+                                            <td><?= $row['status']; ?></td>
+                                        </tr>
+                                        <?php } }
+                                            else{
+                                        ?>
+                                            <tr>
+                                                <td>No Record Found</td>
+                                                <td>No Record Found</td>
+                                                <td>No Record Found</td>
+                                                <td>No Record Found</td>
+                                                <td>No Record Found</td>
+                                            </tr>
+                                        <?php } } ?>
+                                    </tbody>
+                                </table>
+                                <div class="float-end">
+                                    <a href="onlinehistory.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </main>
-                <?php
-                        }
-                    }
-                    else{
-                ?>
-                    <main>
-                        <div class="container-fluid px-4">
-                            <ol class="breadcrumb mb-4 mt-3">
-                                <li class="breadcrumb-item">Dashboard</li>
-                                <li class="breadcrumb-item ">Payment History</li>
-                                <li class="breadcrumb-item ">Via Cash</li>
-                                <li class="breadcrumb-item active">View</li>
-                            </ol>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4>Payment Information</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <h4>No Record Found!</h4>
-                                            <div class="float-end">
-                                                <a href="paymenthistory.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
-                <?php } } ?>
                 <?php include ('../includes/footer.php'); ?>
             </div>
         </div>

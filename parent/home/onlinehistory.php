@@ -52,13 +52,15 @@
                                                 `user`
                                                 ON 
                                                 payment.`user_id` = `user`.user_id
+                                                WHERE payment.platform != 'Cash'
+                                                GROUP BY payment.user_id
                                             ";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){
                                         ?>
                                         <tr>
-                                            <td><?= $row['id']; ?></td>
+                                            <td><?= $row['payment_id']; ?></td>
                                             <td><?= $row['student_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
                                             <td><?= $row['platform']; ?></td>
@@ -66,7 +68,7 @@
                                             <td><?= $row['status']; ?></td>
                                             <td>
                                                 <div class="col-md-3 text-center">
-                                                    <a href="onlinehistory_view?id=<?=$row['id'];?>" class="btn btn-info btn-icon-split"> 
+                                                    <a href="onlinehistory_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                         <span class="icon text-white-50"></span>
                                                         <span class="text ml-2 mr-2">View</span>
                                                     </a>

@@ -75,14 +75,14 @@
                                                 <input disabled type="datetime-local" value="<?= $formatted_date_end; ?>" id="txtDate" class="form-control">
                                             </div>
 
-                                            <div class="col-md-3 mb-3">
+                                            <!-- <div class="col-md-3 mb-3">
                                                 <label for="">Status</label>
                                                 <select disabled class="form-control">
                                                     <option value="" selected disabled>Select Status</option>
                                                     <option value="Active" <?= $user['status'] == 'Active' ? 'selected' :'' ?>>Active</option>
                                                     <option value="In active" <?= $user['status'] == 'In active' ? 'selected' :'' ?>>In active</option>
                                                 </select>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="float-end">
                                             <a href="announcement" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>

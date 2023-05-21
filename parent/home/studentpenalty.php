@@ -24,8 +24,6 @@
                                             <th>No.</th>
                                             <th>Student ID</th>
                                             <th>Name</th>
-                                            <th>Penalties</th>
-                                            <th>Balance</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -35,8 +33,6 @@
                                             <th>No.</th>
                                             <th>Student ID</th>
                                             <th>Name</th>
-                                            <th>Penalties</th>
-                                            <th>Balance</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -47,7 +43,12 @@
                                             *
                                             FROM
                                             user
-                                            WHERE user_type_id = 6 AND user_status_id IN (1,2)";
+                                            INNER JOIN
+                                            penalties
+                                            ON
+                                            penalties.user_id = user.user_id
+                                            WHERE user_type_id = 6 AND user_status_id IN (1,2)
+                                            GROUP BY penalties.user_id";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){
@@ -56,12 +57,10 @@
                                             <td><?= $row['user_id']; ?></td>
                                             <td><?= $row['student_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
-                                            <td>₱<?= $row['penalty']; ?></td>
-                                            <td>₱<?= $row['balance']; ?></td>
                                             <td><?php if($row['balance'] <= 0){ echo"Cleared";} else{ echo"Uncleared"; } ?></td>
                                             <td>
                                                 <div class="col-md-3">
-                                                    <a href="announcement_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
+                                                    <a href="studentpenalty_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                         <span class="icon text-white-50"></span>
                                                         <span class="text ml-2 mr-2">View</span>
                                                     </a>
@@ -72,8 +71,6 @@
                                             else{
                                         ?>
                                             <tr>
-                                                <td>No Record Found</td>
-                                                <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
