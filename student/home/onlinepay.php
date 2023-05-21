@@ -13,15 +13,22 @@
                             <li class="breadcrumb-item ">Online Pay</li>
                         </ol>
                         <div class="row">
-                        <?php
+                            <?php
                                 $person = $_SESSION['auth_user']['user_id'];
-                                $sql = "SELECT balance FROM `user` WHERE user_id = '$person'";
+                                $sql = "SELECT * FROM `payment` INNER JOIN `user` ON `payment`.`user_id` = `user`.`user_id` WHERE `payment`.`user_id` = '$person' ORDER BY `payment`.`date` DESC LIMIT 1";
                                 $sql_query_run = mysqli_query($con, $sql);
                                 if ($row = mysqli_fetch_assoc($sql_query_run)) {
                                     $balance = $row['balance'];
+                                    $pending = $row['status'];
                                 }
                             ?>
-                            <?php if ($balance > 0) { ?>
+                            <?php if ($balance > 0 && $pending == 'Pending') { ?>
+                                <div class="col-xl-12 col-md-12">
+                                    <div class="card bg-info text-white mb-4">
+                                        <div class="card-body"><i class="fas fa-exclamation-circle"></i> Thank you for paying your payment is on pending.</div>
+                                    </div>
+                                </div>
+                            <?php } elseif ($balance > 0 && $pending != 'Pending') { ?>
                                 <div class="col-xl-12 col-md-12">
                                     <div class="card bg-danger text-white mb-4">
                                         <?php
@@ -39,6 +46,10 @@
                                                     }
                                                 ?>
                                             </label>
+                                        </div>
+                                        <div class="card-footer d-flex align-items-center justify-content-between">
+                                            <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>student/home/onlinepay">Pay NOW</a>
+                                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                         </div>
                                     </div>
                                 </div>
