@@ -17,7 +17,7 @@
                             `user`
                             ON 
                             payment.`user_id` = `user`.user_id
-                            WHERE payment.id = '$id'
+                            WHERE payment.platform != 'Cash' AND payment.payment_id = '$id'
                         ";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
@@ -27,7 +27,7 @@
                     <div class="container-fluid px-4">
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
-                            <li class="breadcrumb-item ">Payment History</li>
+                            <li class="breadcrumb-item ">Payment</li>
                             <li class="breadcrumb-item ">Online Payment</li>
                             <li class="breadcrumb-item active">View</li>
                         </ol>
@@ -75,6 +75,16 @@
                                             </div>
 
                                             <div class="col-md-3 mb-3">
+                                                <label for="">Platform</label>
+                                                <input type="text" value="<?=$user['platform'];?>" class="form-control" disabled>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label for="">Amount</label>
+                                                <input type="text" value="<?=$user['amount'];?>" class="form-control" disabled>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
                                                 <label for="">Status</label>
                                                 <input type="text" value="<?=$user['status'];?>" class="form-control" disabled>
                                             </div>
@@ -100,7 +110,7 @@
 
                                         </div>
                                         <div class="float-end">
-                                            <a href="paymenthistory.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                            <a href="onlinepayment.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                         </div>
                                     </div>
                                 </div>
@@ -117,8 +127,8 @@
                         <div class="container-fluid px-4">
                             <ol class="breadcrumb mb-4 mt-3">
                                 <li class="breadcrumb-item">Dashboard</li>
-                                <li class="breadcrumb-item ">Payment History</li>
-                                <li class="breadcrumb-item ">Via Cash</li>
+                                <li class="breadcrumb-item ">Payment</li>
+                                <li class="breadcrumb-item ">Online Payment</li>
                                 <li class="breadcrumb-item active">View</li>
                             </ol>
                             <div class="row">
@@ -130,7 +140,7 @@
                                         <div class="card-body">
                                             <h4>No Record Found!</h4>
                                             <div class="float-end">
-                                                <a href="paymenthistory.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <a href="onlinepayment.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                             </div>
                                         </div>
                                     </div>

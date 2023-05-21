@@ -300,14 +300,14 @@ if (isset($_POST['update_payment'])) {
       $updated = $stmt2->execute();
 
       if ($updated) {
-        $_SESSION['status'] = "Penalty updated successfully";
+        $_SESSION['status'] = "Payment updated successfully";
         $_SESSION['status_code'] = "success";
       } else {
         $_SESSION['status'] = "Failed to update user's balance";
         $_SESSION['status_code'] = "error";
       }
     } else {
-      $_SESSION['status'] = "Failed to update penalty";
+      $_SESSION['status'] = "Failed to update payment";
       $_SESSION['status_code'] = "error";
     }
   } else {
@@ -320,5 +320,82 @@ if (isset($_POST['update_payment'])) {
   $stmt3->close();
 
   header("Location: " . base_url . "treasurer/home/payment");
+  exit(0);
+}
+
+// Update Payment Online
+if (isset($_POST['update_onlinepayment'])) {
+  $id = $_POST['id'];
+  $amount = $_POST['amount'];
+  $status = $_POST['status'];
+  $date = date('Y-m-d H:i:s');
+
+  // Check if the user exists
+  $q1 = "SELECT * FROM payment INNER JOIN user ON user.user_id = payment.user_id WHERE payment_id = ?";
+  $stmt1 = $con->prepare($q1);
+  $stmt1->bind_param('s', $id);
+  $stmt1->execute();
+  $result = $stmt1->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $user_id = $row['user_id'];
+    $prev_bal = $row['amount'];
+    $bal = $row['balance'];
+
+    // Calculate new balance
+    $final_result = $prev_bal + $bal;
+    $new_final_result = $final_result - $amount;
+
+    $q3 = "UPDATE user SET balance = ? WHERE user_id = ?";
+    $stmt3 = $con->prepare($q3);
+    
+    if (!$stmt3) {
+      $_SESSION['status'] = "Failed to prepare statement: " . $con->error;
+      $_SESSION['status_code'] = "error";
+      header("Location: " . base_url . "treasurer/home/onlinepayment");
+      exit(0);
+    }
+
+    $stmt3->bind_param('ss', $new_final_result, $user_id);
+    $updated_user = $stmt3->execute();
+
+    if ($updated_user) {
+      
+      // Insert penalty into the payment table
+      $q2 = "UPDATE payment SET amount = ?, date = ?, status = ? WHERE payment_id = ?";
+      $stmt2 = $con->prepare($q2);
+      
+      if (!$stmt2) {
+        $_SESSION['status'] = "Failed to prepare statement: " . $con->error;
+        $_SESSION['status_code'] = "error";
+        header("Location: " . base_url . "treasurer/home/onlinepayment");
+        exit(0);
+      }
+
+      $stmt2->bind_param('ssss', $amount, $date, $status, $id);
+      $updated = $stmt2->execute();
+
+      if ($updated) {
+        $_SESSION['status'] = "Online Payment updated successfully";
+        $_SESSION['status_code'] = "success";
+      } else {
+        $_SESSION['status'] = "Failed to update user's balance";
+        $_SESSION['status_code'] = "error";
+      }
+    } else {
+      $_SESSION['status'] = "Failed to update payment";
+      $_SESSION['status_code'] = "error";
+    }
+  } else {
+    $_SESSION['status'] = "User not found";
+    $_SESSION['status_code'] = "error";
+  }
+
+  $stmt1->close();
+  $stmt2->close();
+  $stmt3->close();
+
+  header("Location: " . base_url . "treasurer/home/onlinepayment");
   exit(0);
 }
