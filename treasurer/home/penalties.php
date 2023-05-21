@@ -65,11 +65,18 @@
                                             <th><?php if($row['balance'] <= 0){ echo"Cleared";} else{ echo"Uncleared"; } ?></th>
                                             <td> 
                                                 <div class="row d-inline-flex justify-content-center">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         <a href="penalties_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text ml-2 mr-2">View</span>
                                                         </a>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button type="button" data-toggle="modal" value="<?=$row['user_id']; ?>" data-firstname="<?=$row['fname']; ?> <?=$row['lname']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-warning btn-icon-split">
+                                                            <span class="icon text-white-50">
+                                                            </span>
+                                                            <span class="text">Pay</span>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -99,12 +106,13 @@
         <?php include ('../includes/bottom.php'); ?>
     </body>
 </html>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Penalty Student (<label id="label"></label>)</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Add Pay Student (<label id="label"></label>)</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -112,19 +120,14 @@
             <form action="code.php" method="POST">
                 <div class="modal-body">
                     <div class="col-md-12 mb-3">
-                        <label for="" class="required">Penalty Name</label>
-                        <input required type="text" Placeholder="Enter Penalty Name" name="name" class="form-control">
-                    </div>
-
-                    <div class="col-md-12 mb-3">
-                        <label for="" class="required">Penalty amount</label>
+                        <label for="" class="required">Payment amount</label>
                         <input required type="number" Placeholder="Enter Amount" name="amount" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <input type="hidden" id="delete_id" name="penalty_add" value="">
-                    <button type="submit" class="btn btn-success">Add</button>
+                    <input type="hidden" id="delete_id" name="payment_add_cash" value="">
+                    <button type="submit" class="btn btn-success">Pay</button>
                 </div>
             </form>
         </div>

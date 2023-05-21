@@ -77,16 +77,21 @@
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
+                                                    <label for="">Platform</label>
+                                                    <input type="text" value="<?=$user['platform'];?>" class="form-control" disabled>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
                                                     <label for="">Reference Number</label>
                                                     <input type="text" value="<?=$user['referencenumber'];?>" class="form-control" disabled>
                                                 </div>
 
-                                                <div class="col-md-3 mb-3">
+                                                <div class="col-md-4 mb-3">
                                                     <label for="" class="required">Amount</label>
                                                     <input required type="number" value="" name="amount" class="form-control">
                                                 </div>
 
-                                                <div class="col-md-3 mb-3">
+                                                <div class="col-md-4 mb-3">
                                                     <label for="" class="required">Status</label>
                                                     <select name="status" required class="form-control">
                                                         <option value="" selected disabled>Select Status</option>

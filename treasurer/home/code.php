@@ -183,7 +183,7 @@ if (isset($_POST['payment_add_cash'])) {
   $stmt2->close();
   $stmt3->close();
 
-  header("Location: " . base_url . "treasurer/home/studentpay");
+  header("Location: " . base_url . "treasurer/home/penalties");
   exit(0);
 }
 
@@ -210,9 +210,9 @@ if (isset($_POST['payment_add_online'])) {
     $newbal = $bal - $amount;
 
     // Update payment in the payment table
-    $q2 = "UPDATE payment SET amount = ?, date = ?, status = ? WHERE user_id = ?";
+    $q2 = "UPDATE payment SET amount = ?, date = ?, status = ? WHERE payment_id = ?";
     $stmt2 = $con->prepare($q2);
-    $stmt2->bind_param('ssss', $amount, $date, $status, $user_id);
+    $stmt2->bind_param('ssss', $amount, $date, $status, $id);
 
     if ($stmt2->execute()) {
       // Update user's balance

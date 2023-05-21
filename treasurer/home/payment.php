@@ -64,24 +64,17 @@
                                             <td><?= $row['short_date_created']; ?></td>
                                             <td>
                                                 <div class="row d-inline-flex justify-content-center">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-6">
                                                         <a href="payment_view?id=<?=$row['payment_id'];?>" class="btn btn-info btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text ml-2 mr-2">View</span>
                                                         </a>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <a href="payment_edit?id=<?=$row['payment_id'];?>" class="btn btn-success btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text">Update</span>
                                                         </a>
-                                                    </div>
-                                                    <div class="col-md-4" style="margin-left:-0.3rem;">
-                                                        <button type="button" data-toggle="modal" value="<?=$row['payment_id']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-danger btn-icon-split">
-                                                            <span class="icon text-white-50">
-                                                            </span>
-                                                            <span class="text">Delete</span>
-                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>

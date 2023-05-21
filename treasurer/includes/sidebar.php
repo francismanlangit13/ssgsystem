@@ -20,10 +20,6 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa fa-file-signature"></i></div>
                     View Penalties
                 </a>
-                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/studentpay.php') !== false)  { echo 'active'; } ?>" href="studentpay">
-                    <div class="sb-nav-link-icon"><i class="fas fa-solid fa fa-users"></i></div>
-                    Students
-                </a>
                 <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/onlinepay.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepay_view.php') !== false)  { echo 'active'; } ?>" href="onlinepay">
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa fa-users"></i></div>
                     Pending Online Payment

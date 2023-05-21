@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2023 at 06:34 PM
+-- Generation Time: May 22, 2023 at 01:42 AM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -88,14 +88,40 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`payment_id`, `user_id`, `platform`, `amount`, `referencenumber`, `picture`, `date`, `status`) VALUES
-(1, 4, 'Gcash', 5, '14568435355', 'user_20230503_232958.jpg', '2023-05-21 00:33:16', 'Approved'),
+(1, 4, 'Gcash', 240, '14568435355', 'user_20230503_232958.jpg', '2023-04-22 07:05:27', 'Approved'),
 (2, 21, 'Cash', 300, '56546546', 'sdasdasd', '2023-05-20 22:19:05', 'Approved'),
 (3, 21, 'Cash', 300, '56546546', 'sdasdasd', '2023-05-20 23:07:54', 'Approved'),
-(4, 21, '0', 300, '', '', '2023-05-20 23:45:22', ''),
-(5, 21, '0', 20, '', '', '2023-05-20 23:46:51', ''),
+(4, 21, 'Cash', 300, '', '', '2023-05-20 23:45:22', ''),
+(5, 21, 'Cash', 20, '', '', '2023-05-20 23:46:51', ''),
 (6, 21, 'Cash', 20, '', '', '2023-05-20 23:49:03', ''),
 (7, 21, 'Cash', 50, '', '', '2023-05-20 23:49:31', ''),
-(8, 21, 'Cash', 1, '', '', '2023-05-20 23:49:45', '');
+(8, 21, 'Cash', 1, '', '', '2023-05-20 23:49:45', ''),
+(10, 4, 'Gcash', 10, '234234234', 'onlinepay_20230522_070116.jpg', '2023-05-22 07:32:57', 'Approved'),
+(11, 4, 'Cash', 10, '', '', '2023-05-22 07:36:02', 'Approved'),
+(12, 21, 'Cash', 10, '', '', '2023-05-22 07:38:21', 'Approved');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_platform`
+--
+
+CREATE TABLE `payment_platform` (
+  `platform_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `photo` varchar(255) NOT NULL,
+  `account_number` varchar(255) NOT NULL,
+  `date` datetime NOT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `payment_platform`
+--
+
+INSERT INTO `payment_platform` (`platform_id`, `user_id`, `name`, `photo`, `account_number`, `date`, `status`) VALUES
+(1, 1, 'Gcash', 'image_20230521_143651.jpg', '09457664949', '2023-05-21 14:43:44', 'Active');
 
 -- --------------------------------------------------------
 
@@ -126,21 +152,6 @@ INSERT INTO `penalties` (`penalty_id`, `user_id`, `penalty_fee`, `penalty_reason
 -- --------------------------------------------------------
 
 --
--- Table structure for table `qrcode`
---
-
-CREATE TABLE `qrcode` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `photo` varchar(255) NOT NULL,
-  `date` datetime NOT NULL,
-  `status` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `ssg_expenses`
 --
 
@@ -153,16 +164,18 @@ CREATE TABLE `ssg_expenses` (
   `amount` double NOT NULL,
   `or_number` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL,
-  `date` datetime NOT NULL
+  `date` datetime NOT NULL,
+  `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `ssg_expenses`
 --
 
-INSERT INTO `ssg_expenses` (`expense_id`, `user_id`, `activity_id`, `type`, `purpose`, `amount`, `or_number`, `photo`, `date`) VALUES
-(1, 1, 1, 'Materials', 'plywood', 374.75, '1686425', 'user_20230503_232958.jpg', '2023-04-17 15:30:15'),
-(2, 1, 1, 'Supply', 'Gamit sa intrams', 175, '116542', 'user_20230503_232958.jpg', '2023-04-17 15:40:15');
+INSERT INTO `ssg_expenses` (`expense_id`, `user_id`, `activity_id`, `type`, `purpose`, `amount`, `or_number`, `photo`, `date`, `status`) VALUES
+(1, 1, 1, 'Materials', 'plywood', 374.75, '1686425', 'user_20230503_232958.jpg', '2023-04-17 15:30:15', ''),
+(2, 1, 1, 'Supply', 'Gamit sa intrams', 175, '116542', 'user_20230503_232958.jpg', '2023-04-17 15:40:15', ''),
+(3, 1, 1, 'Ballon', 'Buwan ng Wika 2024', 150, '12345435345', 'expense_20230521_163737.jpg', '2023-05-21 16:22:28', 'Archived');
 
 -- --------------------------------------------------------
 
@@ -196,10 +209,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `fname`, `mname`, `lname`, `suffix`, `gender`, `email`, `phone`, `password`, `student_id`, `level`, `balance`, `photo`, `date_added`, `deleted_by`, `date_deleted`, `user_type_id`, `user_status_id`) VALUES
-(1, 'User', '', 'Admin', '', '', 'admin@gmail.com', '09457664949', '0192023a7bbd73250516f069df18b500', '', '', 0, 'user_20230504_101038.png', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 5, 1),
+(1, 'User', '', 'Admin', '', '', 'admin@gmail.com', '09457664949', '0192023a7bbd73250516f069df18b500', '', '', 250, 'user_20230504_101038.png', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 5, 1),
 (2, 'Francis', '', 'Carlo', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', 0, 'user_20230504_101038.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-09 15:10:34', 2, 1),
 (3, 'new parent1', '', 'new', 'Jr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '', '', 0, 'user_20230504_104014.png', '2023-05-03 04:06:31', 'User Admin', '2023-05-09 15:12:41', 4, 1),
-(4, 'Student', '', 'Franz', 'Sr', 'Male', 'franzcarl13@yahoo.com', '09457664949', 'da9c57995b3ecdbe8621f7f7fcf477ab', '2019300208', 'Grade 10', 0, 'user_20230504_140135.png', '2023-04-21 12:07:07', 'User Admin', '2023-05-09 15:13:33', 6, 1),
+(4, 'Student', '', 'Franz', 'Sr', 'Male', 'franzcarl13@yahoo.com', '09457664949', '0192023a7bbd73250516f069df18b500', '2019300208', 'Grade 10', -20, 'user_20230504_140135.png', '2023-04-21 12:07:07', 'User Admin', '2023-05-09 15:13:33', 6, 1),
 (5, 'new', '', 'admin', '', 'Male', 'admin1@gmail.com', '09457664949', 'f7b8bb95e0c1c5138688c03f2fce0b2a', '', '', 0, 'user_20230504_150919.png', '0000-00-00 00:00:00', 'User Admin', '2023-05-01 03:11:07', 5, 1),
 (10, 'Francis Carlo', 'A', 'Manlangit', '', 'Male', 'franzcarl13@yahoo.com', '9457664949', 'edf44baefd0446161387123dda451842', '3-2019300208', 'Grade 12', 0, '', '2023-05-13 23:57:05', 'User Admin', '2023-05-16 16:00:32', 6, 3),
 (11, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 11', 0, '', '2023-05-13 23:57:05', 'User Admin', '2023-05-16 16:00:35', 6, 3),
@@ -212,7 +225,7 @@ INSERT INTO `user` (`user_id`, `fname`, `mname`, `lname`, `suffix`, `gender`, `e
 (18, 'Francis Carlo', 'A', 'Manlangit', '', 'Male', 'franzcarl13@yahoo.com', '9457664949', 'edf44baefd0446161387123dda451842', '3-2019300208', 'Grade 7', 0, '', '2023-05-16 16:00:47', 'User Admin', '2023-05-16 16:02:12', 6, 3),
 (19, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 7', 0, '', '2023-05-16 16:00:47', 'User Admin', '2023-05-16 16:02:15', 6, 3),
 (20, 'Francis Carlo', 'A', 'Manlangit', '', 'Male', 'franzcarl13@yahoo.com', '9457664949', 'edf44baefd0446161387123dda451842', '3-2019300208', 'Grade 11', -1, '', '2023-05-16 16:02:23', '', '0000-00-00 00:00:00', 6, 1),
-(21, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 11', 0, '', '2023-05-16 16:02:23', '', '0000-00-00 00:00:00', 6, 1);
+(21, 'Christine Mae', 'I', 'Balmadres', '', 'Female', 'christinemae@gmail.com', '9457664948', '9757a3ae2eee5925ce7db02aa692241e', '3-2019300207', 'Grade 11', -10, '', '2023-05-16 16:02:23', '', '0000-00-00 00:00:00', 6, 1);
 
 -- --------------------------------------------------------
 
@@ -285,18 +298,18 @@ ALTER TABLE `payment`
   ADD KEY `user_id` (`user_id`) USING BTREE;
 
 --
+-- Indexes for table `payment_platform`
+--
+ALTER TABLE `payment_platform`
+  ADD PRIMARY KEY (`platform_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `penalties`
 --
 ALTER TABLE `penalties`
   ADD PRIMARY KEY (`penalty_id`),
   ADD KEY `user_id` (`user_id`) USING BTREE;
-
---
--- Indexes for table `qrcode`
---
-ALTER TABLE `qrcode`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `ssg_expenses`
@@ -346,7 +359,13 @@ ALTER TABLE `announcement`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `payment_platform`
+--
+ALTER TABLE `payment_platform`
+  MODIFY `platform_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `penalties`
@@ -355,16 +374,10 @@ ALTER TABLE `penalties`
   MODIFY `penalty_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `qrcode`
---
-ALTER TABLE `qrcode`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `ssg_expenses`
 --
 ALTER TABLE `ssg_expenses`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -408,16 +421,16 @@ ALTER TABLE `payment`
   ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
+-- Constraints for table `payment_platform`
+--
+ALTER TABLE `payment_platform`
+  ADD CONSTRAINT `payment_platform_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+--
 -- Constraints for table `penalties`
 --
 ALTER TABLE `penalties`
   ADD CONSTRAINT `penalties_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `qrcode`
---
-ALTER TABLE `qrcode`
-  ADD CONSTRAINT `qrcode_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `ssg_expenses`
