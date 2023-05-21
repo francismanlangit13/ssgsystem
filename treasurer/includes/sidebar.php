@@ -12,6 +12,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa-bullhorn"></i></div>
                     Manage Announcement
                 </a>
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/expense.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/expense_add.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/expense_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/expense_edit.php') !== false)  { echo 'active'; } ?>" href="expense">
+                    <div class="sb-nav-link-icon"><i class="fas fa-solid fa-sheet-plastic"></i></div>
+                    Manage Expenses
+                </a>
                 <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/penalties.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/penalties_add.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/penalties_edit.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/penalties_view.php') !== false)  { echo 'active'; } ?>" href="penalties">
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa fa-file-signature"></i></div>
                     View Penalties
@@ -24,12 +28,16 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa fa-users"></i></div>
                     Pending Online Payment
                 </a>
-                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/payment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_edit.php') !== false)  { echo 'active'; } else { echo 'collapsed'; } ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts">
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/platform.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/platform_add.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/platform_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/platform_edit.php') !== false)  { echo 'active'; } ?>" href="platform">
+                    <div class="sb-nav-link-icon"><i class="fas fa-solid fas fa-receipt"></i></div>
+                    Manage Payment Platform
+                </a>
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/payment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_edit.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_edit.php') !== false)  { echo 'active'; } else { echo 'collapsed'; } ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-file-invoice-dollar"></i></div>
                     Manage Payment
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="<?php if (strpos($_SERVER['PHP_SELF'], 'home/payment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_edit.php') !== false)  { echo 'active'; } else { echo 'collapse'; } ?>" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <div class="<?php if (strpos($_SERVER['PHP_SELF'], 'home/payment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_edit.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_edit.php') !== false)  { echo 'active'; } else { echo 'collapse'; } ?>" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/payment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/payment_edit.php') !== false)  { echo 'active'; }?>" href="payment">Via Cash</a>
                         <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/onlinepayment.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_view.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/onlinepayment_edit.php') !== false)  { echo 'active'; }?>" href="onlinepayment">Online Payment</a>
@@ -42,7 +50,6 @@
                 </a>
                 <div class="<?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false)  { echo 'active'; } else { echo 'collapse'; } ?>" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false)  { echo 'active'; }?>" href="generate_accounts">Accounts</a>
                         <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false)  { echo 'active'; }?>" href="generate_payments">Payments</a>
                     </nav>
                 </div>

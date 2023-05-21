@@ -29,7 +29,7 @@
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Payment</li>
                             <li class="breadcrumb-item ">Via Cash</li>
-                            <li class="breadcrumb-item active">View</li>
+                            <li class="breadcrumb-item active">Update</li>
                         </ol>
                         <div class="row">
                             <div class="col-md-12">
@@ -114,7 +114,7 @@
                                 <li class="breadcrumb-item">Dashboard</li>
                                 <li class="breadcrumb-item ">Payment</li>
                                 <li class="breadcrumb-item ">Via Cash</li>
-                                <li class="breadcrumb-item active">View</li>
+                                <li class="breadcrumb-item active">Update</li>
                             </ol>
                             <div class="row">
                                 <div class="col-md-12">

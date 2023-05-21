@@ -11,6 +11,7 @@
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item ">Penalties</li>
+                            <li class="breadcrumb-item ">View</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">

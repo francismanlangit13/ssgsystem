@@ -36,12 +36,13 @@ if(isset($_POST['add_announcement'])){
   if($query_run){
     $_SESSION['status'] = "Announcement added successfully";
     $_SESSION['status_code'] = "success";
-    header("Location: " . base_url . "secretary/home/announcement");
+    header("Location: " . base_url . "treasurer/home/announcement");
     exit(0);
-  }else{
+  }
+  else{
     $_SESSION['status'] = "Something went wrong!";
     $_SESSION['status_code'] = "error";
-    header("Location: " . base_url . "secretary/home/announcement");
+    header("Location: " . base_url . "treasurer/home/announcement");
     exit(0);
   }
 }
@@ -62,35 +63,35 @@ if(isset($_POST['update_announcement'])){
   if($query_run){
     $_SESSION['status'] = "Announcement updated successfully";
     $_SESSION['status_code'] = "success";
-    header("Location: " . base_url . "secretary/home/announcement");
+    header("Location: " . base_url . "treasurer/home/announcement");
     exit(0);
-  }else{
+  }
+  else{
     $_SESSION['status'] = "Something went wrong!";
     $_SESSION['status_code'] = "error";
-    header("Location: " . base_url . "secretary/home/announcement");
+    header("Location: " . base_url . "treasurer/home/announcement");
     exit(0);
   }
 
 }
 
+// Delete Announcement
 if(isset($_POST['announcement_delete'])){
     $user_id= $_POST['announcement_delete'];
     $newstatus = "Archived";
 
     $query = "UPDATE `announcement` SET `status`='$newstatus' WHERE `announcement_id`= '$user_id'";
     $query_run = mysqli_query($con, $query);
-    if($query_run)
-    {
+    if($query_run){
       $_SESSION['status'] = "The announcement has been successfully archived.";
       $_SESSION['status_code'] = "success";
-      header('Location: announcement.php');
+      header("Location: " . base_url . "treasurer/home/announcement");
       exit(0);
     }
-    else
-    {
+    else{
       $_SESSION['status'] = "SOMETHING WENT WRONG!";
       $_SESSION['status_code'] = "error";
-      header('Location: announcement.php');
+      header("Location: " . base_url . "treasurer/home/announcement");
       exit(0);
     }
 }
@@ -398,4 +399,272 @@ if (isset($_POST['update_onlinepayment'])) {
 
   header("Location: " . base_url . "treasurer/home/onlinepayment");
   exit(0);
+}
+
+// Add Platform
+if(isset($_POST['add_platform'])){
+  $photo = $_FILES['photo'];
+  $customFileName = 'image_' . date('Ymd_His'); // replace with your desired file name
+  $ext = pathinfo($photo['name'], PATHINFO_EXTENSION); // get the file extension
+  $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
+  $fileTmpname = $photo['tmp_name'];
+  $fileSize = $photo['size'];
+  $fileError = $photo['error'];
+  $fileExt = explode('.',$fileName);
+  $fileActExt = strtolower(end($fileExt));
+  $allowed = array('jpg','jpeg','png');
+
+  $name = $_POST['name'];
+  $status = "Active";
+  $date = date('Y-m-d H:i:s');
+  $person =  $_SESSION['auth_user']['user_id'];
+  $account_number = $_POST['account_number'];
+  $uploadDir = '../../assets/files/images/platform/';
+  $targetFile = $uploadDir . $fileName;
+  
+  if (move_uploaded_file($fileTmpname, $targetFile)) {
+    $query = "INSERT INTO `payment_platform`(`user_id`, `name`, `photo`, `account_number`, `date`, `status`) VALUES ('$person','$name','$fileName','$account_number','$date','$status')";
+    $query_run = mysqli_query($con, $query);
+    if($query_run){
+      $_SESSION['status'] = "Payment platform added successfully";
+      $_SESSION['status_code'] = "success";
+      header("Location: " . base_url . "treasurer/home/platform");
+      exit(0);
+    }
+    else{
+      $_SESSION['status'] = "Something went wrong!";
+      $_SESSION['status_code'] = "error";
+      header("Location: " . base_url . "treasurer/home/platform");
+      exit(0);
+    }
+  }
+  else{
+    $_SESSION['status']="Error uploading image.";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "treasurer/home/platform");
+  }
+}
+
+// Update Platform
+if(isset($_POST['update_platform'])){
+  $id = $_POST['id'];
+  $uploadDir = '../../assets/files/images/platform/';
+  if(isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+    $photo = $_FILES['photo'];
+    $OLDfileImage = $_POST['oldimage'];
+    $customFileName = 'image_' . date('Ymd_His'); // replace with your desired file name
+    $ext = pathinfo($photo['name'], PATHINFO_EXTENSION); // get the file extension
+    $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
+    $fileTmpname = $photo['tmp_name'];
+    $fileSize = $photo['size'];
+    $fileError = $photo['error'];
+    $fileExt = explode('.',$fileName);
+    $fileActExt = strtolower(end($fileExt));
+    $allowed = array('jpg','jpeg','png');
+    if(in_array($fileActExt, $allowed)){
+      if($fileError === 0){
+        if($fileSize < 10485760){
+          unlink($uploadDir . $OLDfileImage);
+          $targetFile = $uploadDir . $fileName;
+
+          if (move_uploaded_file($fileTmpname, $targetFile)) {
+            $sql1 = "UPDATE `payment_platform` SET `photo` = '$fileName' WHERE `platform_id` = '$id'";
+            $sql1_run = mysqli_query($con, $sql1);
+          }
+        }
+        else{
+          $_SESSION['status']="The image file is too large file must be 10mb";
+          $_SESSION['status_code'] = "error"; 
+          header("Location: " . base_url . "treasurer/home/platform");
+        }
+      }
+      else{
+        $_SESSION['status']="Image file error";
+        $_SESSION['status_code'] = "error"; 
+        header("Location: " . base_url . "treasurer/home/platform");
+      }
+    }
+    else{
+      $_SESSION['status']="Invalid file type";
+      $_SESSION['status_code'] = "error"; 
+      header("Location: " . base_url . "treasurer/home/platform");
+    }
+  }
+  $name = $_POST['name'];
+  $status = $_POST['status'];
+  $date = date('Y-m-d H:i:s');
+  $person =  $_SESSION['auth_user']['user_id'];
+  $account_number = $_POST['account_number'];
+  
+  $query = "UPDATE `payment_platform` SET `name`='$name', `account_number`='$account_number', `date`='$date', `status`='$status' WHERE `user_id`='$id'";
+  $query_run = mysqli_query($con, $query);
+  if($query_run){
+    $_SESSION['status'] = "Payment platform updated successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "treasurer/home/platform");
+    exit(0);
+  }
+  else{
+    $_SESSION['status'] = "Something went wrong!";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "treasurer/home/platform");
+    exit(0);
+  }
+}
+
+// Delete Platform
+if(isset($_POST['platform_delete'])){
+  $user_id= $_POST['platform_delete'];
+  $newstatus = "Archived";
+
+  $query = "UPDATE `payment_platform` SET `status`='$newstatus' WHERE `platform_id`= '$user_id'";
+  $query_run = mysqli_query($con, $query);
+  if($query_run){
+    $_SESSION['status'] = "The payment platform has been successfully archived.";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "treasurer/home/platform");
+    exit(0);
+  }
+  else{
+    $_SESSION['status'] = "SOMETHING WENT WRONG!";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "treasurer/home/platform");
+    exit(0);
+  }
+}
+
+// Add Expense
+if(isset($_POST['add_expense'])){
+  $photo = $_FILES['photo'];
+  $customFileName = 'expense_' . date('Ymd_His'); // replace with your desired file name
+  $ext = pathinfo($photo['name'], PATHINFO_EXTENSION); // get the file extension
+  $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
+  $fileTmpname = $photo['tmp_name'];
+  $fileSize = $photo['size'];
+  $fileError = $photo['error'];
+  $fileExt = explode('.',$fileName);
+  $fileActExt = strtolower(end($fileExt));
+  $allowed = array('jpg','jpeg','png');
+
+  $activity_id = $_POST['activity_id'];
+  $type = $_POST['type'];
+  $purpose = $_POST['purpose'];
+  $or_number = $_POST['or_number'];
+  $amount = $_POST['amount'];
+  $date = date('Y-m-d H:i:s');
+  $status = 'Active';
+  $person =  $_SESSION['auth_user']['user_id'];
+  $uploadDir = '../../assets/files/images/expenses/';
+  $targetFile = $uploadDir . $fileName;
+  
+  if (move_uploaded_file($fileTmpname, $targetFile)) {
+    $query = "INSERT INTO `ssg_expenses`(`user_id`, `activity_id`, `type`, `purpose`, `amount`, `or_number`, `photo`, `date`, `status`) VALUES ('$person','$activity_id','$type','$purpose','$amount','$or_number','$fileName','$date','$status')";
+    $query_run = mysqli_query($con, $query);
+    if($query_run){
+      $_SESSION['status'] = "Expense added successfully";
+      $_SESSION['status_code'] = "success";
+      header("Location: " . base_url . "treasurer/home/expense");
+      exit(0);
+    }
+    else{
+      $_SESSION['status'] = "Something went wrong!";
+      $_SESSION['status_code'] = "error";
+      header("Location: " . base_url . "treasurer/home/expense");
+      exit(0);
+    }
+  }
+  else{
+    $_SESSION['status']="Error uploading image.";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "treasurer/home/expense");
+  }
+}
+
+// Update Platform
+if(isset($_POST['update_expense'])){
+  $id = $_POST['id'];
+  $uploadDir = '../../assets/files/images/expenses/';
+  if(isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+    $photo = $_FILES['photo'];
+    $OLDfileImage = $_POST['oldimage'];
+    $customFileName = 'expense_' . date('Ymd_His'); // replace with your desired file name
+    $ext = pathinfo($photo['name'], PATHINFO_EXTENSION); // get the file extension
+    $fileName = $customFileName . '.' . $ext; // append the extension to the custom file name
+    $fileTmpname = $photo['tmp_name'];
+    $fileSize = $photo['size'];
+    $fileError = $photo['error'];
+    $fileExt = explode('.',$fileName);
+    $fileActExt = strtolower(end($fileExt));
+    $allowed = array('jpg','jpeg','png');
+    if(in_array($fileActExt, $allowed)){
+      if($fileError === 0){
+        if($fileSize < 10485760){
+          unlink($uploadDir . $OLDfileImage);
+          $targetFile = $uploadDir . $fileName;
+
+          if (move_uploaded_file($fileTmpname, $targetFile)) {
+            $sql1 = "UPDATE `ssg_expenses` SET `photo` = '$fileName' WHERE `expense_id` = '$id'";
+            $sql1_run = mysqli_query($con, $sql1);
+          }
+        }
+        else{
+          $_SESSION['status']="The image file is too large file must be 10mb";
+          $_SESSION['status_code'] = "error"; 
+          header("Location: " . base_url . "treasurer/home/expense");
+        }
+      }
+      else{
+        $_SESSION['status']="Image file error";
+        $_SESSION['status_code'] = "error"; 
+        header("Location: " . base_url . "treasurer/home/expense");
+      }
+    }
+    else{
+      $_SESSION['status']="Invalid file type";
+      $_SESSION['status_code'] = "error"; 
+      header("Location: " . base_url . "treasurer/home/expense");
+    }
+  }
+  $activity_id = $_POST['activity_id'];
+  $type = $_POST['type'];
+  $purpose = $_POST['purpose'];
+  $or_number = $_POST['or_number'];
+  $amount = $_POST['amount'];
+  $person =  $_SESSION['auth_user']['user_id'];
+  
+  $query = "UPDATE `ssg_expenses` SET `user_id`='$person', `activity_id`='$activity_id', `type`='$type', `purpose`='$purpose', `amount`='$amount', `or_number`='$or_number' WHERE `expense_id`='$id'";
+  $query_run = mysqli_query($con, $query);
+  if($query_run){
+    $_SESSION['status'] = "Payment platform updated successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "treasurer/home/expense");
+    exit(0);
+  }
+  else{
+    $_SESSION['status'] = "Something went wrong!";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "treasurer/home/expense");
+    exit(0);
+  }
+}
+
+// Delete Expense
+if(isset($_POST['expense_delete'])){
+  $user_id= $_POST['expense_delete'];
+  $newstatus = "Archived";
+
+  $query = "UPDATE `ssg_expenses` SET `status`='$newstatus' WHERE `expense_id`= '$user_id'";
+  $query_run = mysqli_query($con, $query);
+  if($query_run){
+    $_SESSION['status'] = "The expense has been successfully archived.";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "treasurer/home/expense");
+    exit(0);
+  }
+  else{
+    $_SESSION['status'] = "SOMETHING WENT WRONG!";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "treasurer/home/expense");
+    exit(0);
+  }
 }
