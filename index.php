@@ -49,7 +49,7 @@
 
       <h1 class="logo">
         <a href="<?php echo base_url ?>"><img src="<?php echo base_url ?>assets/files/images/system/ssg.png" alt="" class="img-fluid"></a>
-        <a href="<?php echo base_url ?>"><small class="fs-5">Supreme Student Government</small></a>
+        <a href="<?php echo base_url ?>"><small class="fs-6">Supreme Student Government</small></a>
       </h1>
 
       <nav id="navbar" class="navbar">
