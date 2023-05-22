@@ -185,7 +185,7 @@
 
           <div class="col-lg-6 col-md-5 col-6 d-md-flex align-items-md-stretch">
             <div class="count-box">
-              <span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="2" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="2" class="purecounter"></span>
               <p>Strand</p>
             </div>
           </div>
@@ -250,7 +250,7 @@
                 </svg>
                 <i class="bx bx-file"></i>
               </div>
-              <h4><a>HUMMS</a></h4>
+              <h4><a>HUMSS</a></h4>
               <p style="font-size: 18px;">Humanities and Social Sciences      </p>
             </div>
           </div>
