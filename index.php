@@ -139,18 +139,18 @@
 
         <div class="section-title">
           <h2>About Jimenez Bethel Institute</h2>
-          <p>Jimenez Bethel Institute is a story of the Christian faith in action, of Christian stewardship in tithing, and of Christian courage. It was founded in 1947 as a stock corporation. The first school building was a poultry- like building and with only about 106 students to begin with. Nevertheless, what was seemed impossible was made possible because of the rugged faith and sacrifices of the members of the Jimenez Evangelical Church, Inc. specially the Board of Trustees members who put up not only their money, time, and talents but also their prayers and tears.</p>
+          <p class="text-justify">Jimenez Bethel Institute is a story of the Christian faith in action, of Christian stewardship in tithing, and of Christian courage. It was founded in 1947 as a stock corporation. The first school building was a poultry- like building and with only about 106 students to begin with. Nevertheless, what was seemed impossible was made possible because of the rugged faith and sacrifices of the members of the Jimenez Evangelical Church, Inc. specially the Board of Trustees members who put up not only their money, time, and talents but also their prayers and tears.</p>
         </div>
 
         <div class="row content">
           <div class="col-lg-6">
-            <p>
+            <p class="text-justify">
             Among them were: Rev. Pastor W. Rivera, Mr. Francisco Agapia, Mr. Primo Cuezon, Mr. Honorato Apao, Mr. Marcelo Calope, Mr. Lucas Lluisma, Mr. Bonifacio Mutia, Mrs. Soledad C. Nery and others. In 1969 the school was converted to a non-stock and a non-profit secondary school related with the United Church of Christ in the Philippines (UCCP). 
             </p>
             
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0">
-            <p>
+            <p class="text-justify">
             The school is headed by a Principal. The first principal of the school was the founder, Rev. Pastor W. Rivera, followed by Mr. Tadeo Dagaerag, Mr. Narciso Moncada, Mr. Ernane Fuentes, Mrs. Rosalinda Gloria, Rev. Daniel Carbonel. In 1963 Rev. Rivera came back and was later followed by Mr. Alberto Peralta, Rev. Silvino H. Mumar and Mr. Dionesio S. Vale, Sr. In 2002, Mrs. Leilaneeh V. Sabacahan was appointed as the Principal up to the present.
             </p>
 
@@ -208,8 +208,8 @@
           </div>
 
           <div class="col-lg-6 pt-3 pt-lg-0 content" data-aos="fade-left" data-aos-delay="100">
-            <h3> One of the things that sets Jimenez Bethel Institute apart is our commitment to small class sizes and individualized attention. Our faculty is composed of highly qualified and experienced educators who are dedicated to helping each student reach their full potential.</h3>
-            <p>
+            <h3 class="text-justify"> One of the things that sets Jimenez Bethel Institute apart is our commitment to small class sizes and individualized attention. Our faculty is composed of highly qualified and experienced educators who are dedicated to helping each student reach their full potential.</h3>
+            <p class="text-justify">
             In addition to a strong academic program, Jimenez Bethel Institute also offers a wide range of extracurricular activities and clubs. From sports teams to music and drama programs, there is something for everyone at our school. But it's not just about what happens inside the classroom. Our school is also committed to serving our local and global community. Students at Jimenez Bethel Institute have the opportunity to participate in volunteer and service projects, learning the importance of giving back and making a difference in the world.
             </p>
           </div>
