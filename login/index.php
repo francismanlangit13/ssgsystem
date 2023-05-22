@@ -16,8 +16,8 @@
     <!-- Main css -->
     <link rel="stylesheet" href="<?php echo base_url ?>assets/css/style-login.css">
 </head>
-<body>
-    <div class="main">
+<body style="background-image: url('../assets/files/images/system/background.jpg');">
+    <div class="main" style="background:transparent !important">
         <!-- Sing in  Form -->
         <section class="sign-in">
             <div class="container">
@@ -43,8 +43,13 @@
                             <div class="form-group form-button" style="margin-top:-2.5rem;">
                                 <input type="submit" name="login_btn"  class="form-submit" value="Log in" style="width:100%;"/>
                             </div>
-                            <div class="form-group">
-                                <a href="<?php echo base_url ?>login/forgot" class="signup-image-link">Forgot Password</a>
+                            <div class="row form-group" style="display:flex; justify-content:space-between;">
+                                <div class="float-start">
+                                    <a href="<?php echo base_url ?>login/forgot" class="signup-image-link">Forgot Password</a>
+                                </div>
+                                <div class="float-end">
+                                    <a href="<?php echo base_url ?>" class="signup-image-link">Homepage</a>
+                                </div>
                             </div>
                         </form>
                     </div>

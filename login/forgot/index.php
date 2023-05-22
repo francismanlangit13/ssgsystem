@@ -17,8 +17,8 @@
     <!-- Main css -->
     <link rel="stylesheet" href="<?php echo base_url ?>assets/css/style-login.css">
 </head>
-<body>
-    <div class="main">
+<body style="background-image: url('../../assets/files/images/system/background.jpg');">
+    <div class="main" style="background:transparent !important">
 
         <!-- Sing in  Form -->
         <section class="sign-in">
