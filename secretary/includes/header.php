@@ -9,6 +9,10 @@
     <!-- Favicons -->
     <link href="<?php echo base_url ?>assets/files/images/system/ssg.png" rel="icon">
     <link href="<?php echo base_url ?>assets/files/images/system/ssg.png" rel="apple-touch-icon">
+
+    <!-- Remove Banner -->
+    <script src="<?php echo base_url ?>assets/js/fwhabannerfix.js"></script>
+    
     <link href="<?php echo base_url ?>assets/css/datatables.min.css" rel="stylesheet" />
     <link href="<?php echo base_url ?>assets/css/styles.css" rel="stylesheet" />
     <link href="<?php echo base_url ?>assets/css/plugin.css" rel="stylesheet" />

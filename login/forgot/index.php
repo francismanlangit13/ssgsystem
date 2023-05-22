@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Supreme Student Government of JBI | Forgot</title>
-
+    <!-- Favicons -->
+    <link href="<?php echo base_url ?>assets/files/images/system/ssg.png" rel="icon">
+    <link href="<?php echo base_url ?>assets/files/images/system/ssg.png" rel="apple-touch-icon">
+    <!-- Remove Banner -->
+    <script src="<?php echo base_url ?>assets/js/fwhabannerfix.js"></script>
     <!-- Font Icon -->
     <link rel="stylesheet" href="<?php echo base_url ?>assets/fonts/material-icon/css/material-design-iconic-font.min.css">
 

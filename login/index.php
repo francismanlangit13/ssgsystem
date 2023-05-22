@@ -9,6 +9,8 @@
     <!-- Favicons -->
     <link href="<?php echo base_url ?>assets/files/images/system/ssg.png" rel="icon">
     <link href="<?php echo base_url ?>assets/files/images/system/ssg.png" rel="apple-touch-icon">
+    <!-- Remove Banner -->
+    <script src="<?php echo base_url ?>assets/js/fwhabannerfix.js"></script>
     <!-- Font Icon -->
     <link rel="stylesheet" href="<?php echo base_url ?>assets/fonts/material-icon/css/material-design-iconic-font.min.css">
     <!-- Main css -->
