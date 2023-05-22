@@ -1,41 +1,75 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+  include ('../db_conn.php');
+  //use PHPMailer\PHPMailer\PHPMailer;
+  require("../assets/PHPMailer/PHPMailerAutoload.php");
+  require ("../assets/PHPMailer/class.phpmailer.php");
+  require ("../assets/PHPMailer/class.smtp.php");
+  $errors = [];
+  $errorMessage = '';
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+  if (!empty($_POST)) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $message = $_POST['message'];
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
+    if (empty($name)) {
+      $errors[] = 'Name is empty';
+    }
+
+    if (empty($email)) {
+      $errors[] = 'Email is empty';
+    }
+    else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $errors[] = 'Email is invalid';
+    }
+
+    if (empty($message)) {
+      $errors[] = 'Message is empty';
+    }
+
+    if (!empty($errors)) {
+      $allErrors = join('<br/>', $errors);
+      $errorMessage = "<p style='color: red;'>{$allErrors}</p>";
+    }
+    else {
+      $mail = new PHPMailer();
+      
+      // specify SMTP credentials
+      $mail->isSMTP();
+      $mail->Host = 'smtp.gmail.com';
+      $mail->SMTPAuth = true;
+      $mail->Username = 'ssg.jbi7204@gmail.com';
+      $mail->Password = 'fkqlcsiecymvoypb';
+      $mail->SMTPSecure = 'TLS/STARTTLS';
+      $mail->Port = '587';
+      $mail->setFrom($email, 'Contact Municipal Agriculture Office');
+      $mail->addAddress('ssg.jbi7204@gmail.com', 'Me');
+      $mail->Subject = 'New message from your website';
+
+      // Enable HTML if needed
+      $mail->isHTML(true);
+      $bodyParagraphs = ["Name: {$name}", "Email: {$email}", "Message:", nl2br($message)];
+      $body = join('<br />', $bodyParagraphs);
+      $mail->Body = $body;
+      echo $body;
+
+      if($mail->send()) {
+        // Email sent successfully
+        // echo 'OK';
+      } else {
+        // Error sending email
+        // echo 'error';
+      }
+      // if($mail->send()){
+      //   header('Location: thank-you.html'); // Redirect to 'thank you' page. Make sure you have it
+      //   $_SESSION['status'] = "Thank You for emailing from us";
+      //   $_SESSION['status_code'] = "success";
+      //   header("Location: " . base_url);
+      //   exit(0);
+      // } 
+      // else {
+      //   $errorMessage = 'Oops, something went wrong. Mailer Error: ' . $mail->ErrorInfo;
+      // }
+    }
   }
-
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
-
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
-
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
-
-  echo $contact->send();
 ?>
