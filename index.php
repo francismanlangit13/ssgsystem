@@ -467,7 +467,7 @@
               </div>
               <div class="member-info">
                 <h4>ANGEL A. BUAL</h4>
-                <span>Reasrcher</span>
+                <span>Researcher</span>
               </div>
             </div>
           </div>
