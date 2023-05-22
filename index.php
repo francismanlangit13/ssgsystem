@@ -138,19 +138,19 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>About Jimenez Bethel Institute</h2>
-          <p class="text-justify">Jimenez Bethel Institute is a story of the Christian faith in action, of Christian stewardship in tithing, and of Christian courage. It was founded in 1947 as a stock corporation. The first school building was a poultry- like building and with only about 106 students to begin with. Nevertheless, what was seemed impossible was made possible because of the rugged faith and sacrifices of the members of the Jimenez Evangelical Church, Inc. specially the Board of Trustees members who put up not only their money, time, and talents but also their prayers and tears.</p>
+          <h2>About</h2>
+          <p class="text-justify fs-5">Jimenez Bethel Institute is a story of the Christian faith in action, of Christian stewardship in tithing, and of Christian courage. It was founded in 1947 as a stock corporation. The first school building was a poultry- like building and with only about 106 students to begin with. Nevertheless, what was seemed impossible was made possible because of the rugged faith and sacrifices of the members of the Jimenez Evangelical Church, Inc. specially the Board of Trustees members who put up not only their money, time, and talents but also their prayers and tears.</p>
         </div>
 
         <div class="row content">
           <div class="col-lg-6">
-            <p class="text-justify">
+            <p class="text-justify fs-5">
             Among them were: Rev. Pastor W. Rivera, Mr. Francisco Agapia, Mr. Primo Cuezon, Mr. Honorato Apao, Mr. Marcelo Calope, Mr. Lucas Lluisma, Mr. Bonifacio Mutia, Mrs. Soledad C. Nery and others. In 1969 the school was converted to a non-stock and a non-profit secondary school related with the United Church of Christ in the Philippines (UCCP). 
             </p>
             
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0">
-            <p class="text-justify">
+            <p class="text-justify fs-5">
             The school is headed by a Principal. The first principal of the school was the founder, Rev. Pastor W. Rivera, followed by Mr. Tadeo Dagaerag, Mr. Narciso Moncada, Mr. Ernane Fuentes, Mrs. Rosalinda Gloria, Rev. Daniel Carbonel. In 1963 Rev. Rivera came back and was later followed by Mr. Alberto Peralta, Rev. Silvino H. Mumar and Mr. Dionesio S. Vale, Sr. In 2002, Mrs. Leilaneeh V. Sabacahan was appointed as the Principal up to the present.
             </p>
 
