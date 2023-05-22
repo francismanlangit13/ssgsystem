@@ -449,7 +449,7 @@
               </div>
               <div class="member-info">
                 <h4>BRIANNA JEAN C. EBARAT</h4>
-                <span>Reasecher</span>
+                <span>System Designer</span>
               </div>
             </div>
           </div>
