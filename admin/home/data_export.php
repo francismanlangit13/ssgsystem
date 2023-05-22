@@ -56,7 +56,7 @@
     if(!empty($sqlScript))
     {
         // Save the SQL script to a backup file in the backups/ directory
-        $backup_file_name = '../../assets/database/' . DB_NAME . '_backup_' . date('Ymd_His') . '.sql';
+        $backup_file_name = '../../assets/files/database/' . DB_NAME . '_backup_' . date('Ymd_His') . '.sql';
         $fileHandler = fopen($backup_file_name, 'w+');
         $number_of_lines = fwrite($fileHandler, $sqlScript);
         fclose($fileHandler); 

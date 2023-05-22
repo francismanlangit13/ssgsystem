@@ -16,7 +16,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                         <?php
-                                            $total_student = "SELECT * FROM `user` WHERE user_type_id = 6";
+                                            $total_student = "SELECT * FROM `user` WHERE user_type_id = 6 AND user_status_id != 3";
                                             $total_student_query_run = mysqli_query($con, $total_student);
                                         ?>
                                     <div class="card-body"><i class="fas fa-user-tie"></i> Total Student
@@ -40,7 +40,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
                                     <?php
-                                        $staff = "SELECT * FROM `user` WHERE user_type_id IN (2, 3, 4, 5)";
+                                        $staff = "SELECT * FROM `user` WHERE user_type_id IN (2, 3, 4, 5) AND user_status_id != 3";
                                         $staff_query_run = mysqli_query($con, $staff);
                                     ?>
                                     <div class="card-body"><i class="fas fa-users"></i> Total Officer
