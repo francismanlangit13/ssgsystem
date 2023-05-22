@@ -71,14 +71,14 @@
             }
         }
         else{
-            $_SESSION['status'] = "Invalid Username and Password";
+            $_SESSION['status'] = "Invalid Email and Password";
             $_SESSION['status_code'] = "error";
             header("Location: " . base_url . "login");
             exit(0);
         }
     }
     else{
-        $_SESSION['status'] = "Invalid Username and Password";
+        $_SESSION['status'] = "Invalid Email and Password";
         $_SESSION['status_code'] = "error";
         header("Location: " . base_url . "login");
         exit(0);
