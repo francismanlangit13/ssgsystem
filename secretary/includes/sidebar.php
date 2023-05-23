@@ -16,11 +16,6 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa fa-file-signature"></i></div>
                     Manage Penalties
                 </a>
-                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_liquidation.php') !== false)  { echo 'active'; } else { echo 'collapsed'; } ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
-                    <div class="sb-nav-link-icon"><i class="fas fa-solid fa-print"></i></div>
-                    Generate Report
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
                 <div class="<?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false)  { echo 'active'; } else { echo 'collapse'; } ?>" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_accounts.php') !== false)  { echo 'active'; }?>" href="generate_accounts">Accounts</a>
