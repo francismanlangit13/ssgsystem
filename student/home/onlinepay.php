@@ -15,44 +15,75 @@
                         <div class="row">
                             <?php
                                 $person = $_SESSION['auth_user']['user_id'];
-                                $sql = "SELECT * FROM `payment` INNER JOIN `user` ON `payment`.`user_id` = `user`.`user_id` WHERE `payment`.`user_id` = '$person' ORDER BY `payment`.`date` DESC LIMIT 1";
+                                $query = "SELECT * FROM `payment` WHERE user_id = '$person' ORDER BY date DESC LIMIT 1";
+                                $query_run = mysqli_query($con, $query);
+                                if ($row_payment = mysqli_fetch_assoc($query_run)) {
+                                    $pending = $row_payment['status'];;
+                                }
+                                $sql = "SELECT * FROM `user` WHERE user_id = '$person' LIMIT 1";
                                 $sql_query_run = mysqli_query($con, $sql);
-                                if ($row = mysqli_fetch_assoc($sql_query_run)) {
-                                    $balance = $row['balance'];
-                                    $pending = $row['status'];
+                                if ($row_balance = mysqli_fetch_assoc($sql_query_run)) {
+                                    $balance = $row_balance['balance'];
                                 }
                             ?>
-                            <?php if ($balance > 0 && $pending == 'Pending') { ?>
-                                <div class="col-xl-12 col-md-12">
-                                    <div class="card bg-info text-white mb-4">
-                                        <div class="card-body"><i class="fas fa-exclamation-circle"></i> Thank you for paying your payment is on pending.</div>
-                                    </div>
-                                </div>
-                            <?php } elseif ($balance > 0 && $pending != 'Pending') { ?>
-                                <div class="col-xl-12 col-md-12">
-                                    <div class="card bg-danger text-white mb-4">
-                                        <?php
-                                            $person = $_SESSION['auth_user']['user_id'];
-                                            $sql = "SELECT balance FROM `user` WHERE user_id = '$person'";
-                                            $sql_query_run = mysqli_query($con, $sql);
-                                        ?>
-                                        <div class="card-body"><i class="fas fa-exclamation-circle"></i> You have an outstanding payment. Please pay in treasurer or online payment.
-                                            <label class="float-end">
-                                                <?php
-                                                    if ($row = mysqli_fetch_assoc($sql_query_run)) {
-                                                        echo '<h5>₱'.$row['balance'].'</h5>';
-                                                    } else {
-                                                        echo '<h5>₱0</h5>';
-                                                    }
-                                                ?>
-                                            </label>
-                                        </div>
-                                        <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>student/home/onlinepay">Pay NOW</a>
-                                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            <?php if ($balance > 0) { ?>
+                                <?php if(empty($pending)){ ?>
+                                    <div class="col-xl-12 col-md-12">
+                                        <div class="card bg-danger text-white mb-4">
+                                            <?php
+                                                $person = $_SESSION['auth_user']['user_id'];
+                                                $sql = "SELECT balance FROM `user` WHERE user_id = '$person'";
+                                                $sql_query_run = mysqli_query($con, $sql);
+                                            ?>
+                                            <div class="card-body"><i class="fas fa-exclamation-circle"></i> You have an outstanding payment. Please pay in treasurer or online payment.
+                                                <label class="float-end">
+                                                    <?php
+                                                        if ($row = mysqli_fetch_assoc($sql_query_run)) {
+                                                            echo '<h5>₱'.$row['balance'].'</h5>';
+                                                        } else {
+                                                            echo '<h5>₱0</h5>';
+                                                        }
+                                                    ?>
+                                                </label>
+                                            </div>
+                                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                                <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>student/home/onlinepay">Pay NOW</a>
+                                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php } elseif(!empty($pending) == 'Pending'){ ?>
+                                    <div class="col-xl-12 col-md-12">
+                                        <div class="card bg-info text-white mb-4">
+                                            <div class="card-body"><i class="fas fa-exclamation-circle"></i> Thank you for paying. Your payment is pending.</div>
+                                        </div>
+                                    </div>
+                                <?php } else{?>
+                                    <div class="col-xl-12 col-md-12">
+                                        <div class="card bg-danger text-white mb-4">
+                                            <?php
+                                                $person = $_SESSION['auth_user']['user_id'];
+                                                $sql = "SELECT balance FROM `user` WHERE user_id = '$person'";
+                                                $sql_query_run = mysqli_query($con, $sql);
+                                            ?>
+                                            <div class="card-body"><i class="fas fa-exclamation-circle"></i> You have an outstanding payment. Please pay in treasurer or online payment.
+                                                <label class="float-end">
+                                                    <?php
+                                                        if ($row = mysqli_fetch_assoc($sql_query_run)) {
+                                                            echo '<h5>₱'.$row['balance'].'</h5>';
+                                                        } else {
+                                                            echo '<h5>₱0</h5>';
+                                                        }
+                                                    ?>
+                                                </label>
+                                            </div>
+                                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                                <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>student/home/onlinepay">Pay NOW</a>
+                                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             <?php } else{ } ?>
                             <div class="col-xl-12 col-md-12">
                                 <div class="card bg-success text-white mb-4">

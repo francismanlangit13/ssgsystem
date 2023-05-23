@@ -31,7 +31,7 @@
                         <form action="logincode.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Your Name" required/>
+                                <input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Email" required/>
                             </div>
                             <div class="form-group" style="overflow:visible !important;">
                                 <label for="password"><i class="zmdi zmdi-lock" style="margin-bottom:2.5rem;"></i></label>

@@ -80,11 +80,12 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="front">Profile Picture: </label>
-                                                    <input type="file" name="front" id="front" accept=".jpg, .jpeg, .png" value="">
+                                                    <input type="file" name="image" id="image1" class="form-control-file btn btn-secondary" accept=".jpg, .jpeg, .png" onchange="previewImage('frame1', 'image1')">
+                                                    <input type="text" name="oldimage" value="<?= $row['photo']; ?>" hidden>
                                                 </div>
                                                 <div class="col-md-6 text-center">
                                                     <br>
-                                                    <h5>Bill receipt photo</h5>
+                                                    <h5>Profile Picture</h5>
                                                     <img class="mt-2" id="frame1" src ="
                                                     <?php
                                                         if(isset($user['photo'])){
