@@ -170,7 +170,7 @@
           <div class="col-lg-6 col-md-6 col-6 d-md-flex align-items-md-stretch">
             <div class="count-box">
             <?php
-              $total_student = "SELECT * FROM `user` WHERE user_type_id = 6";
+              $total_student = "SELECT * FROM `user` WHERE user_type_id = 6 AND user_status_id != 3";
               $total_student_query_run = mysqli_query($con, $total_student);
             ?>
               <span data-purecounter-start="0" data-purecounter-end="
