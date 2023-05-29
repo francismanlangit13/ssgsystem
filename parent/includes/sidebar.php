@@ -30,10 +30,6 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa-list"></i></div>
                     Student Penalty
                 </a>
-                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/generate_payments.php') !== false)  { echo 'active'; } ?>" href="generate_payments">
-                    <div class="sb-nav-link-icon"><i class="fas fa-solid fa-print"></i></div>
-                    Generate Payment
-                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">
