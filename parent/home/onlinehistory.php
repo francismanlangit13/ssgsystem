@@ -67,7 +67,7 @@
                                             <td><?= $row['short_date_created']; ?></td>
                                             <td><?= $row['status']; ?></td>
                                             <td>
-                                                <div class="col-md-3 text-center">
+                                                <div class="col-md-12 text-center">
                                                     <a href="onlinehistory_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                         <span class="icon text-white-50"></span>
                                                         <span class="text ml-2 mr-2">View</span>

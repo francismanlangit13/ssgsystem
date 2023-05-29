@@ -59,7 +59,7 @@
                                             <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
                                             <td><?php if($row['balance'] <= 0){ echo"Cleared";} else{ echo"Uncleared"; } ?></td>
                                             <td>
-                                                <div class="col-md-3">
+                                                <div class="col-md-12">
                                                     <a href="studentpenalty_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                         <span class="icon text-white-50"></span>
                                                         <span class="text ml-2 mr-2">View</span>
