@@ -344,7 +344,7 @@
                                 <tbody>
                                     <tr>
                                         <td>Prapared by:<br><br>
-                                        <?php $query = "SELECT * FROM user WHERE user_type_id = 5";
+                                        <?php $query = "SELECT * FROM user WHERE user_type_id = 5 AND user_status_id = 1 desc limit 1";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){ ?>
@@ -353,7 +353,7 @@
                                             SSG Treasurer</h3>
                                         </td>
                                         <td>Corrected by:<br><br>
-                                        <?php $query = "SELECT * FROM user WHERE user_type_id = 4";
+                                        <?php $query = "SELECT * FROM user WHERE user_type_id = 4 AND user_status_id = 1 desc limit 1";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){ ?>
@@ -364,7 +364,7 @@
                                     </tr>
                                     <tr>
                                         <td>Attested by:<br><br>
-                                        <?php $query = "SELECT * FROM user WHERE user_type_id = 2";
+                                        <?php $query = "SELECT * FROM user WHERE user_type_id = 2 AND user_status_id = 1 desc limit 1";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){ ?>
@@ -373,7 +373,7 @@
                                             SSG President</h3>
                                         </td>
                                         <td>Noted by:<br><br>
-                                        <?php $query = "SELECT * FROM user WHERE user_type_id = 1";
+                                        <?php $query = "SELECT * FROM user WHERE user_type_id = 1 AND user_status_id = 1 desc limit 1";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){ ?>
