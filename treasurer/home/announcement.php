@@ -16,9 +16,6 @@
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 List of Announcements
-                                <div class="float-end">
-                                    <a type="button" class="btn btn-primary" href="announcement_add" style="zoom:75%"><i class="fa fa-plus"></i> Add announcement</a>
-                                </div>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple" style="text-align:center;">
@@ -64,24 +61,11 @@
                                             <td><?= $row['status']; ?></td>
                                             <td> 
                                                 <div class="row d-inline-flex justify-content-center">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-12">
                                                         <a href="announcement_view?id=<?=$row['announcement_id'];?>" class="btn btn-info btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text ml-2 mr-2">View</span>
                                                         </a>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <a href="announcement_edit?id=<?=$row['announcement_id'];?>" class="btn btn-success btn-icon-split"> 
-                                                            <span class="icon text-white-50"></span>
-                                                            <span class="text">Update</span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-md-4" style="margin-left:-0.3rem;">
-                                                        <button type="button" data-toggle="modal" value="<?=$row['announcement_id']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-danger btn-icon-split">
-                                                            <span class="icon text-white-50">
-                                                            </span>
-                                                            <span class="text">Delete</span>
-                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
