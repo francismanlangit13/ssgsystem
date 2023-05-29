@@ -7,6 +7,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
+                <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/activity.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/activity_view.php') !== false)  { echo 'active'; } ?>" href="activity">
+                    <div class="sb-nav-link-icon"><i class="fas fa-solid fa-tasks"></i></div>
+                    View Activities
+                </a>
                 <a class="nav-link <?php if (strpos($_SERVER['PHP_SELF'], 'home/announcement.php') !== false || strpos($_SERVER['PHP_SELF'], 'home/announcement_view.php') !== false)  { echo 'active'; } ?>" href="announcement">
                     <div class="sb-nav-link-icon"><i class="fas fa-solid fa-bullhorn"></i></div>
                     Announcement
