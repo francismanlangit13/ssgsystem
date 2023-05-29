@@ -55,9 +55,8 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <li><a class="nav-link scrollto o" href="#portfolio">Portfolio</a></li>
+          <li><a class="nav-link scrollto" href="#about">About US </a></li>
+          <li><a class="nav-link scrollto o" href="#portfolio">Picture</a></li>
           <li><a class="nav-link scrollto o" href="#contact">Contact</a></li>
           <li><a class="nav-link scrollto" href="#team">Team</a></li>
           <li><a class="getstarted scrollto" href="<?php echo base_url ?>login">Login</a></li>
@@ -139,7 +138,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>About</h2>
+          <h2>ABOUT US</h2>
           <p class="text-justify fs-5">Jimenez Bethel Institute is a story of the Christian faith in action, of Christian stewardship in tithing, and of Christian courage. It was founded in 1947 as a stock corporation. The first school building was a poultry- like building and with only about 106 students to begin with. Nevertheless, what was seemed impossible was made possible because of the rugged faith and sacrifices of the members of the Jimenez Evangelical Church, Inc. specially the Board of Trustees members who put up not only their money, time, and talents but also their prayers and tears.</p>
         </div>
 
