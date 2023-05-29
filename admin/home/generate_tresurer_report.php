@@ -79,9 +79,9 @@
                                         <th style="border:0px;"></th>
                                     </tr>
                                     <tr>
-                                        <th style="width:500px; text-align:left;">SSG BALANCE</th>
+                                        <th style="width:1950px; text-align:left;">SSG BALANCE</th>
                                         <th style="width: 80px;">PHP</th>
-                                        <th style="width: 500px; text-align: right;">
+                                        <th style="width: 80px; text-align: right;">
                                             <?php
                                                 if (isset($_POST['id'])) {
                                                     $id = $_POST['id'];
@@ -121,7 +121,7 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th style="width: 500px; text-align: left;">Earnings Month of 
+                                        <th style="width: 1950px; text-align: left;">Earnings Month of 
                                             (<?php
                                                 if(isset($_POST['id'])){
                                                     $id = $_POST['id'];
@@ -137,7 +137,7 @@
                                             ?>)
                                         </th>
                                         <th style="width: 80px;"></th>
-                                        <th style="width: 500px; text-align: right;">
+                                        <th style="width: 80px; text-align: right;">
                                             <?php
                                                 if (isset($_POST['id'])) {
                                                     $id = $_POST['id'];
@@ -177,7 +177,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="1" style="text-align:right;">Total REVENUE</th>
+                                            <th colspan="1" style="text-align:right; width:1950px">Total REVENUE</th>
                                             <th></th>
                                             <th style="text-align: right;">
                                                 <?php
@@ -217,7 +217,7 @@
                                             </th>
                                         </tr>
                                         <tr style="height:20px; border:0px;">
-                                            <th style="width: 500px; border:0px;"></th>
+                                            <th style="width: 80px; border:0px;"></th>
                                         </tr>
                                         <tr>
                                             <th style="width:500px; text-align:left;">Total Expense (As of this month)</th>
@@ -352,14 +352,14 @@
                                         <?php } } else{ echo 'error!'; } ?>
                                             SSG Treasurer</h3>
                                         </td>
-                                        <td>Audited by:<br><br>
+                                        <td>Corrected by:<br><br>
                                         <?php $query = "SELECT * FROM user WHERE user_type_id = 4";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){ ?>
                                                     <h5> <b style="border-bottom: 2px solid;"><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?></b><br>
                                         <?php } } else{ echo 'error!'; } ?>
-                                            SSG Auditor</h3>
+                                            SSG Secretary</h3>
                                         </td>
                                     </tr>
                                     <tr>

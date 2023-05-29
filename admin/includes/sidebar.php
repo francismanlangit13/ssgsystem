@@ -64,7 +64,17 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            Administrator
+            <?php
+                if($_SESSION['auth_role'] == '1'){
+                    echo"Administrator";
+                }
+                elseif($_SESSION['auth_role'] == '2'){
+                    echo"President";
+                }
+                else{
+                    echo"Vice President";
+                }
+            ?>
         </div>
     </nav>
 </div>

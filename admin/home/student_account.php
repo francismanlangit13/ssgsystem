@@ -18,8 +18,11 @@
                                 <i class="fas fa-table me-1"></i>
                                 List of Student Account
                                 <div class="float-end">
-                                    <a type="button" class="btn btn-primary" href="student_add" style="zoom:75%"><i class="fa fa-plus"></i> Add Student Account</a>
-                                    <a type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCSV" style="zoom:75%"><i class="fa fa-file-csv"></i> Import CSV</a>
+                                    <form method="post" action="code.php">
+                                        <a type="button" class="btn btn-primary" href="student_add" style="zoom:75%"><i class="fa fa-plus"></i> Add Student Account</a>
+                                        <a type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCSV" style="zoom:75%"><i class="fa fa-file-csv"></i> Import CSV</a>
+                                        <button class="btn btn-info" style="zoom:75%" type="submit" name="export_student"><i class="fas fa-file-csv"></i> Export CSV</button>
+                                    </form>
                                 </div>
                             </div>
                             <div class="card-body">

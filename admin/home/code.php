@@ -1171,7 +1171,7 @@ if (isset($_POST["import_parents"])) {
           $var4 = addslashes($emapData[4]);
           $var5 = addslashes($emapData[5]);
           $var6 = addslashes($emapData[6]);
-          $new_password = addslashes($emapData[7]); // password
+          $new_password = addslashes('12345678'); // password
           $var7 = md5($new_password);
           $var8 = $date;
           $var9 = '7';
@@ -1293,4 +1293,61 @@ if(isset($_POST['restore'])){
       }
     }
   }
+}
+
+if(isset($_POST['export_student'])){
+  // Fetch data from MySQL table
+  $sql = "SELECT * FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id INNER JOIN user_status ON user.user_status_id = user_status.user_status_id WHERE user.user_type_id = 6 AND user.user_status_id = 1";
+  $result = mysqli_query($con, $sql);
+
+  // Set the filename and mime type
+  $filename = "export_student_" . date('m-d-Y_H:i:s A') . ".csv";
+  header('Content-Type: text/csv');
+  header('Content-Disposition: attachment;filename="' . $filename . '"');
+  header('Cache-Control: max-age=0');
+
+  // Open file for writing
+  $file = fopen('php://output', 'w');
+
+  // Set the column headers
+  fputcsv($file, array('First Name', 'Middle Name', 'Last Name', 'Suffix', 'Gender', 'Email', 'Phone', 'Student ID', 'Grade'));
+
+  // Add the data to the file
+  while ($data = mysqli_fetch_assoc($result)) {
+    fputcsv($file, array($data['fname'], $data['mname'], $data['lname'], $data['suffix'], $data['gender'], $data['email'], $data['phone'], $data['student_id'], $data['level']));
+  }
+
+  // Close file
+  fclose($file);
+
+  // Close MySQL connection
+  mysqli_close($con);
+}
+if(isset($_POST['export_parent'])){
+  // Fetch data from MySQL table
+  $sql = "SELECT * FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id INNER JOIN user_status ON user.user_status_id = user_status.user_status_id WHERE user.user_type_id = 7 AND user.user_status_id = 1";
+  $result = mysqli_query($con, $sql);
+
+  // Set the filename and mime type
+  $filename = "export_parent_" . date('m-d-Y_H:i:s A') . ".csv";
+  header('Content-Type: text/csv');
+  header('Content-Disposition: attachment;filename="' . $filename . '"');
+  header('Cache-Control: max-age=0');
+
+  // Open file for writing
+  $file = fopen('php://output', 'w');
+
+  // Set the column headers
+  fputcsv($file, array('First Name', 'Middle Name', 'Last Name', 'Suffix', 'Gender', 'Email', 'Phone'));
+
+  // Add the data to the file
+  while ($data = mysqli_fetch_assoc($result)) {
+    fputcsv($file, array($data['fname'], $data['mname'], $data['lname'], $data['suffix'], $data['gender'], $data['email'], $data['phone']));
+  }
+
+  // Close file
+  fclose($file);
+
+  // Close MySQL connection
+  mysqli_close($con);
 }
