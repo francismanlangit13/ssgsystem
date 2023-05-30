@@ -87,17 +87,18 @@
                                                 </div>
 
                                                 <div class="col-md-4 mb-3">
-                                                    <label for="" class="required">Amount</label>
-                                                    <input required type="number" value="" name="amount" class="form-control">
-                                                </div>
-
-                                                <div class="col-md-4 mb-3">
                                                     <label for="" class="required">Status</label>
-                                                    <select name="status" required class="form-control">
+                                                    <select name="status" required class="form-control" onchange="showTextarea()">
                                                         <option value="" selected disabled>Select Status</option>
                                                         <option value="Approved">Approved</option>
                                                         <option value="Partial">Partial</option>
+                                                        <option value="Deny">Deny</option>
                                                     </select>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3" id="textarea-container" style="display:none">
+                                                    <label for="" class="required">Amount</label>
+                                                    <input type="number" value="" name="amount" class="form-control">
                                                 </div>
 
                                                 <div class="col-md-6 text-center">
@@ -168,3 +169,19 @@
         <?php include ('../includes/bottom.php'); ?>
     </body>
 </html>
+
+<script>
+    function showTextarea() {
+        var status = document.getElementsByName('status')[0].value;
+        var container = document.getElementById('textarea-container');
+        var input = container.getElementsByTagName('input')[0];
+        if (status === "Deny") {
+            container.style.display = 'none';
+            input.removeAttribute('required');
+            input.value = '';
+        } else {
+            container.style.display = 'block';
+            input.setAttribute('required', true);
+        }
+    }
+</script>
