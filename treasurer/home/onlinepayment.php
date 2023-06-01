@@ -52,7 +52,7 @@
                                                 `user`
                                                 ON 
                                                 payment.`user_id` = `user`.user_id
-                                                WHERE payment.platform != 'Cash'
+                                                WHERE payment.platform != 'Cash' AND payment.status != 'Pending'
                                             ";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){

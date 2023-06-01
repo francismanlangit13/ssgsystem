@@ -25,7 +25,8 @@
 
                                                 <div class="col-md-6 mb-3">
                                                     <label for="" class="required">Name</label>
-                                                    <input required type="text" Placeholder="Enter Name" name="name" class="form-control">
+                                                    <input required type="text" Placeholder="Enter Name" id="name" name="name" class="form-control">
+                                                    <div id="name-error"></div>
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
@@ -35,13 +36,14 @@
 
                                                 <div class="col-md-6 mb-3">
                                                     <label for="" class="required">Account Number</label>
-                                                    <input required type="number" Placeholder="Enter Account Number" name="account_number" class="form-control">
+                                                    <input required type="number" Placeholder="Enter Account Number" id="accountnumber" name="account_number" class="form-control">
+                                                    <div id="accountnumber-error"></div>
                                                 </div>
                                                 
                                             </div>   
                                             <div class="float-end">
                                                 <a href="platform" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                                <button type="submit" name="add_platform" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
+                                                <button type="submit" id="submit-btn" name="add_platform" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
                                             </div>
                                         </form>
                                     </div>
@@ -56,3 +58,67 @@
         <?php include ('../includes/bottom.php'); ?>
     </body>
 </html>
+
+<script>
+    $(document).ready(function() {
+        // disable submit button by default
+        // $('#submit-btn').prop('disabled', true);
+
+        // debounce functions for each input field
+        var debouncedCheckName = _.debounce(checkName, 500);
+        var debouncedCheckAccountnumber = _.debounce(checkAccountnumber, 500);
+
+        // attach event listeners for each input field
+        $('#name').on('input', debouncedCheckName);
+        $('#accountnumber').on('input', debouncedCheckAccountnumber);
+
+        $('#name').on('blur', debouncedCheckName);
+        $('#accountnumber').on('blur', debouncedCheckAccountnumber);
+
+        function checkIfAllFieldsValid() {
+            // check if all input fields are valid and enable submit button if so
+            if ($('#name-error').is(':empty') && $('#accountnumber-error').is(':empty')) {
+                $('#submit-btn').prop('disabled', false);
+            } else {
+                $('#submit-btn').prop('disabled', true);
+            }
+        }
+
+        function checkName() {
+            var name = $('#name').val().trim();
+            
+            // show error if name is empty
+            if (name === '') {
+                $('#name-error').text('Please input name').css('color', 'red');
+                $('#name').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for name if needed
+            
+            $('#name-error').empty();
+            $('#name').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+
+        function checkAccountnumber() {
+            var accountnumber = $('#accountnumber').val().trim();
+            
+            // show error if accountnumber is empty
+            if (accountnumber === '') {
+                $('#accountnumber-error').text('Please input account number').css('color', 'red');
+                $('#accountnumber').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for accountnumber if needed
+            
+            $('#accountnumber-error').empty();
+            $('#accountnumber').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+        
+    });
+</script>

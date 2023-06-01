@@ -73,7 +73,8 @@
 
                                                 <div class="col-md-3 mb-3">
                                                     <label for="">Amount Paid</label>
-                                                    <input type="text" value="<?=$user['amount'];?>" name="amount" class="form-control" required>
+                                                    <input type="text" value="<?=$user['amount'];?>" id="amount" name="amount" class="form-control" required>
+                                                    <div id="amount-error"></div>
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
@@ -93,7 +94,7 @@
                                             </div>
                                             <div class="float-end">
                                                 <a href="onlinepayment.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                                <button type="submit" name="update_onlinepayment" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
+                                                <button type="submit" id="submit-btn" name="update_onlinepayment" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
                                             </div>
                                         </form>
                                     </div>
@@ -139,3 +140,45 @@
         <?php include ('../includes/bottom.php'); ?>
     </body>
 </html>
+
+<script>
+    $(document).ready(function() {
+        // disable submit button by default
+        // $('#submit-btn').prop('disabled', true);
+
+        // debounce functions for each input field
+        var debouncedCheckAmount = _.debounce(checkAmount, 500);
+
+        // attach event listeners for each input field
+        $('#amount').on('input', debouncedCheckAmount);
+        $('#amount').on('blur', debouncedCheckAmount);
+
+        function checkIfAllFieldsValid() {
+            // check if all input fields are valid and enable submit button if so
+            if ($('#amount-error').is(':empty')) {
+                $('#submit-btn').prop('disabled', false);
+            } else {
+                $('#submit-btn').prop('disabled', true);
+            }
+        }
+
+        function checkAmount() {
+            var amount = $('#amount').val().trim();
+            
+            // show error if amount is empty
+            if (amount === '') {
+                $('#amount-error').text('Please input amount').css('color', 'red');
+                $('#amount').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for amount if needed
+            
+            $('#amount-error').empty();
+            $('#amount').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+        
+    });
+</script>

@@ -110,18 +110,20 @@
                 <div class="modal-body">
                     <div class="col-md-12 mb-3">
                         <label for="" class="required">Penalty Name</label>
-                        <input required type="text" Placeholder="Enter Penalty Name" name="name" class="form-control">
+                        <input required type="text" Placeholder="Enter Penalty Name" id="name" name="name" class="form-control">
+                        <div id="name-error"></div>
                     </div>
 
                     <div class="col-md-12 mb-3">
                         <label for="" class="required">Penalty amount</label>
-                        <input required type="number" Placeholder="Enter Amount" name="amount" class="form-control">
+                        <input required type="number" Placeholder="Enter Amount" id="amount" name="amount" class="form-control">
+                        <div id="amount-error"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <input type="hidden" id="delete_id" name="penalty_add" value="">
-                    <button type="submit" class="btn btn-success">Add</button>
+                    <button type="submit" id="submit-btn" class="btn btn-success">Add</button>
                 </div>
             </form>
         </div>
@@ -136,4 +138,68 @@
         document.getElementById("delete_id").value = id;
         document.getElementById("label").innerHTML = firstname;
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        // disable submit button by default
+        // $('#submit-btn').prop('disabled', true);
+
+        // debounce functions for each input field
+        var debouncedCheckName = _.debounce(checkName, 500);
+        var debouncedCheckAmount = _.debounce(checkAmount, 500);
+
+        // attach event listeners for each input field
+        $('#name').on('input', debouncedCheckName);
+        $('#amount').on('input', debouncedCheckAmount);
+
+        $('#name').on('blur', debouncedCheckName);
+        $('#amount').on('blur', debouncedCheckAmount);
+
+        function checkIfAllFieldsValid() {
+            // check if all input fields are valid and enable submit button if so
+            if ($('#name-error').is(':empty') && $('#amount-error').is(':empty')) {
+                $('#submit-btn').prop('disabled', false);
+            } else {
+                $('#submit-btn').prop('disabled', true);
+            }
+        }
+        
+        function checkName() {
+            var name = $('#name').val().trim();
+            
+            // show error if name is empty
+            if (name === '') {
+                $('#name-error').text('Please input name').css('color', 'red');
+                $('#name').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for name if needed
+            
+            $('#name-error').empty();
+            $('#name').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+
+        function checkAmount() {
+            var amount = $('#amount').val().trim();
+            
+            // show error if amount is empty
+            if (amount === '') {
+                $('#amount-error').text('Please input amount').css('color', 'red');
+                $('#amount').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for amount if needed
+            
+            $('#amount-error').empty();
+            $('#amount').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+        
+    });
 </script>

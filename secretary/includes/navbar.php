@@ -18,7 +18,7 @@
         <li class="nav-item dropdown">
             <?php if(isset($_SESSION['auth_user']))  ?>
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <?php
+                    <?php
                         $userID = $_SESSION['auth_user'] ['user_id'];
                         $query = "SELECT * FROM user where user_id = $userID";
                         $query_run = mysqli_query($con, $query);

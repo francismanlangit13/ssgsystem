@@ -88,17 +88,19 @@
 
                                                 <div class="col-md-4 mb-3">
                                                     <label for="" class="required">Status</label>
-                                                    <select name="status" required class="form-control" onchange="showTextarea()">
+                                                    <select id="status" name="status" required class="form-control" onchange="showTextarea()">
                                                         <option value="" selected disabled>Select Status</option>
                                                         <option value="Approved">Approved</option>
                                                         <option value="Partial">Partial</option>
                                                         <option value="Deny">Deny</option>
                                                     </select>
+                                                    <div id="status-error"></div>
                                                 </div>
 
                                                 <div class="col-md-4 mb-3" id="textarea-container" style="display:none">
                                                     <label for="" class="required">Amount</label>
-                                                    <input type="number" value="" name="amount" class="form-control">
+                                                    <input type="number" id="amount" value="" name="amount" class="form-control">
+                                                    <div id="amount-error"></div>
                                                 </div>
 
                                                 <div class="col-md-6 text-center">
@@ -124,7 +126,7 @@
                                             <br><br>
                                             <div class="float-end">
                                                 <a href="onlinepay.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                                <button type="submit" name="payment_add_online" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
+                                                <button type="submit" id="submit-btn" name="payment_add_online" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
                                             </div>
                                         </form>
                                     </div>
@@ -184,4 +186,69 @@
             input.setAttribute('required', true);
         }
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        // disable submit button by default
+        // $('#submit-btn').prop('disabled', true);
+
+        // debounce functions for each input field
+        var debouncedCheckStatus = _.debounce(checkStatus, 500);
+        var debouncedCheckAmount = _.debounce(checkAmount, 500);
+
+        // attach event listeners for each input field
+        $('#status').on('input', debouncedCheckStatus);
+        $('#amount').on('input', debouncedCheckAmount);
+
+        $('#status').on('blur', debouncedCheckStatus);
+        $('#amount').on('blur', debouncedCheckAmount);
+
+        function checkIfAllFieldsValid() {
+            // check if all input fields are valid and enable submit button if so
+            if ($('#status-error').is(':empty') && $('#amount-error').is(':empty')) {
+                $('#submit-btn').prop('disabled', false);
+            } else {
+                $('#submit-btn').prop('disabled', true);
+            }
+        }
+
+        function checkStatus() {
+            var statusSelect = document.getElementById('status');
+            var status = statusSelect.value;
+            
+            // show error if the default option is selected
+            if (status === '' && statusSelect.selectedIndex !== 1) {
+                $('#status-error').text('Please select a status').css('color', 'red');
+                $('#status').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for status if needed
+            
+            $('#status-error').empty();
+            $('#status').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+
+        function checkAmount() {
+            var amount = $('#amount').val().trim();
+            
+            // show error if amount is empty
+            if (amount === '') {
+                $('#amount-error').text('Please input amount').css('color', 'red');
+                $('#amount').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for amount if needed
+            
+            $('#amount-error').empty();
+            $('#amount').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+        
+    });
 </script>

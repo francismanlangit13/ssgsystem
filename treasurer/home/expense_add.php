@@ -29,7 +29,7 @@
                                                         $all_activity = mysqli_query($con, $sql);
                                                     ?>
                                                     <label for="" class="required">Activity</label>
-                                                    <select name="activity_id" required class="form-control">
+                                                    <select id="activity" name="activity_id" required class="form-control">
                                                         <option value="" selected disabled>Select Activity</option>
                                                         <?php while ($activity = mysqli_fetch_array($all_activity, MYSQLI_ASSOC)) {
                                                             $selected = ($activity['activity_id'] == $user['activity_id']) ? 'selected' : '';
@@ -39,26 +39,31 @@
                                                             </option>
                                                         <?php } ?>
                                                     </select>
+                                                    <div id="activity-error"></div>
                                                 </div>
 
                                                 <div class="col-md-12 mb-3">
                                                     <label for="" class="required">Type</label>
-                                                    <input required type="text" name="type" value="<?= $user['type']; ?>" class="form-control">
+                                                    <input required type="text" id="type" name="type" value="<?= $user['type']; ?>" class="form-control">
+                                                    <div id="type-error"></div>
                                                 </div>
 
                                                 <div class="col-md-12 mb-3">
                                                     <label for="" class="required">Purpose</label>
-                                                    <textarea required type="text" name="purpose" class="form-control"><?= $user['purpose']; ?></textarea>       
+                                                    <textarea required type="text" id="purpose" name="purpose" class="form-control"><?= $user['purpose']; ?></textarea>
+                                                    <div id="purpose-error"></div>
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
                                                     <label for="" class="required">OR Number</label>
-                                                    <input required type="number" name="or_number" value="<?= $user['or_number']; ?>" class="form-control">
+                                                    <input required type="number" id="ornumber" name="or_number" value="<?= $user['or_number']; ?>" class="form-control">
+                                                    <div id="ornumber-error"></div>
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
                                                     <label for="" class="required">Amount</label>
-                                                    <input required type="text" name="amount" value="<?= $user['amount']; ?>" class="form-control">
+                                                    <input required type="text" id="amount" name="amount" value="<?= $user['amount']; ?>" class="form-control">
+                                                    <div id="amount-error"></div>
                                                 </div>
 
                                                 <!-- <div class="col-md-6 mb-3">
@@ -80,7 +85,7 @@
                                             </div>
                                             <div class="float-end">
                                                 <a href="expense" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                                <button type="submit" name="add_expense" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
+                                                <button type="submit" id="submit-btn" name="add_expense" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
                                             </div>
                                         </form>
                                     </div>
@@ -95,3 +100,131 @@
         <?php include ('../includes/bottom.php'); ?>
     </body>
 </html>
+
+<script>
+    $(document).ready(function() {
+        // disable submit button by default
+        // $('#submit-btn').prop('disabled', true);
+
+        // debounce functions for each input field
+        var debouncedCheckActivity = _.debounce(checkActivity, 500);
+        var debouncedCheckType = _.debounce(checkType, 500);
+        var debouncedCheckPurpose = _.debounce(checkPurpose, 500);
+        var debouncedCheckOrnumber = _.debounce(checkOrnumber, 500);
+        var debouncedCheckAmount = _.debounce(checkAmount, 500);
+
+        // attach event listeners for each input field
+        $('#activity').on('input', debouncedCheckActivity);
+        $('#type').on('input', debouncedCheckType);
+        $('#purpose').on('input', debouncedCheckPurpose);
+        $('#ornumber').on('input', debouncedCheckOrnumber);
+        $('#amount').on('input', debouncedCheckAmount);
+
+        $('#activity').on('blur', debouncedCheckActivity);
+        $('#type').on('blur', debouncedCheckType);
+        $('#purpose').on('blur', debouncedCheckPurpose);
+        $('#ornumber').on('blur', debouncedCheckOrnumber);
+        $('#amount').on('blur', debouncedCheckAmount);
+
+        function checkIfAllFieldsValid() {
+            // check if all input fields are valid and enable submit button if so
+            if ($('#activity-error').is(':empty') && $('#type-error').is(':empty') && $('#purpose-error').is(':empty') && $('#ornumber-error').is(':empty') && $('#amount-error').is(':empty')) {
+                $('#submit-btn').prop('disabled', false);
+            } else {
+                $('#submit-btn').prop('disabled', true);
+            }
+        }
+
+        function checkActivity() {
+            var activitySelect = document.getElementById('activity');
+            var activity = activitySelect.value;
+            
+            // show error if the default option is selected
+            if (activity === '' && activitySelect.selectedIndex !== 1) {
+                $('#activity-error').text('Please select a activity').css('color', 'red');
+                $('#activity').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for activity if needed
+            
+            $('#activity-error').empty();
+            $('#activity').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+        
+        function checkType() {
+            var type = $('#type').val().trim();
+            
+            // show error if type is empty
+            if (type === '') {
+                $('#type-error').text('Please input type').css('color', 'red');
+                $('#type').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for type if needed
+            
+            $('#type-error').empty();
+            $('#type').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+
+        function checkPurpose() {
+            var purpose = $('#purpose').val().trim();
+            
+            // show error if purpose is empty
+            if (purpose === '') {
+                $('#purpose-error').text('Please input purpose').css('color', 'red');
+                $('#purpose').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for purpose if needed
+            
+            $('#purpose-error').empty();
+            $('#purpose').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+
+        function checkOrnumber() {
+            var ornumber = $('#ornumber').val().trim();
+            
+            // show error if ornumber is empty
+            if (ornumber === '') {
+                $('#ornumber-error').text('Please input or number').css('color', 'red');
+                $('#ornumber').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for ornumber if needed
+            
+            $('#ornumber-error').empty();
+            $('#ornumber').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+
+        function checkAmount() {
+            var amount = $('#amount').val().trim();
+            
+            // show error if amount is empty
+            if (amount === '') {
+                $('#amount-error').text('Please input amount').css('color', 'red');
+                $('#amount').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for amount if needed
+            
+            $('#amount-error').empty();
+            $('#amount').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+        
+    });
+</script>

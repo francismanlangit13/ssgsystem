@@ -37,7 +37,7 @@
                                                         $all_activity = mysqli_query($con, $sql);
                                                     ?>
                                                     <label for="" class="required">Activity</label>
-                                                    <select name="activity_id" required class="form-control">
+                                                    <select id="activity" name="activity_id" required class="form-control">
                                                         <option value="" selected disabled>Select Activity</option>
                                                         <?php while ($activity = mysqli_fetch_array($all_activity, MYSQLI_ASSOC)) {
                                                             $selected = ($activity['activity_id'] == $user['activity_id']) ? 'selected' : '';
@@ -47,16 +47,19 @@
                                                             </option>
                                                         <?php } ?>
                                                     </select>
+                                                    <div id="activity-error"></div>
                                                 </div>
 
                                                 <div class="col-md-12 mb-3">
                                                     <label for="" class="required">Title</label>
-                                                    <input required type="text" Placeholder="Enter Announcement Name" name="title" value="<?= $user['announcement_title']; ?>" class="form-control">
+                                                    <input required type="text" Placeholder="Enter Announcement Name" id="announcement_title" name="title" value="<?= $user['announcement_title']; ?>" class="form-control">
+                                                    <div id="announcement_title-error"></div>
                                                 </div>
 
                                                 <div class="col-md-12 mb-3">
                                                     <label for="" class="required">Description</label>
-                                                    <textarea required type="text" Placeholder="Enter Description" placeholder="Enter Description" name="body" class="form-control"><?= $user['announcement_body']; ?></textarea>       
+                                                    <textarea required type="text" Placeholder="Enter Description" placeholder="Enter Description" id="announcement_message" name="body" class="form-control"><?= $user['announcement_body']; ?></textarea>
+                                                    <div id="announcement_message-error"></div>
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
@@ -65,7 +68,8 @@
                                                         $formatted_date_start = date('Y-m-d\TH:i', strtotime($user['date_start']));
                                                     ?>
                                                     <label for="" class="required">Date Started</label>
-                                                    <input  required type="datetime-local" name="date_start" value="<?= $formatted_date_start; ?>" id="txtDate" class="form-control">
+                                                    <input  required type="datetime-local" id="datestart" name="date_start" value="<?= $formatted_date_start; ?>" id="txtDate" class="form-control">
+                                                    <div id="datestart-error"></div>
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
@@ -74,7 +78,8 @@
                                                         $formatted_date_end = date('Y-m-d\TH:i', strtotime($user['date_end']));
                                                     ?>
                                                     <label for="" class="required">Date Ended</label>
-                                                    <input required type="datetime-local" name="date_end" value="<?= $formatted_date_end; ?>" id="txtDate" class="form-control">
+                                                    <input required type="datetime-local" id="dateend" name="date_end" value="<?= $formatted_date_end; ?>" id="txtDate" class="form-control">
+                                                    <div id="dateend-error"></div>
                                                 </div>
 
                                                 <div class="col-md-3 mb-3">
@@ -88,7 +93,7 @@
                                             </div>
                                             <div class="float-end">
                                                 <a href="announcement" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                                <button type="submit" name="update_announcement" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
+                                                <button type="submit" name="update_announcement" id="submit-btn" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
                                             </div>
                                         </form>
                                     </div>
@@ -139,4 +144,132 @@
     var tomorrowISOString = tomorrow.toISOString().slice(0, 16);
     document.getElementsByName("date_start")[0].setAttribute("min", tomorrowISOString);
     document.getElementsByName("date_end")[0].setAttribute("min", tomorrowISOString);
+</script>
+
+<script>
+    $(document).ready(function() {
+        // disable submit button by default
+        // $('#submit-btn').prop('disabled', true);
+
+        // debounce functions for each input field
+        var debouncedCheckActivity = _.debounce(checkActivity, 500);
+        var debouncedCheckTitle = _.debounce(checkTitle, 500);
+        var debouncedCheckBody = _.debounce(checkBody, 500);
+        var debouncedCheckDatestart = _.debounce(checkDatestart, 500);
+        var debouncedCheckDateend = _.debounce(checkDateend, 500);
+
+        // attach event listeners for each input field
+        $('#activity').on('input', debouncedCheckActivity);
+        $('#announcement_title').on('input', debouncedCheckTitle);
+        $('#announcement_message').on('input', debouncedCheckBody);
+        $('#datestart').on('input', debouncedCheckDatestart);
+        $('#dateend').on('input', debouncedCheckDateend);
+
+        $('#activity').on('blur', debouncedCheckActivity);
+        $('#announcement_title').on('blur', debouncedCheckTitle);
+        $('#announcement_message').on('blur', debouncedCheckBody);
+        $('#datestart').on('blur', debouncedCheckDatestart);
+        $('#dateend').on('blur', debouncedCheckDateend);
+
+        function checkIfAllFieldsValid() {
+            // check if all input fields are valid and enable submit button if so
+            if ($('#activity-error').is(':empty') && $('#announcement_title-error').is(':empty') && $('#announcement_message-error').is(':empty') && $('#datestart-error').is(':empty') && $('#dateend-error').is(':empty')) {
+                $('#submit-btn').prop('disabled', false);
+            } else {
+                $('#submit-btn').prop('disabled', true);
+            }
+        }
+
+        function checkActivity() {
+            var activitySelect = document.getElementById('activity');
+            var activity = activitySelect.value;
+            
+            // show error if the default option is selected
+            if (activity === '' && activitySelect.selectedIndex !== 1) {
+                $('#activity-error').text('Please select a activity').css('color', 'red');
+                $('#activity').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for activity if needed
+            
+            $('#activity-error').empty();
+            $('#activity').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+        
+        function checkTitle() {
+            var announcement_title = $('#announcement_title').val().trim();
+            
+            // show error if announcement_title is empty
+            if (announcement_title === '') {
+                $('#announcement_title-error').text('Please input title').css('color', 'red');
+                $('#announcement_title').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for announcement_title if needed
+            
+            $('#announcement_title-error').empty();
+            $('#announcement_title').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+
+        function checkBody() {
+            var announcement_message = $('#announcement_message').val().trim();
+            
+            // show error if announcement_message is empty
+            if (announcement_message === '') {
+                $('#announcement_message-error').text('Please input description').css('color', 'red');
+                $('#announcement_message').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for middle name if needed
+            
+            $('#announcement_message-error').empty();
+            $('#announcement_message').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+
+        function checkDatestart() {
+            var datestart = $('#datestart').val().trim();
+            
+            // show error if datestart is empty
+            if (datestart === '') {
+                $('#datestart-error').text('Please input date start').css('color', 'red');
+                $('#datestart').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for datestart if needed
+            
+            $('#datestart-error').empty();
+            $('#datestart').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+
+        function checkDateend() {
+            var dateend = $('#dateend').val().trim();
+            
+            // show error if dateend is empty
+            if (dateend === '') {
+                $('#dateend-error').text('Please input date end').css('color', 'red');
+                $('#dateend').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for dateend if needed
+            
+            $('#dateend-error').empty();
+            $('#dateend').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+        
+    });
 </script>

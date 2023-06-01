@@ -52,7 +52,8 @@
                                                 <input type="text" name="id" value="<?=$id;?>" class="form-control" hidden>
                                                 <div class="col-md-12 mb-3">
                                                     <label for="" class="required">Reference Number</label>
-                                                    <input required type="number" Placeholder="Enter Reference Number" name="reference_number" class="form-control">
+                                                    <input required type="number" Placeholder="Enter Reference Number" id="referencenumber" name="reference_number" class="form-control">
+                                                    <div id="referencenumber-error"></div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <label for="dp" class="required">Proof of payment</label><br>
@@ -67,7 +68,7 @@
                                             </div>   
                                             <div class="float-end">
                                                 <a href="onlinepay" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
-                                                <button type="submit" name="add_payment" class="btn btn-primary"><i class="fas fa-wallet"></i> PAY</button>
+                                                <button type="submit" id="submit-btn" name="add_payment" class="btn btn-primary"><i class="fas fa-wallet"></i> PAY</button>
                                             </div>
                                         </form>
                                     </div>
@@ -82,3 +83,44 @@
         <?php include ('../includes/bottom.php'); ?>
     </body>
 </html>
+<script>
+    $(document).ready(function() {
+        // disable submit button by default
+        // $('#submit-btn').prop('disabled', true);
+
+        // debounce functions for each input field
+        var debouncedCheckReferencenumber = _.debounce(checkReferencenumber, 500);
+
+        // attach event listeners for each input field
+        $('#referencenumber').on('input', debouncedCheckReferencenumber);
+        $('#referencenumber').on('blur', debouncedCheckReferencenumber);
+
+        function checkIfAllFieldsValid() {
+            // check if all input fields are valid and enable submit button if so
+            if ($('#referencenumber-error').is(':empty')) {
+                $('#submit-btn').prop('disabled', false);
+            } else {
+                $('#submit-btn').prop('disabled', true);
+            }
+        }
+
+        function checkReferencenumber() {
+            var referencenumber = $('#referencenumber').val().trim();
+            
+            // show error if referencenumber is empty
+            if (referencenumber === '') {
+                $('#referencenumber-error').text('Please input reference number').css('color', 'red');
+                $('#referencenumber').addClass('is-invalid');
+                checkIfAllFieldsValid();
+                return;
+            }
+            
+            // Perform additional validation for referencenumber if needed
+            
+            $('#referencenumber-error').empty();
+            $('#referencenumber').removeClass('is-invalid');
+            checkIfAllFieldsValid();
+        }
+        
+    });
+</script>
