@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2023 at 09:00 AM
+-- Generation Time: Jun 01, 2023 at 09:31 AM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -66,6 +66,19 @@ CREATE TABLE `announcement` (
 INSERT INTO `announcement` (`announcement_id`, `activity_id`, `user_id`, `announcement_title`, `announcement_body`, `date_start`, `date_end`, `status`) VALUES
 (1, 1, 1, 'Attention to all Bethelians', ' Naa tay activity for Intrams.', '2023-05-18 03:15:00', '2023-05-19 03:16:00', 'Active'),
 (2, 1, 1, 'adasdada111', 'asdasdasd ', '2023-06-07 21:47:00', '2023-06-09 21:47:00', 'Active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_reset_temp`
+--
+
+CREATE TABLE `password_reset_temp` (
+  `user_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `expDate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -258,6 +271,12 @@ ALTER TABLE `announcement`
   ADD KEY `activity_id` (`activity_id`);
 
 --
+-- Indexes for table `password_reset_temp`
+--
+ALTER TABLE `password_reset_temp`
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `payment`
 --
 ALTER TABLE `payment`
@@ -380,6 +399,12 @@ ALTER TABLE `activity`
 ALTER TABLE `announcement`
   ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `announcement_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`activity_id`);
+
+--
+-- Constraints for table `password_reset_temp`
+--
+ALTER TABLE `password_reset_temp`
+  ADD CONSTRAINT `password_reset_temp_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `payment`
