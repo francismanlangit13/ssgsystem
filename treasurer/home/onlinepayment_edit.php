@@ -87,7 +87,6 @@
                                                         <option value="" selected disabled>Select Status</option>
                                                         <option value="Approved" <?= $user['status'] == 'Approved' ? 'selected' :'' ?>>Approved</option>
                                                         <option value="Partial" <?= $user['status'] == 'Partial' ? 'selected' :'' ?>>Partial</option>
-                                                        <option value="Deny" <?= $user['status'] == 'Deny' ? 'selected' :'' ?>>Deny</option>
                                                     </select>
                                                 </div>
 

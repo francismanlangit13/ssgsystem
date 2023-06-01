@@ -33,8 +33,8 @@
                                 echo base_url . 'assets/files/images/users/' . $row['photo'];
                         } else { echo base_url . 'assets/files/images/system/no-image.png'; } }
                     ?>"  alt="user-avatar">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?=$row['fname']?> <?=$row['lname']?></span>
                     <?php } } ?>
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?= $_SESSION['auth_user'] ['user_name'];  ?></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="settings"><i class="fas fa-user"></i> My Account</a></li>
