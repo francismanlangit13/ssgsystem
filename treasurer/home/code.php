@@ -251,52 +251,69 @@ if (isset($_POST['payment_add_online'])) {
   $date = date('Y-m-d H:i:s');
   $status = $_POST['status'];
 
-  // Check if the user exists
-  $q1 = "SELECT * FROM user WHERE user_id = ?";
-  $stmt1 = $con->prepare($q1);
-  $stmt1->bind_param('s', $user_id);
-  $stmt1->execute();
-  $result = $stmt1->get_result();
+  if($status != 'Deny'){
+    // Check if the user exists
+    $q1 = "SELECT * FROM user WHERE user_id = ?";
+    $stmt1 = $con->prepare($q1);
+    $stmt1->bind_param('s', $user_id);
+    $stmt1->execute();
+    $result = $stmt1->get_result();
 
-  if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $bal = $row['balance'];
+    if ($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      $bal = $row['balance'];
 
-    // Calculate new balance
-    $newbal = $bal - $amount;
+      // Calculate new balance
+      $newbal = $bal - $amount;
 
-    // Update payment in the payment table
-    $q2 = "UPDATE payment SET amount = ?, date = ?, status = ? WHERE payment_id = ?";
-    $stmt2 = $con->prepare($q2);
-    $stmt2->bind_param('ssss', $amount, $date, $status, $id);
+      // Update payment in the payment table
+      $q2 = "UPDATE payment SET amount = ?, date = ?, status = ? WHERE payment_id = ?";
+      $stmt2 = $con->prepare($q2);
+      $stmt2->bind_param('ssss', $amount, $date, $status, $id);
 
-    if ($stmt2->execute()) {
-      // Update user's balance
-      $q3 = "UPDATE user SET balance = ? WHERE user_id = ?";
-      $stmt3 = $con->prepare($q3);
-      $stmt3->bind_param('is', $newbal, $user_id);
+      if ($stmt2->execute()) {
+        // Update user's balance
+        $q3 = "UPDATE user SET balance = ? WHERE user_id = ?";
+        $stmt3 = $con->prepare($q3);
+        $stmt3->bind_param('is', $newbal, $user_id);
 
-      if ($stmt3->execute()) {
-        $_SESSION['status'] = "Payment updated successfully";
-        $_SESSION['status_code'] = "success";
+        if ($stmt3->execute()) {
+          $_SESSION['status'] = "Payment updated successfully";
+          $_SESSION['status_code'] = "success";
+        } else {
+          $_SESSION['status'] = "Failed to update user's balance";
+          $_SESSION['status_code'] = "error";
+        }
+
+        $stmt3->close();
       } else {
-        $_SESSION['status'] = "Failed to update user's balance";
+        $_SESSION['status'] = "Failed to insert payment";
         $_SESSION['status_code'] = "error";
       }
 
-      $stmt3->close();
+      $stmt2->close();
     } else {
-      $_SESSION['status'] = "Failed to insert payment";
+      $_SESSION['status'] = "User not found";
       $_SESSION['status_code'] = "error";
     }
 
-    $stmt2->close();
+    $stmt1->close();
   } else {
-    $_SESSION['status'] = "User not found";
-    $_SESSION['status_code'] = "error";
+    $sql = "UPDATE `payment` SET `status` = '$status' WHERE `payment_id` = '$id'";
+    $sql_run = mysqli_query($con, $sql);
+    if($sql_run){
+      $_SESSION['status'] = "Payment updated successfully";
+      $_SESSION['status_code'] = "success";
+      header("Location: " . base_url . "treasurer/home/onlinepay");
+      exit(0);
+    }
+    else{
+      $_SESSION['status'] = "Something went wrong!";
+      $_SESSION['status_code'] = "error";
+      header("Location: " . base_url . "treasurer/home/onlinepay");
+      exit(0);
+    }
   }
-
-  $stmt1->close();
 
   header("Location: " . base_url . "treasurer/home/onlinepay");
   exit(0);
