@@ -71,7 +71,7 @@
                                             </div>
                                         </div>   
                                         <div class="float-end">
-                                            <a href="parent_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                            <a href="parent_account" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                         <div class="card-body">
                                             <h4>No Record Found!</h4>
                                             <div class="float-end">
-                                                <a href="parent_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <a href="parent_account" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                             </div>
                                         </div>
                                     </div>

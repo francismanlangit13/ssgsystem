@@ -103,7 +103,7 @@
                                                 </div>
                                             </div>   
                                             <div class="float-end">
-                                                <a href="officer_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <a href="officer_account" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                                 <button type="submit" name="add_officer" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
                                             </div>
                                         </form>

@@ -76,7 +76,7 @@
                                             </div>
                                         </div>
                                         <div class="float-end">
-                                            <a href="officer_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                            <a href="officer_account" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@
                                         <div class="card-body">
                                             <h4>No Record Found!</h4>
                                             <div class="float-end">
-                                                <a href="officer_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <a href="officer_account" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                             </div>
                                         </div>
                                     </div>

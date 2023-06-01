@@ -17,7 +17,7 @@
                             `user`
                             ON 
                             payment.`user_id` = `user`.user_id
-                            WHERE payment.id = '$id'
+                            WHERE payment.payment_id = '$id'
                         ";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
@@ -100,7 +100,7 @@
 
                                         </div>
                                         <div class="float-end">
-                                            <a href="paymenthistory.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                            <a href="onlinehistory" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                         </div>
                                     </div>
                                 </div>
@@ -130,7 +130,7 @@
                                         <div class="card-body">
                                             <h4>No Record Found!</h4>
                                             <div class="float-end">
-                                                <a href="paymenthistory.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <a href="onlinehistory" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                             </div>
                                         </div>
                                     </div>

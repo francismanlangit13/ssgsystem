@@ -92,7 +92,7 @@
                                                 </div>
                                             </div>   
                                             <div class="float-end">
-                                                <a href="parent_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <a href="parent_account" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                                 <button type="submit" name="add_parent" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
                                             </div>
                                         </form>

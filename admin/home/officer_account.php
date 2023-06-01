@@ -35,7 +35,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Id</th>
+                                            <th>No.</th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Role</th>
@@ -56,7 +56,7 @@
                                                 `user`.user_status_id = user_status.user_status_id
                                                 WHERE
                                                 user_type_id IN (1, 2, 3, 4, 5) AND
-                                                user_status.user_status_id IN (1, 2)
+                                                user_status.user_status_id IN (1, 2) AND user.user_id != $user_id
                                             ";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){

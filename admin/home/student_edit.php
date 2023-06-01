@@ -115,7 +115,7 @@
 
                                             </div>
                                             <div class="float-end">
-                                                <a href="student_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <a href="student_account" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                                 <button type="submit" name="update_student" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
                                             </div>
                                             <br><br>
@@ -148,7 +148,7 @@
                                         <div class="card-body">
                                             <h4>No Record Found!</h4>
                                             <div class="float-end">
-                                                <a href="student_account.php" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
+                                                <a href="student_account" class="btn btn-danger"><i class="fas fa-arrow-left"></i> Back</a>
                                             </div>
                                         </div>
                                     </div>
