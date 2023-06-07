@@ -71,7 +71,7 @@
                                             <td><?= $row['user_status']; ?></td>
                                             <td> 
                                                 <div class="row d-inline-flex justify-content-center">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-12">
                                                         <a href="student_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text ml-2 mr-2">View</span>
