@@ -54,8 +54,12 @@
                                                 user_status
                                                 ON 
                                                 `user`.user_status_id = user_status.user_status_id
+                                                INNER JOIN
+                                                user_type
+                                                ON
+                                                user.user_type_id = user_type.user_type_id
                                                 WHERE
-                                                user_type_id IN (1, 2, 3, 4, 5) AND
+                                                user.user_type_id NOT IN (6, 7) AND
                                                 user_status.user_status_id IN (1, 2) AND user.user_id != $user_id
                                             ";
                                             $query_run = mysqli_query($con, $query);
@@ -66,19 +70,7 @@
                                             <td><?= $row['user_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
                                             <td><?= $row['email']; ?></td>
-                                            <td>
-                                                <?php if($row['user_type_id'] == 1){
-                                                    echo "Admin";
-                                                } elseif($row['user_type_id'] == 2){
-                                                    echo "President";
-                                                } elseif($row['user_type_id'] == 3){
-                                                    echo "Vice President";
-                                                } elseif($row['user_type_id'] == 4){
-                                                    echo "Secretary";
-                                                } elseif($row['user_type_id'] == 5){
-                                                    echo "Treasurer";
-                                                } else { } ?>
-                                            </td>
+                                            <td><?= $row['user_type']; ?></td>
                                             <td><?= $row['user_status']; ?></td>
                                             <td> 
                                                 <div class="row d-inline-flex justify-content-center">
