@@ -69,6 +69,12 @@
                 header("Location: " . base_url . "parent");
                 exit(0);
             }
+            else{
+                $_SESSION['status'] = "Welcome $full_name";
+                $_SESSION['status_code'] = "success";
+                header("Location: " . base_url . "other");
+                exit(0);
+            }
         }
         else{
             $_SESSION['status'] = "Invalid Email and Password";
