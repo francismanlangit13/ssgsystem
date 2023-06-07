@@ -10,15 +10,14 @@
                     <div class="container-fluid px-4">
                         <ol class="breadcrumb mb-4 mt-3">
                             <li class="breadcrumb-item">Dashboard</li>
-                            <li class="breadcrumb-item ">Account</li>
-                            <li class="breadcrumb-item active">Offical Account</li>
+                            <li class="breadcrumb-item ">Roles</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                List of Offical Account
+                                List of Roles
                                 <div class="float-end">
-                                    <a type="button" class="btn btn-primary" href="officer_add" style="zoom:75%"><i class="fa fa-plus"></i> Add Offical Account</a>
+                                    <a type="button" class="btn btn-primary" href="roles_add" style="zoom:75%"><i class="fa fa-plus"></i> Add Role</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -26,76 +25,37 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
                                             <th>Role</th>
-                                            <th>Status</th>
-                                            <th>ACTION</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
                                             <th>Role</th>
-                                            <th>Status</th>
-                                            <th>ACTION</th>
+                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                            $user_id = $_SESSION['auth_user']['user_id'];
-                                            $query = "SELECT
-                                                *
-                                                FROM
-                                                `user`
-                                                INNER JOIN
-                                                user_status
-                                                ON 
-                                                `user`.user_status_id = user_status.user_status_id
-                                                WHERE
-                                                user_type_id IN (1, 2, 3, 4, 5) AND
-                                                user_status.user_status_id IN (1, 2) AND user.user_id != $user_id
-                                            ";
+                                            $query = "SELECT * FROM user_type";
                                             $query_run = mysqli_query($con, $query);
                                             if(mysqli_num_rows($query_run) > 0){
                                                 foreach($query_run as $row){
                                         ?>
                                         <tr>
-                                            <td><?= $row['user_id']; ?></td>
-                                            <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
-                                            <td><?= $row['email']; ?></td>
-                                            <td>
-                                                <?php if($row['user_type_id'] == 1){
-                                                    echo "Admin";
-                                                } elseif($row['user_type_id'] == 2){
-                                                    echo "President";
-                                                } elseif($row['user_type_id'] == 3){
-                                                    echo "Vice President";
-                                                } elseif($row['user_type_id'] == 4){
-                                                    echo "Secretary";
-                                                } elseif($row['user_type_id'] == 5){
-                                                    echo "Treasurer";
-                                                } else { } ?>
-                                            </td>
-                                            <td><?= $row['user_status']; ?></td>
+                                            <td><?= $row['user_type_id']; ?></td>
+                                            <td><?= $row['user_type']; ?></td>
                                             <td> 
                                                 <div class="row d-inline-flex justify-content-center">
-                                                    <div class="col-md-3">
-                                                        <a href="officer_view?id=<?=$row['user_id'];?>" class="btn btn-info btn-icon-split"> 
-                                                            <span class="icon text-white-50"></span>
-                                                            <span class="text ml-2 mr-2">View</span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <a href="officer_edit?id=<?=$row['user_id'];?>" class="btn btn-success btn-icon-split"> 
+                                                    <div class="col-md-6">
+                                                        <a href="roles_edit?id=<?=$row['user_type_id'];?>" class="btn btn-success btn-icon-split"> 
                                                             <span class="icon text-white-50"></span>
                                                             <span class="text">Update</span>
                                                         </a>
                                                     </div>
-                                                    <div class="col-md-4" style="margin-left:-0.3rem;">
-                                                        <button type="button" data-toggle="modal" value="<?=$row['user_id']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-danger btn-icon-split">
+                                                    <div class="col-md-6" style="margin-left:-0.3rem;">
+                                                        <button type="button" data-toggle="modal" value="<?=$row['user_type_id']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-danger btn-icon-split">
                                                             <span class="icon text-white-50">
                                                             </span>
                                                             <span class="text">Delete</span>
@@ -108,9 +68,6 @@
                                             else{
                                         ?>
                                             <tr>
-                                                <td>No Record Found</td>
-                                                <td>No Record Found</td>
-                                                <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
                                                 <td>No Record Found</td>
@@ -144,7 +101,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <form action="code.php" method="POST">
-            <input type="hidden" id="delete_id" name="officer_delete" value="">
+            <input type="hidden" id="delete_id" name="role_delete" value="">
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       </div>

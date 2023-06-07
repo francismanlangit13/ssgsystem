@@ -1351,3 +1351,63 @@ if(isset($_POST['export_parent'])){
   // Close MySQL connection
   mysqli_close($con);
 }
+
+// Add role
+if(isset($_POST['add_role'])){
+  $role = $_POST['role'];
+  $query = "INSERT INTO `user_type`(`user_type`) VALUES ('$role')";
+  $query_run = mysqli_query($con, $query);
+
+  if($query_run){
+    $_SESSION['status'] = "Role added successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "admin/home/roles");
+    exit(0);
+  }else{
+    $_SESSION['status'] = "Something went wrong!";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/roles");
+    exit(0);
+  }
+}
+
+// Update role
+if(isset($_POST['update_role'])){
+  $id = $_POST['id'];
+  $role = $_POST['role'];
+  $query = "UPDATE `user_type` SET `user_type`='$role' WHERE user_type_id = '$id'";
+  $query_run = mysqli_query($con, $query);
+
+  if($query_run){
+    $_SESSION['status'] = "Role updated successfully";
+    $_SESSION['status_code'] = "success";
+    header("Location: " . base_url . "admin/home/roles");
+    exit(0);
+  }else{
+    $_SESSION['status'] = "Something went wrong!";
+    $_SESSION['status_code'] = "error";
+    header("Location: " . base_url . "admin/home/roles");
+    exit(0);
+  }
+}
+
+// Delete role
+if(isset($_POST['role_delete'])){
+  $id= $_POST['role_delete'];
+
+  $query = "DELETE FROM `user_type` WHERE user_type_id = '$id'";
+  $query_run = mysqli_query($con, $query);
+  
+  if($query_run){
+      $_SESSION['status'] = "Role deleted successfully";
+      $_SESSION['status_code'] = "success";
+      header("Location: " . base_url . "admin/home/roles");
+      exit(0);
+  }
+  else{
+      $_SESSION['status'] = "Something went wrong!";
+      $_SESSION['status_code'] = "error";
+      header("Location: " . base_url . "admin/home/roles");
+      exit(0);
+  }
+}

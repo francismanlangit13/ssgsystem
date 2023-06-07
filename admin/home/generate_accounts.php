@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <?php include('../includes/header.php'); ?>
-    <?php
-        $from = isset($_POST['from']) ? $_POST['from'] : date("Y-m-d",strtotime(date("Y-m-d"))); 
-        $to = isset($_POST['to']) ? $_POST['to'] : date("Y-m-d",strtotime(date("Y-m-d"))); 
-        function duration($dur = 0){
-            if($dur == 0){
-                return "00:00";
-            }
-            $hours = floor($dur / (60 * 60));
-            $min = floor($dur / (60)) - ($hours*60);
-            $dur = sprintf("%'.02d",$hours).":".sprintf("%'.02d",$min);
-            return $dur;
-        }
-    ?>
     <body class="sb-nav-fixed">
         <?php include ('../includes/navbar.php'); ?>
         <div id="layoutSidenav">
@@ -65,14 +52,6 @@
                                                             <option value="3">Archive</option> 
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-md-2">
-                                                        <label for="from" class="control-label">Date From</label>
-                                                        <input type="date" name="from" id="from" value="<?= $from ?>" class="form-control form-control-sm rounded-0">
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                        <label for="to" class="control-label">Date To</label>
-                                                        <input type="date" name="to" id="to" value="<?= $to ?>" class="form-control form-control-sm rounded-0">
-                                                    </div>
                                                     <div class="form-group col-md-6 mt-4">
                                                         <button class="btn btn-primary btn-flat btn-sm" name="submit-btn" id="submit-btn"><i class="fa fa-filter"></i> Filter</button>
                                                         <button class="btn btn-sm btn-flat btn-success" type="button" onclick="window.print()" <?php if(isset($_POST['submit-btn'])) { } else { echo "disabled";} ?>><i class="fa fa-print"></i> Print</button>
@@ -105,7 +84,7 @@
                                         <h5 class="text-center" style="font-size:12px;">BONIFACIO/BURGOS ST. NAGA, JIMENEZ, MISAMIS OCCIDENTAL - 7204</h5>
                                         <hr style="border-top: 1.5px solid black !important; opacity: 100 !important;">
                                         <h5 class="text-center" style="font-size:12px;"><?php if(isset($_POST['accounts'])){ if($_POST['accounts'] == 'Official') { echo"Officials"; } elseif ($_POST['accounts'] == 'Parents') { echo"Parent"; } else{ echo"Students"; } }?> <?php if(isset($_POST['status'])){ if($_POST['status'] == '1') { echo"(Active Accounts)"; } elseif($_POST['status'] == '2') { echo"(In active Accounts)"; } else{ echo"(Archive Accounts)"; } } else { } ?></h5>
-                                        <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5>
+                                        <!-- <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5> -->
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center">
                                         <img src="<?php echo base_url ?>assets/files/images/system/ssg.png" class="img-circle" id="sys_logo" alt="System Logo">
@@ -147,7 +126,6 @@
                                                     WHERE level = '$level' 
                                                     AND user_type_id = 6 
                                                     AND user_status_id = '$user_status_id'
-                                                    AND date(date_deleted) BETWEEN '{$from}' AND '{$to}' 
                                                     ORDER BY UNIX_TIMESTAMP(date_deleted) ASC");
                                                     while($row = $qry->fetch_assoc()):
                                                 ?>
