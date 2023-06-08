@@ -47,21 +47,23 @@
                                             <td><?= $row['user_type_id']; ?></td>
                                             <td><?= $row['user_type']; ?></td>
                                             <td> 
-                                                <div class="row d-inline-flex justify-content-center">
-                                                    <div class="col-md-6">
-                                                        <a href="roles_edit?id=<?=$row['user_type_id'];?>" class="btn btn-success btn-icon-split"> 
-                                                            <span class="icon text-white-50"></span>
-                                                            <span class="text">Update</span>
-                                                        </a>
+                                                <?php if($row['user_type_id'] > 7){ ?>
+                                                    <div class="row d-inline-flex justify-content-center">
+                                                        <div class="col-md-6">
+                                                            <a href="roles_edit?id=<?=$row['user_type_id'];?>" class="btn btn-success btn-icon-split"> 
+                                                                <span class="icon text-white-50"></span>
+                                                                <span class="text">Update</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-md-6" style="margin-left:-0.3rem;">
+                                                            <button type="button" data-toggle="modal" value="<?=$row['user_type_id']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-danger btn-icon-split">
+                                                                <span class="icon text-white-50">
+                                                                </span>
+                                                                <span class="text">Delete</span>
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6" style="margin-left:-0.3rem;">
-                                                        <button type="button" data-toggle="modal" value="<?=$row['user_type_id']; ?>" data-target="#exampleModalDelete" onclick="deleteModal(this)" class="btn btn-danger btn-icon-split">
-                                                            <span class="icon text-white-50">
-                                                            </span>
-                                                            <span class="text">Delete</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                                <?php } else{ } ?>
                                             </td>
                                         </tr>
                                         <?php } }
