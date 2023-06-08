@@ -83,7 +83,7 @@
                                         <h3 class="text-center" style="font-size:14px;"><b>SUPREME STUDENT GOVERNMENT</b></h3>
                                         <h5 class="text-center" style="font-size:12px;">BONIFACIO/BURGOS ST. NAGA, JIMENEZ, MISAMIS OCCIDENTAL - 7204</h5>
                                         <hr style="border-top: 1.5px solid black !important; opacity: 100 !important;">
-                                        <h5 class="text-center" style="font-size:12px;"><?php if(isset($_POST['accounts'])){ if($_POST['accounts'] == 'Official') { echo"Officials"; } elseif ($_POST['accounts'] == 'Parents') { echo"Parent"; } else{ echo"Students"; } }?> <?php if(isset($_POST['status'])){ if($_POST['status'] == '1') { echo"(Active Accounts)"; } elseif($_POST['status'] == '2') { echo"(In active Accounts)"; } else{ echo"(Archive Accounts)"; } } else { } ?></h5>
+                                        <h5 class="text-center" style="font-size:12px;"><?php if(isset($_POST['accounts'])){ if($_POST['accounts'] == 'Official') { echo"Officials"; } elseif ($_POST['accounts'] == 'Parent') { echo"Parent"; } else{ echo"Students"; } }?> <?php if(isset($_POST['status'])){ if($_POST['status'] == '1') { echo"(Active Accounts)"; } elseif($_POST['status'] == '2') { echo"(In active Accounts)"; } else{ echo"(Archive Accounts)"; } } else { } ?></h5>
                                         <!-- <h5 class="text-center" style="font-size:12px;"><?php echo date("F d, Y", strtotime($from)). " - ".date("F d, Y", strtotime($to)); ?></h5> -->
                                     </div>
                                     <div class="col-2 d-flex justify-content-center align-items-center">
