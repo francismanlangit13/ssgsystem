@@ -9,7 +9,7 @@
                 <?php
                     if(isset($_GET['id'])){
                         $id = $_GET['id'];
-                        $users = "SELECT * FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id INNER JOIN user_status ON user.user_status_id = user_status.user_status_id WHERE user_id='$id' AND user_type.user_type_id IN (1,2,3,4,5) AND user_status.user_status_id IN (1,2)";
+                        $users = "SELECT * FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id INNER JOIN user_status ON user.user_status_id = user_status.user_status_id WHERE user_id='$id' AND user_type.user_type_id NOT IN (6, 7) AND user_status.user_status_id IN (1,2)";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
                             foreach($users_run as $user){

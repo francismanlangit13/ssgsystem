@@ -9,7 +9,7 @@
                 <?php
                     if(isset($_GET['id'])){
                         $id = $_GET['id'];
-                        $users = "SELECT * FROM user WHERE user_id='$id' AND user_type_id IN (1,2,3,4,5) AND user_status_id IN (1,2)";
+                        $users = "SELECT * FROM user WHERE user_id='$id' AND user_type_id NOT IN (6, 7) AND user_status_id IN (1,2)";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
                             foreach($users_run as $user){
@@ -94,14 +94,18 @@
                                                 </div>
                                                 
                                                 <div class="col-md-3 mb-3">
-                                                    <label for="" class="required">Role</label>
-                                                    <select id="role" name="role" required class="form-control">
-                                                        <option value="" selected disabled>Select Role</option>
-                                                        <option value="1" <?= $user['user_type_id'] == '1' ? 'selected' :'' ?>>Admin</option>
-                                                        <option value="2" <?= $user['user_type_id'] == '2' ? 'selected' :'' ?>>President</option>
-                                                        <option value="3" <?= $user['user_type_id'] == '3' ? 'selected' :'' ?>>Vice President</option>
-                                                        <option value="4" <?= $user['user_type_id'] == '4' ? 'selected' :'' ?>>Secretary</option>
-                                                        <option value="5" <?= $user['user_type_id'] == '5' ? 'selected' :'' ?>>Treasurer</option>
+                                                    <label for="role" class="required">Role</label>
+                                                    <select class="form-control" id="role" name="role">
+                                                        <?php
+                                                        $sql = "SELECT * FROM `user_type` WHERE user_type_id NOT IN (6, 7)";
+                                                        $sql_run = mysqli_query($con, $sql);
+                                                        while ($row = mysqli_fetch_array($sql_run, MYSQLI_ASSOC)):
+                                                            $selected = ($row['user_type_id'] == $user['user_type_id']) ? 'selected' : ''; // Check if user_type_id matches the value from the database, set 'selected' attribute
+                                                        ?>
+                                                        <option value="<?php echo $row['user_type_id']; ?>" <?php echo $selected; ?>>
+                                                            <?php echo $row['user_type']; ?>
+                                                        </option>
+                                                        <?php endwhile; ?>
                                                     </select>
                                                     <div id="role-error"></div>
                                                 </div>
