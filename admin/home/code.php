@@ -1355,7 +1355,8 @@ if(isset($_POST['export_parent'])){
 // Add role
 if(isset($_POST['add_role'])){
   $role = $_POST['role'];
-  $query = "INSERT INTO `user_type`(`user_type`) VALUES ('$role')";
+  $status = '1';
+  $query = "INSERT INTO `user_type`(`user_type`, `user_status_id`) VALUES ('$role', '$status')";
   $query_run = mysqli_query($con, $query);
 
   if($query_run){
