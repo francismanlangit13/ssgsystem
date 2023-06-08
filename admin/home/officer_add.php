@@ -86,7 +86,7 @@
 
                                                 <div class="col-md-3 mb-3">
                                                     <?php
-                                                        $sql = "SELECT * FROM `user_type` WHERE user_type_id NOT IN (6, 7)";
+                                                        $sql = "SELECT * FROM `user_type` WHERE user_type_id NOT IN (6, 7) AND user_status_id = 1";
                                                         $sql_run = mysqli_query($con,$sql);
                                                     ?>
                                                     <label for="role" class="required">Role</label>

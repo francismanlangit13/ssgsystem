@@ -67,7 +67,11 @@
 
                                             <div class="col-md-3 mb-3">
                                                 <label for="">Role</label>
-                                                <input type="text" value="<?=$user['user_type'];?>" class="form-control" disabled>
+                                                <?php if ($row['user_status_id'] == 1){ ?>
+                                                    <input type="text" value="<?=$user['user_type'];?>" class="form-control" disabled>
+                                                <?php } else{ ?>
+                                                    <input type="text" value="Unknown" class="form-control" disabled>
+                                                <?php } ?>
                                             </div>
 
                                             <div class="col-md-3 mb-3">

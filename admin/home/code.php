@@ -1395,7 +1395,7 @@ if(isset($_POST['update_role'])){
 if(isset($_POST['role_delete'])){
   $id= $_POST['role_delete'];
 
-  $query = "DELETE FROM `user_type` WHERE user_type_id = '$id'";
+  $query = "UPDATE `user_type` SET user_status_id = 3 WHERE user_type_id = '$id'";
   $query_run = mysqli_query($con, $query);
   
   if($query_run){

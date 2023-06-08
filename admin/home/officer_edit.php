@@ -95,9 +95,10 @@
                                                 
                                                 <div class="col-md-3 mb-3">
                                                     <label for="role" class="required">Role</label>
-                                                    <select class="form-control" id="role" name="role">
+                                                    <select class="form-control" id="role" name="role" required>
+                                                        <option value="" selected>Please select role</option>
                                                         <?php
-                                                        $sql = "SELECT * FROM `user_type` WHERE user_type_id NOT IN (6, 7)";
+                                                        $sql = "SELECT * FROM `user_type` WHERE user_type_id NOT IN (6, 7) AND user_status_id = 1";
                                                         $sql_run = mysqli_query($con, $sql);
                                                         while ($row = mysqli_fetch_array($sql_run, MYSQLI_ASSOC)):
                                                             $selected = ($row['user_type_id'] == $user['user_type_id']) ? 'selected' : ''; // Check if user_type_id matches the value from the database, set 'selected' attribute
@@ -114,8 +115,8 @@
                                                     <label for="" class="required">Status</label>
                                                     <select id="status" name="status" required class="form-control">
                                                         <option value="" selected disabled>Select Status</option>
-                                                        <option value="1" <?= $user['user_type_id'] == '1' ? 'selected' :'' ?>>Active</option>
-                                                        <option value="2" <?= $user['user_type_id'] == '2' ? 'selected' :'' ?>>In active</option>
+                                                        <option value="1" <?= $user['user_status_id'] == '1' ? 'selected' :'' ?>>Active</option>
+                                                        <option value="2" <?= $user['user_status_id'] == '2' ? 'selected' :'' ?>>In active</option>
                                                     </select>
                                                 </div>
 

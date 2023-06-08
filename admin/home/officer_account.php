@@ -70,7 +70,11 @@
                                             <td><?= $row['user_id']; ?></td>
                                             <td><?= $row['fname']; ?> <?= $row['mname']; ?> <?= $row['lname']; ?> <?= $row['suffix']; ?></td>
                                             <td><?= $row['email']; ?></td>
-                                            <td><?= $row['user_type']; ?></td>
+                                            <?php if ($row['user_status_id'] == 1){ ?>
+                                                <td><?= $row['user_type']; ?></td>
+                                            <?php } else{ ?>
+                                                <td>Unknown</td>
+                                            <?php } ?>
                                             <td><?= $row['user_status']; ?></td>
                                             <td> 
                                                 <div class="row d-inline-flex justify-content-center">

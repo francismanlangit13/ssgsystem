@@ -9,7 +9,7 @@
                 <?php
                     if(isset($_GET['id'])){
                         $id = $_GET['id'];
-                        $users = "SELECT * FROM user_type WHERE user_type_id='$id' ";
+                        $users = "SELECT * FROM user_type WHERE user_type_id='$id' AND user_status_id = 1";
                         $users_run = mysqli_query($con, $users);
                         if(mysqli_num_rows($users_run) > 0){
                             foreach($users_run as $user){
