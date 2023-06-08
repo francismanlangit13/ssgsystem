@@ -54,13 +54,13 @@ if(isset($_POST['update_account'])){
               $_SESSION['status'] = "Account updated sucessfully";
               $_SESSION['status_code'] = "success";
               header('Location: index');
-              header("Location: " . base_url . "admin/home/");
+              header("Location: " . base_url . "other/home/");
               exit(0);
             }
             else{
               $_SESSION['status'] = "Something went wrong!";
               $_SESSION['status_code'] = "error";
-              header("Location: " . base_url . "admin/home/");
+              header("Location: " . base_url . "other/home/");
               exit(0);
             }
           }
@@ -68,19 +68,19 @@ if(isset($_POST['update_account'])){
         else{
           $_SESSION['status']="File is too large file must be 10mb";
           $_SESSION['status_code'] = "error"; 
-          header("Location: " . base_url . "admin/home/settings");
+          header("Location: " . base_url . "other/home/settings");
         }
       }
       else{
         $_SESSION['status']="File Error";
         $_SESSION['status_code'] = "error"; 
-        header("Location: " . base_url . "admin/home/settings");
+        header("Location: " . base_url . "other/home/settings");
       }
     }
     else{
       $_SESSION['status']="Invalid file type";
       $_SESSION['status_code'] = "error"; 
-      header("Location: " . base_url . "admin/home/settings");
+      header("Location: " . base_url . "other/home/settings");
     }
   }
   else{
@@ -90,13 +90,13 @@ if(isset($_POST['update_account'])){
     if($query_run){
       $_SESSION['status'] = "Account updated sucessfully";
       $_SESSION['status_code'] = "success";
-      header("Location: " . base_url . "admin/home/");
+      header("Location: " . base_url . "other/home/");
       exit(0);
     }
     else{
       $_SESSION['status'] = "Something went wrong!";
       $_SESSION['status_code'] = "error";
-      header("Location: " . base_url . "admin/home/settings");
+      header("Location: " . base_url . "other/home/settings");
       exit(0);
     }
   }

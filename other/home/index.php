@@ -32,7 +32,7 @@
                                         </label>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>admin/home/student_account" >View Details</a>
+                                        <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>other/home/student_account" >View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                                         </label>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>admin/home/officer_account">View Details</a>
+                                        <a class="small text-white stretched-link text-decoration-none" href="#">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                                         </label>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>admin/home/paymenthistory">View Details</a>
+                                        <a class="small text-white stretched-link text-decoration-none" href="<?php echo base_url ?>other/home/paymenthistory">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                                         </label>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link text-decoration-none" href="generate_accounts">View Details</a>
+                                        <a class="small text-white stretched-link text-decoration-none" href="#">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
