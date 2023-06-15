@@ -213,8 +213,7 @@
                                             <tbody>
                                                 <?php 
                                                     $user_status_id= $_POST['status'];
-                                                    $qry = $con->query("SELECT *, DATE_FORMAT(date_deleted, '%m-%d-%Y %h:%i:%s %p') as short_date_deleted
-                                                    FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.user_type_id = 7 AND user_status_id = $user_status_id order by unix_timestamp(date_deleted) asc");
+                                                    $qry = $con->query("SELECT *, DATE_FORMAT(date_deleted, '%m-%d-%Y %h:%i:%s %p') as short_date_deleted FROM user INNER JOIN user_type ON user.user_type_id = user_type.user_type_id WHERE user_type.user_type_id = '7' AND user.user_status_id = '$user_status_id' order by unix_timestamp(date_deleted) asc");
                                                     while($row = $qry->fetch_assoc()):
                                                 ?>
                                                 <tr>
